@@ -1,10 +1,26 @@
 import os
 from flask import Flask
+from flask_pymongo import pymongo
 
 app = Flask(__name__)
 
-app.config["MONGO_DBNAME"] = "task_manager"
-app.config["MONGO_URI"] = "mongodb+srv://InvAdrian:Iambutts1985@myfirstcluster-e8a5p.mongodb.net/terming_for_learning?retryWrites=true&w=majority"
+MONGODB_URI = os.getenv("MONGO_URI")
+DBS_NAME = "terming_for_learning"
+TERMS = "terms"
+CATEGORIES = "categories"
+SUB_CATEGORIES = "sub_categories"
+
+
+def mongo_connect(url):
+    try:
+        conn = pymongo.MongoClient(url)
+        print("Mongo is connected!")
+        return conn
+    except pymongo.errors.ConnectionFailure as e:
+        print("Could not connect to Mongo: %s") % e
+
+
+conn = mongo_connect(MONGODB_URI)
 
 
 @app.route("/")
