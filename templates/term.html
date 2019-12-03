@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div>
+        <h2>{{ term.term }}</h2>
+        <hr>
+        <h3>Category</h3>
+        <p>{{ term.category_name }}</p>
+        <hr>
+        <h3>Definition</h3>
+        <p>{{ term.term_definition }}</p>
+        <hr>
+        <h3>Noob Definition</h3>
+        <p>{{ term.noob_definition }}</p>
+        <hr>
+        <h3>Term Examples</h3>
+        <p>{{ term.term_examples }}</p>
+        <hr>
+        <h3>Add to / remove from Further Readings</h3>
+        <p>{{ term.explore_more }}</p>
+        <hr>
+    </div>
+
+{% endblock %}
+        

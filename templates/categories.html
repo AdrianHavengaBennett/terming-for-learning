@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Categories:</h2>
+{% for cat in categories %}
+    <div>
+        <h4>{{ cat.category_name }}</h4>
+        <hr>
+    </div>
+{% endfor %}
+{% endblock %}
