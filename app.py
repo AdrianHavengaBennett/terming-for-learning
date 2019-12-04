@@ -74,7 +74,7 @@ def save_term(term_id):
 
 
 # Delete a term:
-# At the moment, this will delete the term immediately. You'll need to edit it later so that it asks first
+# At the moment, this will delete the term immediately. You'll need to edit it later so that it asks first.
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
     terms.remove({"_id": ObjectId(term_id)})
