@@ -105,7 +105,7 @@ def save_category():
     added_category = request.form["category_name"]  # This is what the user inputs
     is_in_database = categories.find_one({"category_name": added_category })  # This will need further validating (lowercase and uppercase, for example)
     if is_in_database:
-        return render_template("oops.html")  # TODO change this to a JS prompt to warn the user
+        return render_template("oops.html")  # TODO change this to a JS prompt to warn the user.
     else:
         categories.insert_one(request.form.to_dict())
     return redirect(url_for("get_categories"))
