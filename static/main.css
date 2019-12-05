@@ -9,3 +9,8 @@ html, body {
             #47aad9, #fff3d9
         );
 }
+
+.container {
+    margin: 0 auto;
+    max-width: 75%;
+}

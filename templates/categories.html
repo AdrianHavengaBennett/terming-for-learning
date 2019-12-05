@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Categories:</h2>
-{% for cat in categories %}
-    <div>
-        <h4>{{ cat.category_name }}</h4>
-        <hr>
-    </div>
-{% endfor %}
-<button><a href= "{{ url_for('add_category') }}">New Category</a></button>
-<button><a href= "{{ url_for('get_terms') }}">All Terms</a></button>
+<div class="container">
+    <h2>Categories:</h2>
+    {% for cat in categories %}
+        <div>
+            <h4>{{ cat.category_name }}</h4>
+            <hr>
+        </div>
+    {% endfor %}
+    <button><a href= "{{ url_for('add_category') }}">New Category</a></button>
+    <button><a href= "{{ url_for('get_terms') }}">All Terms</a></button>
+</div>
+
 {% endblock %}

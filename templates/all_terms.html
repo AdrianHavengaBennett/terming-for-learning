@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Terms:</h2>
-{% for term in terms %}
-    <div>
-        <p><a href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
-        <hr>
-    </div>
-{% endfor %}
-<button><a href= "{{ url_for('new_term') }}">New Term</a></button>
-<button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
+<div class="container">
+    <h2>Terms:</h2>
+    {% for term in terms %}
+        <div>
+            <p><a href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
+            <hr>
+        </div>
+    {% endfor %}
+    <button><a href= "{{ url_for('new_term') }}">New Term</a></button>
+    <button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
+</div>
+
 {% endblock %}

@@ -62,21 +62,30 @@ def edit_term(term_id):
 @app.route("/save_term/<term_id>", methods=["POST"])
 def save_term(term_id):
     all_terms = terms
-    all_terms.update({"_id": ObjectId(term_id)}, {
-                      "term": request.form.get("term"),
-                      "category_name": request.form.get("category_name"),
-                      "term_definition": request.form.get("term_definition"),
-                      "noob_definition": request.form.get("noob_definition"),
-                      "term_examples": request.form.get("term_examples"),
-                      "explore_more": request.form.get("explore_more")
-                      })
+    all_terms.replace_one(
+        {"_id": ObjectId(term_id)}, {
+         "term": request.form.get("term"),
+         "category_name": request.form.get("category_name"),
+         "term_definition": request.form.get("term_definition"),
+         "noob_definition": request.form.get("noob_definition"),
+         "term_examples": request.form.get("term_examples"),
+         "explore_more": request.form.get("explore_more")
+         })
     return redirect(url_for("get_terms"))
 
-
 # Delete a term:
-# At the moment, this will delete the term immediately. You'll need to edit it later so that it asks first.
+@app.route("/delete_request/<term_id>")
+def delete_request(term_id):
+    term = terms.find_one({"_id": ObjectId(term_id)})
+    return render_template("delete_request.html", term=term)
+
+# Shows chosen term and asks for confirmation:
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
+    """
+    At the moment, this will delete the term immediately.
+    You'll need to edit it later so that it asks first.
+    """
     terms.remove({"_id": ObjectId(term_id)})
     return redirect(url_for("get_terms"))
 
@@ -88,14 +97,18 @@ def get_categories():
 # Add a new category:
 @app.route("/add_category")
 def add_category():
-    return render_template("add_category.html")
+    return render_template("add_category.html", categories=categories.find())
 
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
 def save_category():
-
+    added_category = request.form["category_name"]  # This is what the user inputs
+    is_in_database = categories.find_one({"category_name": added_category })  # This will need further validating (lowercase and uppercase, for example)
+    if is_in_database:
+        return render_template("oops.html")  # TODO change this to a JS prompt to warn the user
+    else:
+        categories.insert_one(request.form.to_dict())
     return redirect(url_for("get_categories"))
-    pass
 
 
 if __name__ == "__main__":
