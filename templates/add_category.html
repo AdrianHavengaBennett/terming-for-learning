@@ -6,10 +6,11 @@
 
     <form action="{{ url_for('save_category') }}" method="post">
         <label for="category">Category Name:</label><br>
-        <input type="text" id="category" name="category_name"><br> <!--how to run through current categories to avoid duplication? for loop and check value attr.?-->
+        <input type="text" id="category" name="category_name" required><br>
         <button type="submit">Add Category</button>
+        <input type="reset" value="Clear">
     </form>
-    <button><a href= "{{ url_for('get_categories') }}">All Categories</a></button>
+    <button><a href= "{{ url_for('get_categories') }}">Go Back</a></button>
 </div>
 
 {% endblock %}

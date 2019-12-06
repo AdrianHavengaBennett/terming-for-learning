@@ -23,7 +23,7 @@
     </div>
     <p><strong>!! Are you sure you'd like to delete this term? !!</strong></p>
     <button><a href= "{{ url_for('delete_term', term_id=term._id) }}">Delete</a></button>
-    <button><a href= "{{ url_for('get_terms') }}">All Terms</a></button>
+    <button><a href= "{{ url_for('show_term', term_id=term._id) }}">Go Back</a></button>
 </div>
 
 

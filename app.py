@@ -94,6 +94,23 @@ def delete_term(term_id):
 def get_categories():
     return render_template("categories.html", categories=categories.find())
 
+# When a category is clicked:
+@app.route("/show_category/<category_id>")
+def show_category(category_id):
+    category = categories.find_one({"_id": ObjectId(category_id)})
+    return render_template("show_category.html", category=category)
+
+
+# Delete a category
+@app.route("/delete_category/<category_id>")
+def delete_category(category_id):
+    """
+    Note that this will delete the
+    category without confirmation
+    """
+    categories.remove({"_id": ObjectId(category_id)})
+    return redirect(url_for("get_categories"))
+
 # Add a new category:
 @app.route("/add_category")
 def add_category():
@@ -103,7 +120,7 @@ def add_category():
 @app.route("/save_category", methods=["POST"])
 def save_category():
     added_category = request.form["category_name"]  # This is what the user inputs
-    is_in_database = categories.find_one({"category_name": added_category })  # This will need further validating (lowercase and uppercase, for example)
+    is_in_database = categories.find_one({"category_name": added_category})  # This will need further validating (lowercase and uppercase, for example, and whitespace (there's a method that can do that - Google it))
     if is_in_database:
         return render_template("oops.html")  # TODO change this to a JS prompt to warn the user.
     else:
