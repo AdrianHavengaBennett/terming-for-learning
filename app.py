@@ -101,7 +101,7 @@ def show_category(category_id):
     return render_template("show_category.html", category=category)
 
 
-# Delete a category
+# Delete a category:
 @app.route("/delete_category/<category_id>")
 def delete_category(category_id):
     """
