@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div>
+        <h2>{{ category.category_name }}</h2>
+        <hr>
+    </div>
+    <p><strong>!! Are you sure you'd like to delete this category? !!</strong></p>
+    <h3><strong>!! Any terms you have saved in this category will be deleted along with it! !!</strong></h3>
+    <button><a href= "{{ url_for('show_category', category_id=category._id) }}">Cancel</a></button>
+    <button><a href="{{ url_for('delete_category', category_id=category._id) }}">Delete Category</a></button>
+</div>
+
+{% endblock %}

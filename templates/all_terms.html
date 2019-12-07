@@ -2,6 +2,7 @@
 {% block content %}
 
 <div class="container">
+    <h1>Welcome to your terms list</h1>
     <h2>Terms:</h2>
     {% for term in terms %}
         <div>
@@ -11,6 +12,7 @@
     {% endfor %}
     <button><a href= "{{ url_for('new_term') }}">New Term</a></button>
     <button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
+    <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button>
 </div>
 
 {% endblock %}

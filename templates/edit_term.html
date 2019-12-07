@@ -23,13 +23,7 @@
         <label for="noob_definition">Noob Definition:</label><br>
         <textarea id="noob_definition" name="noob_definition" required>{{ term.noob_definition }}</textarea><br>
         <label for="term_examples">Term Examples:</label><br>
-        <textarea id="term_examples" name="term_examples" required>{{ term.term_examples }}</textarea><br>
-        <label for="explore_more">Add to Further Readings</label>
-        {% if term.explore_more %}
-            <input type="checkbox" name="explore_more" id="explore_more" checked><br> <!--TODO: if checked, return true, else return false. I want it to be false or 'off' if unchecked -->
-        {% else %}
-            <input type="checkbox" name="explore_more" id="explore_more"><br> <!--TODO: if checked, return true, else return false. I want it to be false or 'off' if unchecked -->
-        {% endif %}
+        <textarea id="term_examples" name="term_examples" rows="5" required>{{ term.term_examples }}</textarea><br>
         <button type="submit">Save Changes</button>
     </form>
     <button><a href= "{{ url_for('show_term', term_id=term._id) }}">Go Back</a></button>
