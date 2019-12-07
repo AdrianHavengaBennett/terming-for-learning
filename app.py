@@ -136,7 +136,7 @@ def saved_terms():
                            further_readings=further_readings.find())
 
 
-# Copies a document and saves it to the further readings database:
+# Copies a document and saves it to the further_readings database:
 @app.route("/add_to_saved/<term_id>")
 def add_to_saved(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
@@ -144,7 +144,7 @@ def add_to_saved(term_id):
     return redirect(url_for("saved_terms"))
 
 
-# Removes a document from the further readings database:
+# Removes a document from the further_readings database:
 @app.route("/remove_from_saved/<term_id>")
 def remove_from_saved(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
