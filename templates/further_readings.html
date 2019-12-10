@@ -3,6 +3,11 @@
 
 <div class="container">
     <h1>Welcome to your further readings list</h1>
+    <form action="{{ url_for('find_saved') }}" method="post">
+        <label for="saved_search">Search Further Readings</label>
+        <input type="search" name="saved_search" id="saved_search">
+        <input type="submit" value="Search">
+    </form>
     <h2>Terms:</h2>
     {% for term in further_readings %}
         <div>

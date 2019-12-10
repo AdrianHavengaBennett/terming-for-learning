@@ -3,6 +3,11 @@
 
 <div class="container">
     <h2>Categories:</h2>
+    <form action="{{ url_for('find_category') }}" method="post">
+        <label for="category_search">Search Categories</label>
+        <input type="search" name="category_search" id="category_search">
+        <input type="submit" value="Search">
+    </form>
     {% for cat in categories %}
         <div>
             <h4><a href="{{ url_for('show_category', category_id=cat._id) }}">{{ cat.category_name }}</a></h4>

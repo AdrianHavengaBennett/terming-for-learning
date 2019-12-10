@@ -40,8 +40,9 @@ def get_terms():
 @app.route("/term/<term_id>")
 def show_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
+    is_in_database = further_readings.find_one({"_id": ObjectId(term_id)})
     return render_template("term.html", term=term,
-                           further_readings=further_readings.find())
+                           is_in_database=is_in_database)
 
 # Add a new term:
 @app.route("/new_term")
@@ -151,8 +152,41 @@ def remove_from_saved(term_id):
     further_readings.remove(term)
     return redirect(url_for("saved_terms"))
 
+# Find a term:
+@app.route("/find_term", methods=["POST"])
+def find_term():
+    # This requires some error checking and validation
+    term_searched = request.form["term_search"]
+    the_term = terms.find_one({"term": term_searched})
+    if the_term:
+        return render_template("term.html", term=the_term)
+    else:
+        return render_template("oops_find.html", term=the_term)  # TODO change this to a JS prompt to warn the user.
+
+# Find a category:
+@app.route("/find_category", methods=["POST"])
+def find_category():
+    # This requires some error checking and validation
+    category_searched = request.form["category_search"]
+    the_category = categories.find_one({"category_name": category_searched})
+    if the_category:
+        return render_template("show_category.html", category=the_category)
+    else:
+        return render_template("oops_find.html", category_name=the_category)  # TODO change this to a JS prompt to warn the user.
+
+# Find a saved term in further readings:
+@app.route("/find_saved", methods=["POST"])
+def find_saved():
+    # This requires some error checking and validation
+    term_searched = request.form["saved_search"]
+    the_term = terms.find_one({"term": term_searched})
+    if the_term:
+        return render_template("term.html", term=the_term)
+    else:
+        return render_template("oops_find.html", saved_name=the_term)  # TODO change this to a JS prompt to warn the user.
+
 
 if __name__ == "__main__":
-    app.run(host=os.environ.get("IP", "5000"),
+    app.run(host=os.environ.get("IP", "127.0.0.1"),
             port=os.environ.get("PORT", "5000"),
             debug=True)

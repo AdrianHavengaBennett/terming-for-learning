@@ -17,9 +17,6 @@
         <h3>Term Examples</h3>
         <p>{{ term.term_examples }}</p>
         <hr>
-        <h3>Add to / remove from Further Readings</h3>
-        <p>{{ term.explore_more }}</p>
-        <hr>
     </div>
     <p><strong>!! Are you sure you'd like to delete this term? !!</strong></p>
     <button><a href= "{{ url_for('show_term', term_id=term._id) }}">Cancel</a></button>

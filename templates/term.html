@@ -17,12 +17,11 @@
         <h3>Term Examples</h3>
         <p>{{ term.term_examples }}</p>
         <hr>
-        <h3>Add to / remove from Further Readings</h3>
-        <!-- if the term is not already in further readings -->
-        <button><a href= "{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
-        <!-- else (if it is not already in further readings) -->
-        <!-- <button><a href= "{{ url_for('add_to_saved', term_id=term._id) }}">Remove From Further Readings</a></button> -->
-        <p>{{ term.explore_more }}</p>
+        {% if is_in_database %}
+            <button><a href= "{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
+        {% else %}
+            <button><a href= "{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
+        {% endif %}
         <hr>
     </div>
     <button><a href= "{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a></button>

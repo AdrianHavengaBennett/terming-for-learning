@@ -3,6 +3,11 @@
 
 <div class="container">
     <h1>Welcome to your terms list</h1>
+    <form action="{{ url_for('find_term') }}" method="post">
+        <label for="term_search">Search Terms</label>
+        <input type="search" name="term_search" id="term_search">
+        <input type="submit" value="Search">
+    </form>
     <h2>Terms:</h2>
     {% for term in terms %}
         <div>
