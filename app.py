@@ -11,6 +11,7 @@ DBS_NAME = "terming_for_learning"
 TERMS = "terms"
 CATEGORIES = "categories"
 FURTHER_READINGS = "further_readings"
+USERS = "users"
 
 
 def mongo_connect(url):
@@ -25,24 +26,69 @@ conn = mongo_connect(MONGODB_URI)
 terms = conn[DBS_NAME][TERMS]
 categories = conn[DBS_NAME][CATEGORIES]
 further_readings = conn[DBS_NAME][FURTHER_READINGS]
+users = conn[DBS_NAME][USERS]
 
 # Home screen / main welcome page:
 @app.route("/")
 def welcome():
     return render_template("home.html")
 
-# Shows all the current terms in the database:
-@app.route("/all_terms")
-def get_terms():
-    return render_template("all_terms.html", terms=terms.find())
+# User login:
+@app.route("/user_login")
+def user_login():
+    return render_template("user_login.html")
+
+# checks the login credentials and loads the terms list:
+@app.route("/valid_login", methods=["POST"])
+def valid_login():
+    email = request.form["email"]
+    password = request.form["password"]
+    user_exists = users.find_one({"email": email})
+    # TODO more server-side validation
+    if user_exists:
+        if password != user_exists["password"]:
+            return "Password Incorrect!"
+        return redirect(url_for("get_terms", username=user_exists["username"]))
+    else:
+        return "User not found - try register instead"
+
+# User register:
+@app.route("/user_register")
+def user_register():
+    return render_template("user_register.html")
+
+# checks the register credentials and loads the terms list:
+@app.route("/save_new_user", methods=["POST"])
+def save_new_user():
+    email = request.form["email"]
+    username = request.form["username"]
+    password = request.form["password"]
+    user_exists = users.find_one({"email": email})
+    # TODO more server-side validation
+    if user_exists:
+        return "User already exists - try log in"
+    if len(username) < 4:
+        return "Username too short!"
+    if len(password) < 4:
+        return "Password too short!"
+    users.insert_one(request.form.to_dict())
+    return redirect(url_for("get_terms", username=username))
+
+# Shows all the current terms in the database - this needs to change to user's terms only:
+@app.route("/all_terms/<username>")
+def get_terms(username):
+    return render_template("all_terms.html", terms=terms.find(),
+                           username=username)
 
 # When a term is clicked:
 @app.route("/term/<term_id>")
 def show_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
+    active_user = term["username"]  # this needs to be session user, not user who added the term
     is_in_database = further_readings.find_one({"_id": ObjectId(term_id)})
     return render_template("term.html", term=term,
-                           is_in_database=is_in_database)
+                           is_in_database=is_in_database,
+                           username=active_user)
 
 # Add a new term:
 @app.route("/new_term")
@@ -124,7 +170,7 @@ def save_category():
     added_category = request.form["category_name"]  # This is what the user inputs
     is_in_database = categories.find_one({"category_name": added_category})  # This will need further validating (lowercase and uppercase, for example, and whitespace (there's a method that can do that - Google it))
     if is_in_database:
-        return render_template("oops.html")  # TODO change this to a JS prompt to warn the user.
+        return "Category already exists!"  # TODO change this to a JS prompt to warn the user.
     else:
         categories.insert_one(request.form.to_dict())
     return redirect(url_for("get_categories"))
@@ -161,7 +207,7 @@ def find_term():
     if the_term:
         return render_template("term.html", term=the_term)
     else:
-        return render_template("oops_find.html", term=the_term)  # TODO change this to a JS prompt to warn the user.
+        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
 # Find a category:
 @app.route("/find_category", methods=["POST"])
@@ -172,7 +218,7 @@ def find_category():
     if the_category:
         return render_template("show_category.html", category=the_category)
     else:
-        return render_template("oops_find.html", category_name=the_category)  # TODO change this to a JS prompt to warn the user.
+        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
 # Find a saved term in further readings:
 @app.route("/find_saved", methods=["POST"])
@@ -183,7 +229,7 @@ def find_saved():
     if the_term:
         return render_template("term.html", term=the_term)
     else:
-        return render_template("oops_find.html", saved_name=the_term)  # TODO change this to a JS prompt to warn the user.
+        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
 
 if __name__ == "__main__":

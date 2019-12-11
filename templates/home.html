@@ -3,6 +3,9 @@
 <div id="home-background-color" class="container">
     <h1>Terming For Learning</h1>
     <p>Jot down, share, and rate terminology</p>
-    <a href="{{ url_for('get_terms') }}"><button>Let's Go!</button></a>
+    <p>Already have an account?</p>
+    <a href="{{ url_for('user_login') }}"><button>Log In</button></a>
+    <p>If not, why not register?</p>
+    <a href="{{ url_for('user_register') }}"><button>Register</button></a>
 </div>
 {% endblock %}
