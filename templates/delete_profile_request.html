@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div>
+        <h2>{{ user.username }}</h2>
+        <hr>
+    </div>
+    <p><strong>!! Are you sure you'd like to delete this profile? !!</strong></p>
+    <h3><strong>!! Any terms you have saved in this profile will be deleted along with it! !!</strong></h3>
+    <button><a href= "{{ url_for('get_terms', username=user.username) }}">Cancel</a></button>
+    <button><a href="{{ url_for('delete_profile', user_id=user._id) }}">Delete Profile</a></button>
+</div>
+
+
+{% endblock %}

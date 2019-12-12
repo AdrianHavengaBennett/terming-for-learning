@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import pymongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "3ef;EFJH;DUGHA;dsjgn;IUDGS;ADJBV;DLSIUHGA;LSDJGHP;DUXH;UHNP;piouhpIUEHA;GU;RAWERAG;ODFIGH;AHG;AIOSUDG"
+app.config["SECRET_KEY"] = "Nmr_JMruq7stpCsuYsGidA"
 
 MONGODB_URI = os.getenv("MONGO_URI")
 DBS_NAME = "terming_for_learning"
@@ -38,8 +38,28 @@ def welcome():
 def user_login():
     return render_template("user_login.html")
 
+# User sign-out:
+@app.route("/sign_out")
+def sign_out():
+    session.pop("USERNAME", None)
+    return redirect(url_for("welcome"))
+
+# Delete profile request:
+@app.route("/delete_profile_request/<user_id>")
+def delete_profile_request(user_id):
+    user = users.find_one({"_id": ObjectId(user_id)})
+    return render_template("delete_profile_request.html", user=user)
+
+# Delete profile:
+@app.route("/delete_profile/<user_id>")
+def delete_profile(user_id):
+    user = users.find_one({"_id": ObjectId(user_id)})
+    users.delete_one(user)
+    session.pop("USERNAME", None)
+    return redirect(url_for("welcome"))
+
 # checks the login credentials and loads the terms list:
-@app.route("/valid_login", methods=["POST"])
+@app.route("/valid_login", methods=["GET", "POST"])
 def valid_login():
     email = request.form["email"]
     password = request.form["password"]
@@ -48,6 +68,7 @@ def valid_login():
     if user_exists:
         if password != user_exists["password"]:
             return "Password Incorrect!"
+        session["USERNAME"] = user_exists["username"]  # this needs to change to the user's id
         return redirect(url_for("get_terms", username=user_exists["username"]))
     else:
         return "User not found - try register instead"
@@ -71,29 +92,35 @@ def save_new_user():
         return "Username too short!"
     if len(password) < 4:
         return "Password too short!"
+    session["USERNAME"] = username  # this needs to change to the user's id
     users.insert_one(request.form.to_dict())
     return redirect(url_for("get_terms", username=username))
 
 # Shows all the current terms in the database - this needs to change to user's terms only:
 @app.route("/all_terms/<username>")
 def get_terms(username):
+    user = users.find_one({"username": username})
     return render_template("all_terms.html", terms=terms.find(),
-                           username=username)
+                           user=user)
 
 # When a term is clicked:
 @app.route("/term/<term_id>")
 def show_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
-    active_user = term["username"]  # this needs to be session user, not user who added the term
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     is_in_database = further_readings.find_one({"_id": ObjectId(term_id)})
     return render_template("term.html", term=term,
                            is_in_database=is_in_database,
-                           username=active_user)
+                           username=username)
 
 # Add a new term:
 @app.route("/new_term")
 def new_term():
-    return render_template("new_term.html", categories=categories.find())
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    return render_template("new_term.html", categories=categories.find(),
+                           username=username)
 
 # Save the term to the database:
 @app.route("/add_term", methods=["POST"])
@@ -139,7 +166,10 @@ def delete_term(term_id):
 # Show all categories:
 @app.route("/categories")
 def get_categories():
-    return render_template("categories.html", categories=categories.find())
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    return render_template("categories.html", categories=categories.find(),
+                           username=username)
 
 # When a category is clicked:
 @app.route("/show_category/<category_id>")
@@ -179,8 +209,11 @@ def save_category():
 # Shows the list of saved terms (Further Readings):
 @app.route("/saved_terms")
 def saved_terms():
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     return render_template("further_readings.html",
-                           further_readings=further_readings.find())
+                           further_readings=further_readings.find(),
+                           username=username)
 
 
 # Copies a document and saves it to the further_readings database:

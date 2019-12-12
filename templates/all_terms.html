@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container">
-    <h1>Welcome, {{ username }}, to your terms list</h1>
+    <h1>Welcome, {{ user.username }}, to your terms list</h1>
     <form action="{{ url_for('find_term') }}" method="post">
         <label for="term_search">Search Terms</label>
         <input type="search" name="term_search" id="term_search">
@@ -18,6 +18,8 @@
     <button><a href= "{{ url_for('new_term') }}">New Term</a></button>
     <button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
     <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button>
+    <button><a href= "{{ url_for('sign_out') }}">Sign Out</a></button>
+    <button><a href= "{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a></button>
 </div>
 
 
