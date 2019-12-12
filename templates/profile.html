@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h1>Hello, {{ user.username }}!</h1>
+    
+    <button><a href= "{{ url_for('my_terms', username=user.username) }}">My Terms</a></button>
+    <button><a href= "{{ url_for('get_all_terms') }}">All Terms</a></button>
+    <button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
+    <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button>
+    <button><a href= "{{ url_for('sign_out') }}">Sign Out</a></button>
+    <button><a href= "{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a></button>
+</div>
+
+
+{% endblock %}

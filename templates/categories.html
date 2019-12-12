@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container">
-    <h2>Categories:</h2>
+    <h1>{{ username }}'s Categories</h1>
     <form action="{{ url_for('find_category') }}" method="post">
         <label for="category_search">Search Categories</label>
         <input type="search" name="category_search" id="category_search">
@@ -15,7 +15,7 @@
         </div>
     {% endfor %}
     <button><a href= "{{ url_for('add_category') }}">New Category</a></button>
-    <button><a href= "{{ url_for('get_terms', username=username) }}">Go back</a></button>
+    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
 </div>
 
 

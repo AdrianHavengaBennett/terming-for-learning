@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container">
-    <h1>Welcome to your further readings list</h1>
+    <h1>{{ username }}'s Further Readings</h1>
     <form action="{{ url_for('find_saved') }}" method="post">
         <label for="saved_search">Search Further Readings</label>
         <input type="search" name="saved_search" id="saved_search">
@@ -19,7 +19,7 @@
             <hr>
         </div>
     {% endfor %}
-    <button><a href= "{{ url_for('get_terms', username=username) }}">Go back</a></button>
+    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
 </div>
 
 {% endblock %}

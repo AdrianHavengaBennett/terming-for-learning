@@ -59,7 +59,7 @@ def delete_profile(user_id):
     return redirect(url_for("welcome"))
 
 # checks the login credentials and loads the terms list:
-@app.route("/valid_login", methods=["GET", "POST"])
+@app.route("/valid_login", methods=["POST"])
 def valid_login():
     email = request.form["email"]
     password = request.form["password"]
@@ -69,7 +69,7 @@ def valid_login():
         if password != user_exists["password"]:
             return "Password Incorrect!"
         session["USERNAME"] = user_exists["username"]  # this needs to change to the user's id
-        return redirect(url_for("get_terms", username=user_exists["username"]))
+        return redirect(url_for("profile", username=user_exists["username"]))
     else:
         return "User not found - try register instead"
 
@@ -94,14 +94,28 @@ def save_new_user():
         return "Password too short!"
     session["USERNAME"] = username  # this needs to change to the user's id
     users.insert_one(request.form.to_dict())
-    return redirect(url_for("get_terms", username=username))
+    return redirect(url_for("profile", username=username))
 
-# Shows all the current terms in the database - this needs to change to user's terms only:
-@app.route("/all_terms/<username>")
-def get_terms(username):
+# User's profile:
+@app.route("/profile/<username>")
+def profile(username):
     user = users.find_one({"username": username})
+    return render_template("profile.html", user=user)
+
+# Shows all of the user's terms
+@app.route("/my_terms/<username>")
+def my_terms(username):
+    user = users.find_one({"username": username})
+    return render_template("my_terms.html", user=user,
+                           terms=terms.find({"author": username}))
+
+# Show all terms in the database:
+@app.route("/all_terms")
+def get_all_terms():
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     return render_template("all_terms.html", terms=terms.find(),
-                           user=user)
+                           username=username)
 
 # When a term is clicked:
 @app.route("/term/<term_id>")
@@ -125,31 +139,38 @@ def new_term():
 # Save the term to the database:
 @app.route("/add_term", methods=["POST"])
 def add_term():
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     terms.insert_one(request.form.to_dict())
-    return redirect(url_for("get_terms"))
+    return redirect(url_for("my_terms", username=username))
 
 # Edit a term:
 @app.route("/edit_term/<term_id>")
 def edit_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
     all_categories = categories.find()
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     return render_template("edit_term.html",
-                           term=term, categories=all_categories)
+                           term=term, categories=all_categories,
+                           username=username)
 
 # Save your changes to the database once done editing:
 @app.route("/save_term/<term_id>", methods=["POST"])
 def save_term(term_id):
-    all_terms = terms
-    all_terms.replace_one(
+    my_terms = terms
+    my_terms.replace_one(
         {"_id": ObjectId(term_id)}, {
          "term": request.form.get("term"),
          "category_name": request.form.get("category_name"),
          "term_definition": request.form.get("term_definition"),
          "noob_definition": request.form.get("noob_definition"),
          "term_examples": request.form.get("term_examples"),
-         "explore_more": request.form.get("explore_more")
+         "author": request.form.get("author")
          })
-    return redirect(url_for("get_terms"))
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    return redirect(url_for("my_terms", username=username))
 
 # Delete a term:
 @app.route("/delete_request/<term_id>")
@@ -160,8 +181,10 @@ def delete_request(term_id):
 # Shows chosen term and asks for confirmation before deleting:
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     terms.delete_one({"_id": ObjectId(term_id)})
-    return redirect(url_for("get_terms"))
+    return redirect(url_for("my_terms", username=username))
 
 # Show all categories:
 @app.route("/categories")
