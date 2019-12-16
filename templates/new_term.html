@@ -5,7 +5,8 @@
     <h2>New Term</h2>
 
     <form action="{{ url_for('add_term') }}" method="post">
-        <input type="text" id="author" name="author" value="{{ username }}"><br><br>
+        <input type="hidden" id="author" name="author" value="{{ username }}">
+        <input type="hidden" id="saved_by" name="saved_by" value="">
         <label for="category">Category:</label><br>
         <select name="category_name" id="category" required>
             <option value="" disabled selected>Choose Category</option>

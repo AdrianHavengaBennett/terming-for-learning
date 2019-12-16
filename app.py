@@ -1,3 +1,4 @@
+import uuid
 import os
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import pymongo
@@ -123,8 +124,19 @@ def show_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
     if session.get("USERNAME", None) is not None:
         username = session["USERNAME"]
-    is_in_database = further_readings.find_one({"_id": ObjectId(term_id)})
+    is_in_database = further_readings.find_one({"saved_by": username})
     return render_template("term.html", term=term,
+                           is_in_database=is_in_database,
+                           username=username)
+
+# When a further readings term is clicked:
+@app.route("/show_saved_term/<term_id>")
+def show_saved_term(term_id):
+    term = further_readings.find_one({"_id": term_id})
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    is_in_database = further_readings.find_one({"saved_by": username})
+    return render_template("saved_term.html", term=term,
                            is_in_database=is_in_database,
                            username=username)
 
@@ -235,14 +247,20 @@ def saved_terms():
     if session.get("USERNAME", None) is not None:
         username = session["USERNAME"]
     return render_template("further_readings.html",
-                           further_readings=further_readings.find(),
+                           further_readings=further_readings
+                           .find({"saved_by": username}),
                            username=username)
 
 
 # Copies a document and saves it to the further_readings database:
 @app.route("/add_to_saved/<term_id>")
 def add_to_saved(term_id):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     term = terms.find_one({"_id": ObjectId(term_id)})
+    term["saved_by"] = username
+    random_string = uuid.uuid4().hex
+    term["_id"] = random_string
     further_readings.insert_one(term)
     return redirect(url_for("saved_terms"))
 
@@ -250,9 +268,10 @@ def add_to_saved(term_id):
 # Removes a document from the further_readings database:
 @app.route("/remove_from_saved/<term_id>")
 def remove_from_saved(term_id):
-    term = terms.find_one({"_id": ObjectId(term_id)})
-    further_readings.remove(term)
-    return redirect(url_for("saved_terms"))
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    further_readings.delete_one({"_id": term_id})
+    return redirect(url_for("saved_terms", username=username))
 
 # Find a term:
 @app.route("/find_term", methods=["POST"])
