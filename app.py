@@ -145,7 +145,8 @@ def show_saved_term(term_id):
 def new_term():
     if session.get("USERNAME", None) is not None:
         username = session["USERNAME"]
-    return render_template("new_term.html", categories=categories.find(),
+    return render_template("new_term.html",
+                           categories=categories.find({"author": username}),
                            username=username)
 
 # Save the term to the database:
@@ -160,11 +161,11 @@ def add_term():
 @app.route("/edit_term/<term_id>")
 def edit_term(term_id):
     term = terms.find_one({"_id": ObjectId(term_id)})
-    all_categories = categories.find()
     if session.get("USERNAME", None) is not None:
         username = session["USERNAME"]
     return render_template("edit_term.html",
-                           term=term, categories=all_categories,
+                           term=term,
+                           categories=categories.find({"author": username}),
                            username=username)
 
 # Save your changes to the database once done editing:
@@ -203,7 +204,8 @@ def delete_term(term_id):
 def get_categories():
     if session.get("USERNAME", None) is not None:
         username = session["USERNAME"]
-    return render_template("categories.html", categories=categories.find(),
+    return render_template("categories.html",
+                           categories=categories.find({"author": username}),
                            username=username)
 
 # When a category is clicked:
@@ -227,14 +229,20 @@ def delete_category(category_id):
 # Add a new category:
 @app.route("/add_category")
 def add_category():
-    return render_template("add_category.html", categories=categories.find())
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    return render_template("add_category.html",
+                           username=username,
+                           categories=categories.find())
 
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
 def save_category():
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     added_category = request.form["category_name"]  # This is what the user inputs
     is_in_database = categories.find_one({"category_name": added_category})  # This will need further validating (lowercase and uppercase, for example, and whitespace (there's a method that can do that - Google it))
-    if is_in_database:
+    if is_in_database["author"] == username:
         return "Category already exists!"  # TODO change this to a JS prompt to warn the user.
     else:
         categories.insert_one(request.form.to_dict())
@@ -252,7 +260,7 @@ def saved_terms():
                            username=username)
 
 
-# Copies a document and saves it to the further_readings database:
+# Copies a document, overwrites id with a temporary one, and saves it to the further_readings database:
 @app.route("/add_to_saved/<term_id>")
 def add_to_saved(term_id):
     if session.get("USERNAME", None) is not None:
@@ -277,10 +285,16 @@ def remove_from_saved(term_id):
 @app.route("/find_term", methods=["POST"])
 def find_term():
     # This requires some error checking and validation
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     term_searched = request.form["term_search"]
     the_term = terms.find_one({"term": term_searched})
-    if the_term:
-        return render_template("term.html", term=the_term)
+    # if searching in all_terms:
+        # if term exists:
+            # show term
+    # elif searching in user's terms:
+    if the_term["author"] == username:
+        return redirect(url_for("show_term", term_id=the_term["_id"]))
     else:
         return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
@@ -298,13 +312,16 @@ def find_category():
 # Find a saved term in further readings:
 @app.route("/find_saved", methods=["POST"])
 def find_saved():
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
     # This requires some error checking and validation
     term_searched = request.form["saved_search"]
-    the_term = terms.find_one({"term": term_searched})
-    if the_term:
-        return render_template("term.html", term=the_term)
-    else:
+    the_term = further_readings.find_one({"term": term_searched})
+    if not the_term:
         return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
+    if the_term["saved_by"] == username:
+        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
+    return render_template("saved_term.html", term=the_term)
 
 
 if __name__ == "__main__":

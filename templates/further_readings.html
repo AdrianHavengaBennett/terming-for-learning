@@ -11,7 +11,7 @@
     <h2>Terms:</h2>
     {% for term in further_readings %}
         <div>
-            {% if not term %}
+            {% if not further_readings %}
                 <p>Nothing saved yet! Get to it!</p>
             {% else %}
                 <p><a href="{{ url_for('show_saved_term', term_id=term._id) }}">{{ term.term }}</a></p>

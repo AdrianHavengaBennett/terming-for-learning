@@ -5,12 +5,13 @@
     <h2>New Category</h2>
 
     <form action="{{ url_for('save_category') }}" method="post">
+        <input type="hidden" id="author" name="author" value="{{ username }}">
         <label for="category">Category Name:</label><br>
         <input type="text" id="category" name="category_name" required><br>
         <button type="submit">Add Category</button>
         <input type="reset" value="Clear">
     </form>
-    <button><a href= "{{ url_for('get_categories') }}">Go Back</a></button>
+    <button><a href= "{{ url_for('get_categories', username=username) }}">Go Back</a></button>
 </div>
 
 

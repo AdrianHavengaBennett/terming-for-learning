@@ -5,7 +5,7 @@
     <h2>Edit Term</h2>
 
     <form action="{{ url_for('save_term', term_id=term._id) }}" method="post">
-        <input type="text" id="author" name="author" value="{{ username }}"><br><br>
+        <input type="hidden" id="author" name="author" value="{{ username }}">
         <label for="category">Category:</label><br>
         <select name="category_name" id="category" required>
             <option value="" disabled selected>Choose Category</option>
