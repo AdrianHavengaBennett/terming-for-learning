@@ -13,6 +13,11 @@
         <hr>
         <h3>Noob Definition</h3>
         <p>{{ term.noob_definition }}</p>
+        {% if already_voted %}
+            <button><a href="{{ url_for('remove_vote', term_id=term._id) }}">Thumb Down</a></button>
+        {% else %}
+            <button><a href="{{ url_for('add_vote', term_id=term._id) }}">Thumb Up</a></button>
+        {% endif %}
         <hr>
         <h3>Term Examples</h3>
         <p>{{ term.term_examples }}</p>
@@ -21,17 +26,17 @@
         <p>{{ term.author }}</p>
         <hr>
         {% if is_in_database %}
-            <button><a href= "{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
+            <button><a href="{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
         {% else %}
-            <button><a href= "{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
+            <button><a href="{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
         {% endif %}
         <hr>
     </div>
     {% if username == term.author %}
-        <button><a href= "{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a></button>
-        <button><a href= "{{ url_for('delete_request', term_id=term._id) }}">Delete</a></button>
+        <button><a href="{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a></button>
+        <button><a href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a></button>
     {% endif %}
-    <button><a href= "{{ url_for('my_terms', username=username) }}">Go back</a></button>
+    <button><a href="{{ url_for('my_terms', username=username) }}">Go back</a></button>
 </div>
 
 {% endblock %}

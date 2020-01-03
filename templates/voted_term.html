@@ -25,15 +25,12 @@
         <h4>Author</h4>
         <p>{{ term.author }}</p>
         <hr>
-        <button><a href= "{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
-        <hr>
     </div>
     {% if username == term.author %}
         <button><a href= "{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a></button>
         <button><a href= "{{ url_for('delete_request', term_id=term._id) }}">Delete</a></button>
     {% endif %}
-    <button><a href= "{{ url_for('saved_terms', username=username) }}">Go back</a></button>
+    <button><a href= "{{ url_for('voted_terms') }}">Go back</a></button>
 </div>
 
 {% endblock %}
-        

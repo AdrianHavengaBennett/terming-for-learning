@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h1>Top Noob Definitions</h1>
+    <h2>Terms:</h2>
+    {% for term in voted_by %}
+        <div>
+            <p><a href="{{ url_for('show_voted_term', term_id=term._id) }}">{{ term.term }}</a></p>
+            <hr>
+        </div>
+    {% endfor %}
+    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
+</div>
+
+{% endblock %}
