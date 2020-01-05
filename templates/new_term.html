@@ -6,8 +6,9 @@
 
     <form action="{{ url_for('add_term') }}" method="post">
         <input type="hidden" id="author" name="author" value="{{ username }}">
-        <input type="hidden" id="saved_by" name="saved_by" value="">
-        <input type="hidden" id="voted_by" name="voted_by" value="">
+        <!-- <input type="hidden" id="saved_by" name="saved_by" value="">
+        <input type="hidden" id="voted_by" name="voted_by" value=""> -->
+        <input type="hidden" id="_id" name="_id" value="{{ new_id }}">
         <label for="category">Category:</label><br>
         <select name="category_name" id="category" required>
             <option value="" disabled selected>Choose Category</option>

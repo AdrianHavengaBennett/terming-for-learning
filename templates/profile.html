@@ -1,17 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
 
+<header>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="{{ url_for('my_terms', username=user.username) }}">My Terms</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{ url_for('my_terms', username=user.username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
+                <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
+                <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
+                <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                <li><a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i>Delete Profile</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <div class="header-container">
+                    <h2 class="header-font page-header">Navigation</h2>
+                </div>
+                <li><a href="{{ url_for('my_terms', username=user.username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
+                <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
+                <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
+                <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                <li><a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i>Delete Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
 <div class="container">
     <h1>Hello, {{ user.username }}!</h1>
     
     <button><a href= "{{ url_for('my_terms', username=user.username) }}">My Terms</a></button>
     <button><a href= "{{ url_for('get_all_terms') }}">All Terms</a></button>
-    <button><a href= "{{ url_for('voted_terms') }}">Top Noob Definitions</a></button>
+    <!-- <button><a href= "{{ url_for('voted_terms') }}">Top Noob Definitions</a></button> -->
     <button><a href= "{{ url_for('get_categories') }}">Categories</a></button>
-    <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button>
+    <!-- <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button> -->
     <button><a href= "{{ url_for('sign_out') }}">Sign Out</a></button>
     <button><a href= "{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a></button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script>
+$(document).ready(function() {
+        $(".button-collapse").sideNav();
+    });
+</script>
 
 {% endblock %}

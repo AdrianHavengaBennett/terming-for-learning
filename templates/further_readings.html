@@ -9,14 +9,12 @@
         <input type="submit" value="Search">
     </form>
     <h2>Terms:</h2>
-    {% for term in further_readings %}
+    {% for term in terms %}
         <div>
-            {% if not further_readings %}
-                <p>Nothing saved yet! Get to it!</p>
-            {% else %}
-                <p><a href="{{ url_for('show_saved_term', term_id=term._id) }}">{{ term.term }}</a></p>
-            {% endif %}
+        {% if term["saved_by"] != "" %}
+            <p><a href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
             <hr>
+        {% endif %}
         </div>
     {% endfor %}
     <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
