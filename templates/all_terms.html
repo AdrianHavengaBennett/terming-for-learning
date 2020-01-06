@@ -1,23 +1,31 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "profile.html" %}
+{% block profile_content %}
 
-<div class="container">
-    <h1>All Terms List</h1>
-    <form action="{{ url_for('find_term') }}" method="post">
-        <label for="term_search">Search Terms</label>
-        <input type="search" name="term_search" id="term_search">
-        <input type="submit" value="Search">
-    </form>
-    <h2>Terms:</h2>
-    {% for term in terms %}
-        <div>
-            <p><a href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
-            <hr>
+<div class="general-background-color border">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">All terms</h2>
+        <i class="fa fa-list-ul header-icon" aria-hidden="true"></i>
+    </div>
+    <div class="container">
+        <form action="{{ url_for('find_term') }}" method="post">
+            <label class="text-font" for="term_search">Search Terms</label>
+            <input type="search" name="term_search" id="term_search" required>
+            <input type="submit" value="Search">
+        </form>
+        {% for term in terms %}
+            <div>
+                <p><a class="text-font" href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
+                <hr>
+            </div>
+        {% endfor %}
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('profile', username=username) }}">Go back</a>
+                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New Term</a>
+            </div>
         </div>
-    {% endfor %}
-    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
-    <button><a href= "{{ url_for('new_term') }}">New Term</a></button>
+    </div>
 </div>
-
 
 {% endblock %}

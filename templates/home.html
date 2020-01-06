@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="home-background-color border">
-    <h1 id="home-title" class="header-font">Terming For Learning</h1>
-    <p id="home-text-sub-heading" class="text-font"><i>Jot down, share, and rate terminology</i></p>
-    <a href="{{ url_for('user_register') }}" class="waves-effect waves-light btn user-register-button text-font">Register</a>
-    <p id="home-text-sign-in" class="text-font"><i>Already have an account? </i><a href="{{ url_for('user_login') }}">Sign In</a></p>
-    <p class="copyright-info text-font">&copy; 2020 Adrian Havenga-Bennett</p>
-</div>
+
+    <div class="home-background-color border">
+        <h1 id="home-title" class="header-font">Terming For Learning</h1>
+        <p id="home-text-sub-heading" class="text-font"><i>Jot down, share, and rate terminology</i></p>
+        <a href="{{ url_for('user_register') }}" class="waves-effect waves-light btn user-register-button text-font"><span class="text-font">Register</span></a>
+        <p id="home-text-sign-in" class="text-font"><i>Already have an account? </i><a href="{{ url_for('user_login') }}">Sign In</a></p>
+        <p class="copyright-info text-font">&copy; 2020 Adrian Havenga-Bennett</p>
+    </div>
+
 {% endblock %}

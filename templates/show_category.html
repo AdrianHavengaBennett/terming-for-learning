@@ -1,14 +1,23 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "profile.html" %}
+{% block profile_content %}
 
-<div class="container">
-    <div>
-        <h2>{{ category.category_name }}</h2>
-        <hr>
+<div class="general-background-color border disable-scroll">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">Categories</h2>
+        <i class="fa fa-files-o header-icon" aria-hidden="true"></i>
     </div>
-    <button><a href= "{{ url_for('get_categories') }}">Go Back</a></button>
-    <button><a href="{{ url_for('delete_category_request', category_id=category._id) }}">Delete Category</a></button>
+    <div class="container">
+        <div class="text-font">
+            <h2>{{ category.category_name }}</h2>
+        </div>
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('get_categories') }}">Go Back</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_category_request', category_id=category._id) }}">Delete Category</a>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 {% endblock %}

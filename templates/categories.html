@@ -1,21 +1,30 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "profile.html" %}
+{% block profile_content %}
 
-<div class="container">
-    <h1>{{ username }}'s Categories</h1>
-    <form action="{{ url_for('find_category') }}" method="post">
-        <label for="category_search">Search Categories</label>
-        <input type="search" name="category_search" id="category_search">
-        <input type="submit" value="Search">
-    </form>
-    {% for cat in categories %}
-        <div>
-            <h4><a href="{{ url_for('show_category', category_id=cat._id) }}">{{ cat.category_name }}</a></h4>
-            <hr>
+<div class="general-background-color border">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">Categories</h2>
+        <i class="fa fa-files-o header-icon" aria-hidden="true"></i>
+    </div>
+    <div class="container">
+        <form action="{{ url_for('find_category') }}" method="post">
+            <label for="category_search">Search Categories</label>
+            <input type="search" name="category_search" id="category_search">
+            <input type="submit" value="Search">
+        </form>
+        {% for cat in categories %}
+            <div class="text-font">
+                <h5><a href="{{ url_for('show_category', category_id=cat._id) }}">{{ cat.category_name }}</a></h5>
+                <hr>
+            </div>
+        {% endfor %}
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=username) }}">Go back</a>
+            </div>
         </div>
-    {% endfor %}
-    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
+    </div>
 </div>
-
 
 {% endblock %}

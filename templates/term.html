@@ -1,42 +1,49 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "profile.html" %}
+{% block profile_content %}
 
-<div class="container">
-    <div>
-        <h2>{{ term.term }}</h2>
-        <hr>
-        <h3>Category</h3>
-        <p>{{ term.category_name }}</p>
-        <hr>
-        <h3>Definition</h3>
-        <p>{{ term.term_definition }}</p>
-        <hr>
-        <h3>Noob Definition</h3>
-        <p>{{ term.noob_definition }}</p>
-        <!-- {% if already_voted %}
-            <button><a href="{{ url_for('remove_vote', term_id=term._id) }}">Remove Vote</a></button>
-        {% else %}
-            <button><a href="{{ url_for('vote_up', term_id=term._id) }}">Vote Up</a></button>
-        {% endif %} -->
-        <hr>
-        <h3>Term Examples</h3>
-        <p>{{ term.term_examples }}</p>
-        <hr>
-        <h4>Author</h4>
-        <p>{{ term.author }}</p>
-        <hr>
-        <!-- {% if is_in_database %}
-            <button><a href="{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
-        {% else %}
-            <button><a href="{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
-        {% endif %} -->
-        <hr>
+<div class="general-background-color border">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">{{ term.term }}</h2>
+        <i class="fa fa-quote-right header-icon" aria-hidden="true"></i>
     </div>
-    {% if username == term.author %}
-        <button><a href="{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a></button>
-        <button><a href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a></button>
-    {% endif %}
-    <button><a href="{{ url_for('my_terms', username=username) }}">Go back</a></button>
+    <div class="container">
+        <div class="text-font">
+            <h5>Definition</h5>
+            <p>{{ term.term_definition }}</p>
+            <hr>
+            <h5>Noob Definition</h5>
+            <p>{{ term.noob_definition }}</p>
+            <!-- {% if already_voted %}
+                <button><a href="{{ url_for('remove_vote', term_id=term._id) }}">Remove Vote</a></button>
+            {% else %}
+                <button><a href="{{ url_for('vote_up', term_id=term._id) }}">Vote Up</a></button>
+            {% endif %} -->
+            <hr>
+            <h5>Term Examples</h5>
+            <p>{{ term.term_examples }}</p>
+            <hr>
+            <h6>Category</h6>
+            <p>{{ term.category_name }}</p>
+            <hr>
+            <h6>Author</h6>
+            <p>{{ term.author }}</p>
+            <!-- {% if is_in_database %}
+                <button><a href="{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>
+            {% else %}
+                <button><a href="{{ url_for('add_to_saved', term_id=term._id) }}">Add To Further Readings</a></button>
+            {% endif %} -->
+        </div>
+        <div class="buttons-container">
+            <div class="row">
+                {% if username == term.author %}
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a>
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a>
+                {% endif %}
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('my_terms', username=username) }}">Go back</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

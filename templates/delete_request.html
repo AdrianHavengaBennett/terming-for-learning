@@ -1,26 +1,34 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "profile.html" %}
+{% block profile_content %}
 
-<div class="container">
-    <div>
-        <h2>{{ term.term }}</h2>
-        <hr>
-        <h3>Category</h3>
-        <p>{{ term.category_name }}</p>
-        <hr>
-        <h3>Definition</h3>
-        <p>{{ term.term_definition }}</p>
-        <hr>
-        <h3>Noob Definition</h3>
-        <p>{{ term.noob_definition }}</p>
-        <hr>
-        <h3>Term Examples</h3>
-        <p>{{ term.term_examples }}</p>
-        <hr>
+<div class="general-background-color border">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">{{ term.term }}</h2>
+        <i class="fa fa-trash header-icon" aria-hidden="true"></i>
     </div>
-    <p><strong>!! Are you sure you'd like to delete this term? !!</strong></p>
-    <button><a href= "{{ url_for('show_term', term_id=term._id) }}">Cancel</a></button>
-    <button><a href= "{{ url_for('delete_term', term_id=term._id) }}">Delete</a></button>
+    <div class="container">
+        <div class="text-font">
+            <h5>Definition</h5>
+            <p>{{ term.term_definition }}</p>
+            <hr>
+            <h5>Noob Definition</h5>
+            <p>{{ term.noob_definition }}</p>
+            <hr>
+            <h5>Term Examples</h5>
+            <p>{{ term.term_examples }}</p>
+            <hr>
+            <h5>Category</h5>
+            <p>{{ term.category_name }}</p>
+        </div>
+        <p class="text-font"><strong>Are you sure you'd like to delete this term?</strong></p>
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_term', term_id=term._id) }}">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 

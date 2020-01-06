@@ -1,43 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="general-background-color border">
+    <div class="general-background-color border disable-scroll">
     <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
-    <div class="container">
-        <div class="header-container">
-            <h2 class="header-font page-header">New face! Welcome!</h2>
-        </div>
-        <div class="row form-box">
-            <form class="col s12" action="{{ url_for('save_new_user') }}" method="post">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" type="email" id="email" name="email" required><br>
-                        <label for="email" class="active text-font">Email:</label><br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" type="text" id="username" name="username" required><br>
-                        <label for="username" class="active text-font">Username:</label><br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" type="password" id="password" name="password" required><br>
-                        <label for="password" class="active text-font">Password:</label><br>
-                    </div>
-                </div>
-                <div class="buttons-container">
+        <div class="container">
+            <div class="header-container">
+                <h2 class="header-font page-header">New face! Welcome!</h2>
+            </div>
+            <div class="row form-box text-font">
+                <form class="col s12" action="{{ url_for('save_new_user') }}" method="post">
                     <div class="row">
-                        <a href= "{{ url_for('welcome') }}" class="waves-effect waves-light btn buttons">Cancel</a>
-                        <a class="waves-effect waves-light btn buttons"><input type="reset" value="Clear"></a>
-                        <a class="waves-effect waves-light btn buttons"><input type="submit" value="Register"></a>
+                        <div class="input-field col s12">
+                            <input class="validate" type="email" id="email" name="email" required><br>
+                            <label for="email" class="active">Email:</label><br>
+                        </div>
                     </div>
-                </div>
-            </form>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" type="text" id="username" name="username" required><br>
+                            <label for="username" class="active">Username:</label><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" type="password" id="password" name="password" required><br>
+                            <label for="password" class="active">Password:</label><br>
+                        </div>
+                    </div>
+                    <div class="buttons-container">
+                        <div class="row">
+                            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('welcome') }}">Cancel</a>
+                            <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                            <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Register"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
 
 {% endblock %}

@@ -114,9 +114,13 @@ def profile(username):
 # Shows all of the user's terms
 @app.route("/my_terms/<username>")
 def my_terms(username):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+
     user = users.find_one({"username": username})
 
     return render_template("my_terms.html", user=user,
+                           username=username,
                            terms=terms.find({"author": username}))
 
 # Show all terms in the database:
@@ -127,6 +131,7 @@ def get_all_terms():
 
     return render_template("all_terms.html",
                            username=username,
+                           user=username,
                            terms=terms.find())
 
 # When a term is clicked:
@@ -141,7 +146,8 @@ def show_term(term_id):
     # is_in_database = terms.find_one({"_id": term_id,
     #                                 "saved_by": username})
 
-    return render_template("term.html", term=term, username=username)
+    return render_template("term.html", term=term,
+                           username=username, user=username)
 
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
@@ -153,7 +159,7 @@ def new_term():
 
     return render_template("new_term.html",
                            categories=categories.find({"author": username}),
-                           new_id=random_string,
+                           new_id=random_string, user=username,
                            username=username)
 
 # Save the term to the database:
@@ -177,7 +183,7 @@ def edit_term(term_id):
     return render_template("edit_term.html",
                            term=term,
                            categories=categories.find({"author": username}),
-                           username=username)
+                           username=username, user=username)
 
 # Save your changes to the database once done editing:
 @app.route("/save_term/<term_id>", methods=["POST"])
@@ -201,9 +207,13 @@ def save_term(term_id):
 # Delete a term request TODO change to JS prompt:
 @app.route("/delete_request/<term_id>")
 def delete_request(term_id):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+
     term = terms.find_one({"_id": term_id})
 
-    return render_template("delete_request.html", term=term)
+    return render_template("delete_request.html",
+                           term=term, user=username)
 
 # Shows chosen term and asks for confirmation before deleting:
 @app.route("/delete_term/<term_id>")
@@ -225,10 +235,11 @@ def find_my_term():
     term_searched = request.form["term_search"]
     the_term = terms.find_one({"term": term_searched})
 
-    if the_term["author"] == username:
-        return redirect(url_for("show_term",
-                                username=username,
-                                term_id=the_term["_id"]))
+    if the_term is not None:
+        if the_term["author"] == username:
+            return redirect(url_for("show_term",
+                                    username=username,
+                                    term_id=the_term["_id"]))
     else:
         return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
@@ -257,21 +268,29 @@ def get_categories():
 
     return render_template("categories.html",
                            categories=categories.find({"author": username}),
-                           username=username)
+                           username=username, user=username)
 
 # When a category is clicked:
 @app.route("/show_category/<category_id>")
 def show_category(category_id):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+
     category = categories.find_one({"_id": ObjectId(category_id)})
 
-    return render_template("show_category.html", category=category)
+    return render_template("show_category.html",
+                           category=category, user=username)
 
 # Delete a category request TODO change to a JS prompt:
 @app.route("/delete_category_request/<category_id>")
 def delete_category_request(category_id):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+
     category = categories.find_one({"_id": ObjectId(category_id)})
 
-    return render_template("delete_category_request.html", category=category)
+    return render_template("delete_category_request.html",
+                           category=category, user=username)
 
 # Shows chosen category and asks for confirmation before deleting:
 @app.route("/delete_category/<category_id>")
@@ -287,7 +306,7 @@ def add_category():
         username = session["USERNAME"]
 
     return render_template("add_category.html",
-                           username=username)
+                           username=username, user=username)
 
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
