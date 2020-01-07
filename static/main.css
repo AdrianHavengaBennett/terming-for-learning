@@ -9,6 +9,21 @@ html, body {
     margin: 0;
 }
 
+hr {
+    width: 4em;
+    background-color: #333333;
+}
+
+select {
+    background-color: rgba(255,255,255,0);
+    color: #333333;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #47aad9;
+    border-radius: 2px;
+    height: 3rem;
+}
+
 .header-font {
     font-family: 'Unica One', sans-serif;
     font-weight: 500;
@@ -20,7 +35,9 @@ html, body {
     text-align: center;
 }
 
-.text-font>h5,h6 {
+.text-font>h4,
+h5,
+h6 {
     color: #47aad9;
 }
 
@@ -50,6 +67,36 @@ html, body {
 
 .buttons:hover {
     background-color: #153240;
+}
+
+.custom-button {
+    text-transform: uppercase;
+    padding: .5em;
+    border-radius: 3px;
+    margin: 1.5em;
+}
+
+.term-category-button {
+    position: relative;
+    width: 100%;
+    height: 2.5em;
+    margin: 10px 0;
+    background-color: #2e6e8d;
+    color: #fafafa;
+    line-height: 2.5em;
+    text-align: justify;
+    padding-left: 10px;
+    border-bottom: 2px solid #fafafa;
+    border-top: 2px solid #fafafa;
+}
+
+.term-category-button-icon {
+    position: absolute;
+    color: #fafafa;
+    font-size: .5em;
+    top: 50%;
+    margin-top: -3.5px;
+    right: 1em;
 }
 
 nav {
@@ -82,16 +129,30 @@ nav a {
 
 /*******************************GENERAL*/
 
+nav, 
+nav .nav-wrapper i, 
+nav a.button-collapse, 
+nav a.button-collapse i {
+    height: 56px;
+    line-height: 48px;
+}
+
 .disable-scroll {
-    overflow-y:hidden;
-    overflow-x:hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.enable-vertical-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .header-icon {
     z-index: 1;
     position: absolute;
-    font-size: 2em;
-    right: .25em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    right: .5em;
     top: 50%;
     margin-top: -15px;
     color: #333333;
@@ -151,6 +212,12 @@ nav a {
     background-color: #fafafa;
 }
 
+.content-section {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .buttons-container {
     position: absolute;
     width: 20em;
@@ -172,6 +239,10 @@ nav a {
 }
 
 .form-box {
+    margin-top: 2em;
+}
+
+.form-box-login-register {
     margin-top: 5em;
 }
 
@@ -284,6 +355,61 @@ nav a {
         bottom: 1.5em;
         font-size: 0.75em;
     }
+
+    .buttons-container {
+        width: 30em;
+        margin-left: -15em;
+    }
+
+    .buttons-container .btn {
+        height: 3.5em;
+        line-height: 3.5em;
+        font-size: initial;
+    }
+
+    .header-container {
+        height: 5rem;
+    }
+
+    .page-header {
+        font-size: 2rem;
+        margin-top: -15px;
+    }
+
+    .header-icon {
+        font-size: 2.5em;
+        line-height: .9em;
+        right: .5em;
+    }
+
+    nav,
+    nav .nav-wrapper i,
+    nav a.button-collapse,
+    nav a.button-collapse i {
+        line-height: 1.75em;
+        font-size: 1.4em;
+        padding-left: 4px;
+    }
+
+    .custom-button {
+        font-size: 1.25em;
+    }
+
+    #user-welcome {
+        font-size: 3em;
+    }
+
+    .side-nav li {
+        padding: 16px;
+    }
+    
+    .side-nav li>a {
+        font-size: 1.5rem;
+    }
+
+    .side-nav li>a>i {
+        padding-right: 24px;
+    }
 }
 
 
@@ -293,5 +419,7 @@ nav a {
 
 /*******************************MEDIA QUERIES*/
 
-
+.user-register-button>span {
+    line-height: 2.5em;
+}
 

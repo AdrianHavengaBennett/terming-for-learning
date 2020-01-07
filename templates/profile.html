@@ -25,36 +25,37 @@
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('my_terms', username=user.username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
+                    <li><a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
                     <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
                     <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
                     <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
-                    <li><a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i>Delete Profile</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <div class="header-container">
                         <h2 class="header-font page-header">Navigation</h2>
                     </div>
-                    <li><a href="{{ url_for('my_terms', username=user.username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
+                    <li><a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
                     <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
                     <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
                     <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
-                    <li><a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i>Delete Profile</a></li>
                 </ul>
             </div>
         </nav>
     </header>
     {% block profile_content %}
-    <div class="general-background-color border">
+    <div class="general-background-color border disable-scroll">
         <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
         <div class="header-container">
             <h2 class="header-font page-header">Terming For Learning</h2>
             <i class="fa fa-home header-icon" aria-hidden="true"></i>
         </div>
     
-        <div class="container">
+        <div class="container content-section form-box">
             <h1 id="user-welcome" class="text-font">Hello, {{ user.username }}!</h1>
-
+            <div class="text-font custom-button">
+                <a class="buttons custom-button" href="{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a>
+            </div>
+            
             <!-- <button><a href= "{{ url_for('voted_terms') }}">Top Noob Definitions</a></button> -->
             <!-- <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button> -->
 
@@ -67,10 +68,8 @@
     <script>
         $(document).ready(function() {
             $(".button-collapse").sideNav();
+            $('select').formSelect();
         });
     </script>
-
-    <!-- Custom script -->
-    <script href="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

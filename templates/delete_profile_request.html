@@ -7,9 +7,9 @@
         <h2 class="header-font page-header">But ... why?!</h2>
         <i class="fa fa-trash header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container">
-        <div>
-            <h2 class="text-font">{{ user.username }}</h2>
+    <div class="container form-box">
+        <div class="text-font">
+            <h4>{{ user.username }}</h4>
             <hr>
         </div>
         <p class="text-font"><strong>Are you sure you'd like to delete this profile?</strong></p>
@@ -17,7 +17,7 @@
         <div class="buttons-container">
             <div class="row">
                 <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=user.username) }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_profile', user_id=user._id) }}">Delete Profile</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_profile', user_id=user._id) }}">Yes, delete</a>
             </div>
         </div>
     </div>

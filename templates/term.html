@@ -1,32 +1,33 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border">
+<div class="general-background-color border disable-scroll">
     <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">{{ term.term }}</h2>
         <i class="fa fa-quote-right header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container">
+    <div class="container content-section form-box">
         <div class="text-font">
             <h5>Definition</h5>
-            <p>{{ term.term_definition }}</p>
             <hr>
+            <p>{{ term.term_definition }}</p>
             <h5>Noob Definition</h5>
+            <hr>
             <p>{{ term.noob_definition }}</p>
             <!-- {% if already_voted %}
                 <button><a href="{{ url_for('remove_vote', term_id=term._id) }}">Remove Vote</a></button>
             {% else %}
                 <button><a href="{{ url_for('vote_up', term_id=term._id) }}">Vote Up</a></button>
             {% endif %} -->
+            <h5>Examples</h5>
             <hr>
-            <h5>Term Examples</h5>
             <p>{{ term.term_examples }}</p>
-            <hr>
             <h6>Category</h6>
-            <p>{{ term.category_name }}</p>
             <hr>
+            <p>{{ term.category_name }}</p>
             <h6>Author</h6>
+            <hr>
             <p>{{ term.author }}</p>
             <!-- {% if is_in_database %}
                 <button><a href="{{ url_for('remove_from_saved', term_id=term._id) }}">Remove From Further Readings</a></button>

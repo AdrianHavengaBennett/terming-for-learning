@@ -1,13 +1,13 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border">
+<div class="general-background-color border disable-scroll">
     <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">{{ term.term }}</h2>
         <i class="fa fa-trash header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container">
+    <div class="container content-section form-box">
         <div class="text-font">
             <h5>Definition</h5>
             <p>{{ term.term_definition }}</p>
@@ -25,7 +25,7 @@
         <div class="buttons-container">
             <div class="row">
                 <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_term', term_id=term._id) }}">Delete</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_term', term_id=term._id) }}">Yes, delete</a>
             </div>
         </div>
     </div>

@@ -27,6 +27,14 @@ terms = conn[DBS_NAME][TERMS]
 categories = conn[DBS_NAME][CATEGORIES]
 users = conn[DBS_NAME][USERS]
 
+
+# Helper functions
+def check_session_user(session):
+    if session.get("USERNAME", None) is not None:
+        username = session["USERNAME"]
+    return username
+
+
 # Home screen / main welcome page:
 @app.route("/")
 def welcome():
@@ -107,15 +115,17 @@ def save_new_user():
 # User's profile:
 @app.route("/profile/<username>")
 def profile(username):
+    username = check_session_user(session)
+
     user = users.find_one({"username": username})
 
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", user=user,
+                           username=username)
 
 # Shows all of the user's terms
 @app.route("/my_terms/<username>")
 def my_terms(username):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     user = users.find_one({"username": username})
 
@@ -126,8 +136,7 @@ def my_terms(username):
 # Show all terms in the database:
 @app.route("/all_terms")
 def get_all_terms():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     return render_template("all_terms.html",
                            username=username,
@@ -137,8 +146,7 @@ def get_all_terms():
 # When a term is clicked:
 @app.route("/term/<term_id>")
 def show_term(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = username = check_session_user(session)
 
     term = terms.find_one({"_id": term_id})
     # already_voted = terms.find_one({"_id": term_id,
@@ -152,8 +160,7 @@ def show_term(term_id):
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
 def new_term():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     random_string = uuid.uuid4().hex
 
@@ -165,8 +172,7 @@ def new_term():
 # Save the term to the database:
 @app.route("/add_term", methods=["POST"])
 def add_term():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     terms.insert_one(request.form.to_dict())
 
@@ -175,8 +181,7 @@ def add_term():
 # Edit a term:
 @app.route("/edit_term/<term_id>")
 def edit_term(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term = terms.find_one({"_id": term_id})
 
@@ -188,8 +193,7 @@ def edit_term(term_id):
 # Save your changes to the database once done editing:
 @app.route("/save_term/<term_id>", methods=["POST"])
 def save_term(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     my_terms = terms
     my_terms.replace_one(
@@ -207,8 +211,7 @@ def save_term(term_id):
 # Delete a term request TODO change to JS prompt:
 @app.route("/delete_request/<term_id>")
 def delete_request(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term = terms.find_one({"_id": term_id})
 
@@ -218,8 +221,7 @@ def delete_request(term_id):
 # Shows chosen term and asks for confirmation before deleting:
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     terms.delete_one({"_id": term_id})
 
@@ -229,8 +231,7 @@ def delete_term(term_id):
 @app.route("/find_my_term", methods=["POST"])
 def find_my_term():
     # This requires some error checking and validation
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term_searched = request.form["term_search"]
     the_term = terms.find_one({"term": term_searched})
@@ -247,8 +248,7 @@ def find_my_term():
 @app.route("/find_term", methods=["POST"])
 def find_term():
     # This requires some error checking and validation
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term_searched = request.form["term_search"]
     the_term = terms.find_one({"term": term_searched})
@@ -263,8 +263,7 @@ def find_term():
 # Show all categories:
 @app.route("/categories")
 def get_categories():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     return render_template("categories.html",
                            categories=categories.find({"author": username}),
@@ -273,8 +272,7 @@ def get_categories():
 # When a category is clicked:
 @app.route("/show_category/<category_id>")
 def show_category(category_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     category = categories.find_one({"_id": ObjectId(category_id)})
 
@@ -284,8 +282,7 @@ def show_category(category_id):
 # Delete a category request TODO change to a JS prompt:
 @app.route("/delete_category_request/<category_id>")
 def delete_category_request(category_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     category = categories.find_one({"_id": ObjectId(category_id)})
 
@@ -302,8 +299,7 @@ def delete_category(category_id):
 # Add a new category:
 @app.route("/add_category")
 def add_category():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     return render_template("add_category.html",
                            username=username, user=username)
@@ -311,8 +307,7 @@ def add_category():
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
 def save_category():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     added_category = request.form["category_name"]
     is_in_database = categories.find_one({"category_name": added_category,
@@ -327,14 +322,14 @@ def save_category():
 # Find a category:
 @app.route("/find_category", methods=["POST"])
 def find_category():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
     # This requires some error checking and validation
     category_searched = request.form["category_search"]
     the_category = categories.find_one({"category_name": category_searched})
 
     if the_category["author"] == username:
-        return render_template("show_category.html", category=the_category)
+        return render_template("show_category.html",
+                               category=the_category, user=username)
     else:
         return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
 
@@ -343,8 +338,7 @@ def find_category():
 # Shows the list of saved terms (Further Readings):
 @app.route("/saved_terms")
 def saved_terms():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     return render_template("further_readings.html",
                            terms=terms.find(),
@@ -353,8 +347,7 @@ def saved_terms():
 # clones the term, changes the id, and populates saved_by to generate further readings list:
 @app.route("/add_to_saved/<term_id>")
 def add_to_saved(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term = terms.find({"_id": term_id})
     cloned_term = term.clone()
@@ -370,8 +363,7 @@ def add_to_saved(term_id):
 # Removes a document from the further_readings database:
 @app.route("/remove_from_saved/<term_id>")
 def remove_from_saved(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     terms.delete_one({"_id": term_id})
 
@@ -380,8 +372,7 @@ def remove_from_saved(term_id):
 # Find a saved term in further readings:
 @app.route("/find_saved", methods=["POST"])
 def find_saved():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
     # This requires some error checking and validation
     term_searched = request.form["saved_search"]
     the_term = terms.find_one({"term": term_searched,
@@ -397,8 +388,7 @@ def find_saved():
 # Shows the list of voted for terms (Noob Definitions):
 @app.route("/voted_terms")
 def voted_terms():
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     return render_template("voted_terms.html",
                            terms=terms.find(),
@@ -407,8 +397,7 @@ def voted_terms():
 # populates voted_by to generate voted list:
 @app.route("/vote_up/<term_id>")
 def vote_up(term_id):
-    if session.get("USERNAME", None) is not None:
-        username = session["USERNAME"]
+    username = check_session_user(session)
 
     term = terms.find({"_id": term_id})
     cloned_term = term.clone()

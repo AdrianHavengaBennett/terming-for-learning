@@ -1,28 +1,30 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border">
+<div class="general-background-color border disable-scroll">
     <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">New term</h2>
         <i class="fa fa-file-text-o header-icon" aria-hidden="true"></i>
     </div>
 
-    <div class="container">
+    <div class="container content-section form-box">
 
         <form class="text-font" action="{{ url_for('add_term') }}" method="post">
             <input type="hidden" id="author" name="author" value="{{ username }}">
-            <!-- <input type="hidden" id="saved_by" name="saved_by" value="">
-            <input type="hidden" id="voted_by" name="voted_by" value=""> -->
             <input type="hidden" id="_id" name="_id" value="{{ new_id }}">
-            <label for="category">Category:</label><br>
-            <select name="category_name" id="category" required>
-                <option value="" disabled selected>Choose Category</option>
+
+            <select name="category_name" id="category" class="browser-default" required>
+                <option value="" disabled selected>Saved Categories</option>
                 {% for cat in categories %}
-                <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                    <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
                 {% endfor %}
-            </select><br>
-            <button><a href= "{{ url_for('add_category') }}">New Category</a></button><br>
+            </select>
+
+            <div class="text-font custom-button">
+                <a class="buttons custom-button" href= "{{ url_for('add_category') }}">New Category</a>
+            </div>
+
             <label for="term">Term Name:</label><br>
             <input type="text" id="term" name="term" required><br>
             <label for="term_definition">Term Definition:</label><br>
@@ -31,6 +33,7 @@
             <textarea id="noob_definition" name="noob_definition" required></textarea><br>
             <label for="term_examples">Term Examples:</label><br>
             <textarea id="term_examples" name="term_examples" rows="4" required></textarea><br> <!--Need to treat links as such. How can I achieve this? -->
+
             <div class="buttons-container">
                 <div class="row">
                     <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=username) }}">Cancel</a>
