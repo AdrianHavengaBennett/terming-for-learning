@@ -1,23 +1,35 @@
 {% extends "profile.html" %}
-{% block content %}
+{% block profile_content %}
 
-<div class="container">
-    <h1>{{ username }}'s Further Readings</h1>
-    <form action="{{ url_for('find_saved') }}" method="post">
-        <label for="saved_search">Search Further Readings</label>
-        <input type="search" name="saved_search" id="saved_search">
-        <input type="submit" value="Search">
-    </form>
-    <h2>Terms:</h2>
-    {% for term in terms %}
-        <div>
-        {% if term["saved_by"] != "" %}
-            <p><a href="{{ url_for('show_term', term_id=term._id) }}">{{ term.term }}</a></p>
-            <hr>
-        {% endif %}
+<div class="general-background-color border disable-scroll">
+    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    <div class="header-container">
+        <h2 class="header-font page-header">Your saved terms</h2>
+        <i class="fa fa-floppy-o header-icon" aria-hidden="true"></i>
+    </div>
+    <div class="container content-section form-box">
+        <form action="{{ url_for('find_saved') }}" method="post">
+            <label class="text-font" for="term_search">Search Further Readings</label>
+            <input type="search" name="saved_search" id="saved_search" required>
+        </form>
+        {% for term in terms %}
+            {% if term["saved_by"] != "" %}
+
+                <a href="{{ url_for('show_further_readings_term', term_id=term._id) }}">
+                    <div class="term-category-button">
+                        {{ term.term }}
+                        <i class="fa fa-chevron-right term-category-button-icon" aria-hidden="true"></i>
+                    </div>
+                </a>
+
+            {% endif %}
+        {% endfor %}
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('profile', username=username) }}">Go back</a>
+            </div>
         </div>
-    {% endfor %}
-    <button><a href= "{{ url_for('profile', username=username) }}">Go back</a></button>
+    </div>
 </div>
 
 {% endblock %}

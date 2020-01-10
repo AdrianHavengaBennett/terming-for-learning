@@ -8,7 +8,7 @@
                 <h2 class="header-font page-header">New face! Welcome!</h2>
             </div>
             <div class="row form-box-login-register text-font">
-                <form class="col s12" action="{{ url_for('save_new_user') }}" method="post">
+                <form class="col s12" action="{{ url_for('save_new_user') }}" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">
                             <input class="validate" type="email" id="email" name="email" required><br>
@@ -25,6 +25,12 @@
                         <div class="input-field col s12">
                             <input class="validate" type="password" id="password" name="password" required><br>
                             <label for="password" class="active">Password:</label><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="file" name="profile_image">
+                            <label for="pic">Profile image (optional): </label>
                         </div>
                     </div>
                     <div class="buttons-container">

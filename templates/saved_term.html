@@ -21,11 +21,7 @@
             <p>{{ term.term_examples }}</p>
             <div class="text-font">
                 <div class="row">
-                {% if is_in_database %}
                     <p>Remove From Further Readings: <span><a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times" aria-hidden="true"></i></a></span></p>
-                {% else %}
-                    <p>Add To Further Readings: <span><a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag" aria-hidden="true"></i></a></span></p>
-                {% endif %}
                 </div>
             </div>
             <h6>Category</h6>
@@ -37,11 +33,7 @@
         </div>
         <div class="buttons-container">
             <div class="row">
-                {% if username == term.author %}
-                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a>
-                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a>
-                {% endif %}
-                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('my_terms', username=username) }}">Go back</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('saved_terms', username=username) }}">Go back</a>
             </div>
         </div>
     </div>

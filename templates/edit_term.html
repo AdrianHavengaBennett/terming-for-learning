@@ -16,7 +16,7 @@
             <select name="category_name" id="category" class="browser-default" required>
                 {% for cat in categories %}
                     {% if cat.category_name == term.category_name %}
-                        <option value="{{ cat.category_name }}" disabled selected>{{ term.category_name }}</option>
+                        <option value="{{ cat.category_name }}" selected>{{ term.category_name }}</option>
                     {% else %}
                         <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
                     {% endif %}

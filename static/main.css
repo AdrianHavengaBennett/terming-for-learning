@@ -5,13 +5,42 @@
 
 /**********************************************GENERAL START*/
 
+.like-counter {
+  color: #000;
+  text-decoration: none;
+  margin-right: 5px;
+}
+.liked {
+  font-weight: bold;
+}
+
 html, body {
     margin: 0;
+}
+
+form>input {
+    color: #333333;
+}
+
+label {
+    font-size: 1rem;
+    color: #333333;
 }
 
 hr {
     width: 4em;
     background-color: #333333;
+}
+
+.profile-image {
+    width: 100%;
+    text-align: center;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    width: 50%;
+    text-align: center;
 }
 
 select {
@@ -74,6 +103,12 @@ h6 {
     padding: .5em;
     border-radius: 3px;
     margin: 1.5em;
+}
+
+.fa-times,
+.fa-flag {
+    color: #e87285;
+    font-size: 1.5em;
 }
 
 .term-category-button {
@@ -193,13 +228,13 @@ nav a.button-collapse i {
 .page-header {
     text-align: center;
     position: absolute;
-    width: 12em;
+    width: 16em;
     top: 50%;
     left: 50%;
-    margin-left: -6em;
+    margin-left: -8em;
     margin-top: -9.5px;
     color: #383838;
-    font-size: 1.25em;
+    font-size: 1em;
     z-index: 1;
 }
 
@@ -330,10 +365,6 @@ nav a.button-collapse i {
         font-size: 3em;
     }
 
-    #home-text-sub-heading {
-        font-size: 1.5em;
-    }
-
     .user-register-button {
         width: 24em;
         height: 3.5em;
@@ -386,7 +417,7 @@ nav a.button-collapse i {
     nav .nav-wrapper i,
     nav a.button-collapse,
     nav a.button-collapse i {
-        line-height: 1.75em;
+        line-height: 1.7em;
         font-size: 1.4em;
         padding-left: 4px;
     }
@@ -395,21 +426,56 @@ nav a.button-collapse i {
         font-size: 1.25em;
     }
 
-    #user-welcome {
-        font-size: 3em;
-    }
-
     .side-nav li {
         padding: 16px;
-    }
-    
-    .side-nav li>a {
-        font-size: 1.5rem;
     }
 
     .side-nav li>a>i {
         padding-right: 24px;
     }
+
+    .form-box {
+        margin-top: 4em;
+    }
+
+    .text-font>h4,
+    h5,
+    h6,
+    #user-welcome {
+        font-size: 3em;
+    }
+
+    hr {
+        width: 8em;
+    }
+
+    label,
+    .input-field.col label {
+        font-size: 1.25rem;
+    }
+
+    .side-nav li>a,
+    .text-font>p,
+    input[type=text]:not(.browser-default),
+    input[type=search]:not(.browser-default),
+    input[type=email]:not(.browser-default),
+    input[type=password]:not(.browser-default),
+    textarea,
+    .text-font .row p,
+    select.browser-default,
+    .term-category-button,
+    #home-text-sub-heading {
+        font-size: 1.5rem;
+    }
+
+    p>strong {
+        font-size: 2em;
+    }
+
+    .text-font .row p i {
+        font-size: 1.75em;
+    }
+
 }
 
 

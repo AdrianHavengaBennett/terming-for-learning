@@ -39,6 +39,15 @@
                     <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
                     <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
                 </ul>
+
+                <div class="buttons-container social-icons">
+                    <div class="row">
+                        <div class="col s3">
+                            <a href="#"><i class="fa fa-youtube header-icon" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </nav>
     </header>
@@ -51,25 +60,28 @@
         </div>
     
         <div class="container content-section form-box">
+            <div class="profile-image">
+                <img src="{{ url_for('static', filename='02th-egg-person.jpg') }}">
+            </div>
             <h1 id="user-welcome" class="text-font">Hello, {{ user.username }}!</h1>
             <div class="text-font custom-button">
-                <a class="buttons custom-button" href="{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a>
+                <div class="row">
+                    <a class="buttons custom-button" href="{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a>
+                </div>
+                <div class="row">
+                    <a class="buttons custom-button" href="{{ url_for('saved_terms') }}">Further Readings</a>
+                </div>
+                <div class="row">
+                    <a class="buttons custom-button" href="{{ url_for('edit_profile', user_id=user._id) }}">Edit Profile</a>
+                </div>
             </div>
-            
-            <!-- <button><a href= "{{ url_for('voted_terms') }}">Top Noob Definitions</a></button> -->
-            <!-- <button><a href= "{{ url_for('saved_terms') }}">Further Readings</a></button> -->
-
         </div>
     </div>
     {% endblock %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".button-collapse").sideNav();
-            $('select').formSelect();
-        });
-    </script>
+
 </body>
 </html>

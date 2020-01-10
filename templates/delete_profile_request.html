@@ -12,12 +12,12 @@
             <h4>{{ user.username }}</h4>
             <hr>
         </div>
-        <p class="text-font"><strong>Are you sure you'd like to delete this profile?</strong></p>
         <h5 class="text-font"><strong>Any terms you have saved in this profile will be deleted along with it!</strong></h5>
+        <p class="text-font"><strong>Are you sure you'd like to delete this profile?</strong></p>
         <div class="buttons-container">
             <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=user.username) }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_profile', user_id=user._id) }}">Yes, delete</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=user.username) }}">No</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_profile', user_id=user._id) }}">Yes</a>
             </div>
         </div>
     </div>

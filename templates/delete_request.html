@@ -9,23 +9,24 @@
     </div>
     <div class="container content-section form-box">
         <div class="text-font">
+            <p class="text-font"><strong>Are you sure you'd like to delete this term?</strong></p>
             <h5>Definition</h5>
+            <hr>
             <p>{{ term.term_definition }}</p>
-            <hr>
             <h5>Noob Definition</h5>
+            <hr>
             <p>{{ term.noob_definition }}</p>
-            <hr>
             <h5>Term Examples</h5>
-            <p>{{ term.term_examples }}</p>
             <hr>
+            <p>{{ term.term_examples }}</p>
             <h5>Category</h5>
+            <hr>
             <p>{{ term.category_name }}</p>
         </div>
-        <p class="text-font"><strong>Are you sure you'd like to delete this term?</strong></p>
         <div class="buttons-container">
             <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_term', term_id=term._id) }}">Yes, delete</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">No</a>
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_term', term_id=term._id) }}">Yes</a>
             </div>
         </div>
     </div>
