@@ -138,10 +138,11 @@ def save_new_user():
     if len(password) < 4:
         return "Password too short!"  # TODO JS prompt
 
-    if "profile_image" in request.files:
-        profile_image = request.files["profile_image"]
-        mongo.save_file(profile_image.filename, profile_image)
-        users.insert_one(request.form.to_dict())
+    # if "profile_image" in request.files:
+    #     profile_image = request.files["profile_image"]
+    #     mongo.save_file(profile_image.filename, profile_image)
+
+    users.insert_one(request.form.to_dict())
 
     return redirect(url_for("profile", username=username))
 

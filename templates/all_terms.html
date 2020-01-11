@@ -1,11 +1,9 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border disable-scroll">
-    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">All terms</h2>
-        <i class="fa fa-list-ul header-icon" aria-hidden="true"></i>
+        <i class="fa fa-list-ol header-icon" aria-hidden="true"></i>
     </div>
     <div class="container content-section form-box">
         <form action="{{ url_for('find_term') }}" method="post">
@@ -22,13 +20,13 @@
             </a>
             
         {% endfor %}
-        <div class="buttons-container">
-            <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('profile', username=username) }}">Go back</a>
-                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New Term</a>
-            </div>
+    </div>
+    <div class="buttons-container">
+        <div class="row">
+            <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('profile', username=username) }}">Go back</a>
+            <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New Term</a>
         </div>
     </div>
-</div>
+
 
 {% endblock %}

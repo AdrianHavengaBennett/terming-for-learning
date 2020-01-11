@@ -1,8 +1,6 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border disable-scroll">
-    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">New Category</h2>
         <i class="fa fa-file-text-o header-icon" aria-hidden="true"></i>
@@ -13,16 +11,16 @@
             <input type="hidden" id="author" name="author" value="{{ username }}">
             <label for="category">Category Name:</label><br>
             <input type="text" id="category" name="category_name" required><br>
-            <div class="buttons-container">
-                <div class="row">
-                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">Cancel</a>
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
-                </div>
-            </div>
-        </form>
     </div>
-</div>
+        <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">Cancel</a>
+                <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
+            </div>
+        </div>
+    </form>
+
 
 
 {% endblock %}

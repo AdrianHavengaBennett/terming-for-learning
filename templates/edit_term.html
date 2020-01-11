@@ -1,8 +1,6 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border disable-scroll">
-    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">Edit Term</h2>
         <i class="fa fa-pencil header-icon" aria-hidden="true"></i>
@@ -31,15 +29,14 @@
             <textarea id="noob_definition" name="noob_definition" required>{{ term.noob_definition }}</textarea><br>
             <label for="term_examples">Term Examples:</label><br>
             <textarea id="term_examples" name="term_examples" rows="4" required>{{ term.term_examples }}</textarea><br>
-
-            <div class="buttons-container">
-                <div class="row">
-                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Save Term"></a>
-                </div>
-            </div>
-        </form>
     </div>
-</div>
+    <div class="buttons-container">
+        <div class="row">
+            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
+            <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Save Term"></a>
+        </div>
+    </div>
+    </form>
+
 
 {% endblock %}

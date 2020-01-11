@@ -1,8 +1,6 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border disable-scroll">
-    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">New term</h2>
         <i class="fa fa-file-text-o header-icon" aria-hidden="true"></i>
@@ -34,17 +32,16 @@
             <label for="noob_definition">Noob Definition:</label><br>
             <textarea id="noob_definition" name="noob_definition" required></textarea><br>
             <label for="term_examples">Term Examples:</label><br>
-            <textarea id="term_examples" name="term_examples" rows="4" required></textarea><br> <!--Need to treat links as such. How can I achieve this? -->
-
-            <div class="buttons-container">
-                <div class="row">
-                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=username) }}">Cancel</a>
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add Term"></a>
-                </div>
-            </div>
-        </form>
+            <textarea id="term_examples" name="term_examples" rows="4" required></textarea><br> <!--Need to treat links as such. How can I achieve this? -->   
     </div>
-</div>
+    <div class="buttons-container">
+            <div class="row">
+                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=username) }}">Cancel</a>
+                <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add Term"></a>
+            </div>
+        </div>
+    </form>
+
 
 {% endblock %}

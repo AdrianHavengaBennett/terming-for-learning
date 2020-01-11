@@ -21,63 +21,61 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
-                    <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
-                    <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
-                    <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
-                </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <div class="header-container">
                         <h2 class="header-font page-header">Navigation</h2>
                     </div>
-                    <li><a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-user" aria-hidden="true"></i>My Terms</a></li>
-                    <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ul" aria-hidden="true"></i>All Terms</a></li>
+                    <li><a href="{{ url_for('profile', username=username) }}"><i class="fa fa-user" aria-hidden="true"></i>Profile</a></li>
+                    <li><a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-list-ol" aria-hidden="true"></i>My Terms</a></li>
+                    <li><a href="{{ url_for('saved_terms') }}"><i class="fa fa-flag" aria-hidden="true"></i>Further Readings</a></li>
+                    <li><a href="{{ url_for('get_all_terms') }}"><i class="fa fa-list-ol" aria-hidden="true"></i>All Terms</a></li>
                     <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
                     <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
                 </ul>
-
                 <div class="buttons-container social-icons">
                     <div class="row">
                         <div class="col s3">
-                            <a href="#"><i class="fa fa-youtube header-icon" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </nav>
     </header>
-    {% block profile_content %}
-    <div class="general-background-color border disable-scroll">
+    
+    <section class="general-background-color border disable-scroll">
         <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
+    {% block profile_content %}
+        
         <div class="header-container">
             <h2 class="header-font page-header">Terming For Learning</h2>
             <i class="fa fa-home header-icon" aria-hidden="true"></i>
         </div>
-    
-        <div class="container content-section form-box">
-            <div class="profile-image">
-                <img src="{{ url_for('static', filename='02th-egg-person.jpg') }}">
-            </div>
-            <h1 id="user-welcome" class="text-font">Hello, {{ user.username }}!</h1>
-            <div class="text-font custom-button">
-                <div class="row">
-                    <a class="buttons custom-button" href="{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a>
+        <div class="row">
+            <div class="col s12 m9 container content-section form-box">
+                <div class="profile-image">
+                    <img src="{{ url_for('static', filename='02th-egg-person.jpg') }}">
                 </div>
-                <div class="row">
-                    <a class="buttons custom-button" href="{{ url_for('saved_terms') }}">Further Readings</a>
-                </div>
-                <div class="row">
-                    <a class="buttons custom-button" href="{{ url_for('edit_profile', user_id=user._id) }}">Edit Profile</a>
+                <h1 id="user-welcome" class="text-font">Hello, {{ user.username }}!</h1>
+                <div class="text-font custom-button">
+                    <div class="row">
+                        <a class="buttons custom-button" href="{{ url_for('delete_profile_request', user_id=user._id) }}">Delete Profile</a>
+                    </div>
+                    <div class="row">
+                        <a class="buttons custom-button" href="{{ url_for('edit_profile', user_id=user._id) }}">Edit Profile</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {% endblock %}
+        
+        {% endblock %}
+    </section>
+    <footer>
+        <div class="footer-container hide-on-med-and-down">
+            <h2 class="header-font page-header">Your footer</h2>
+        </div>
+    </footer>
+    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

@@ -1,8 +1,6 @@
 {% extends "profile.html" %}
 {% block profile_content %}
 
-<div class="general-background-color border disable-scroll">
-    <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
     <div class="header-container">
         <h2 class="header-font page-header">{{ term.term }}</h2>
         <i class="fa fa-quote-right header-icon" aria-hidden="true"></i>
@@ -31,13 +29,13 @@
             <hr>
             <p>{{ term.author }}</p>
         </div>
-        <div class="buttons-container">
-            <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('saved_terms', username=username) }}">Go back</a>
-            </div>
+    </div>
+    <div class="buttons-container">
+        <div class="row">
+            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('saved_terms', username=username) }}">Go back</a>
         </div>
     </div>
-</div>
+
 
 {% endblock %}
         

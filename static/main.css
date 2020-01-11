@@ -16,6 +16,8 @@
 
 html, body {
     margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
 form>input {
@@ -80,10 +82,12 @@ h6 {
 }
 
 .general-background-color {
-    position: relative;
-    height: 100vh;
+    position: absolute;
+    bottom: 0em;
+    top: 0em;
+    width: 100%;
     background-color: #fff3d9;
-    z-index: 1;
+    z-index: 0;
 }
 
 .input-field label {
@@ -111,6 +115,10 @@ h6 {
     font-size: 1.5em;
 }
 
+.text-font .row p i:hover {
+    font-size: 2em;
+}
+
 .term-category-button {
     position: relative;
     width: 100%;
@@ -125,6 +133,11 @@ h6 {
     border-top: 2px solid #fafafa;
 }
 
+.term-category-button:hover {
+    border-bottom: 2px solid#2e6e8d;
+    border-top: 2px solid #2e6e8d;
+}
+
 .term-category-button-icon {
     position: absolute;
     color: #fafafa;
@@ -135,7 +148,7 @@ h6 {
 }
 
 nav {
-    position: absolute;
+    position: relative;
     left: 50%;
     margin-left: -47%;
     top: 1em;
@@ -219,6 +232,7 @@ nav a.button-collapse i {
 
 .btn {
     transition: none;
+    letter-spacing: 0px;
 }
 
 .row {
@@ -247,8 +261,26 @@ nav a.button-collapse i {
     background-color: #fafafa;
 }
 
+.footer-container {
+    color: #153240;
+    position: fixed;
+    left: 50%;
+    margin-left: -47%;
+    bottom: 1.5em;
+    text-align: center;
+    box-shadow: 0px 0px 4px #333333;
+    width: 94%;
+    height: 3em;
+    background-color: #fafafa;
+}
+
 .content-section {
-    max-height: 70vh;
+    position: initial;
+    left: 50%;
+    width: 90%;
+    margin-left: -45%;
+    top: 4em;
+    bottom: 5em;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -262,13 +294,13 @@ nav a.button-collapse i {
 }
 
 .buttons-container .btn {
-    width: 30.33%;
+    width: 31%;
     transition: none;
     padding: 0;
 }
 
 .buttons {
-    margin: 0 3px;
+    margin: 0 2px;
     background-color: #47aad9;
     color: #fafafa;
 }
@@ -283,13 +315,14 @@ nav a.button-collapse i {
 
 #graduation-cap-icon {
     position: absolute;
-    font-size: 30em;
-    top: 0.1em;
+    font-size: 40em;
+    top: 0rem;
     color: #333333;
     transform: rotate(-17deg);
     -webkit-transform: rotate(-17deg);
-    opacity: 0.1;
+    opacity: 0.09;
     z-index: -1;
+    border: 10px solid #153240;
 }
 
 /*******************************HOME SCREEN*/
@@ -357,7 +390,11 @@ nav a.button-collapse i {
 
 @media only screen and (min-width: 768px) {
     #graduation-cap-icon {
-        font-size: 60em;
+        font-size: 68em;
+    }
+
+    .content-section {
+        bottom: 8em;
     }
 
     #home-title {
@@ -398,7 +435,8 @@ nav a.button-collapse i {
         font-size: initial;
     }
 
-    .header-container {
+    .header-container,
+    .footer-container {
         height: 5rem;
     }
 
@@ -485,7 +523,55 @@ nav a.button-collapse i {
 
 /*******************************MEDIA QUERIES*/
 
-.user-register-button>span {
-    line-height: 2.5em;
+@media only screen and (min-width: 1024px) {
+    .user-register-button>span {
+        line-height: 2.5em;
+    }
+
+    .content-section {
+        bottom: 14em;
+    }
+
+    #graduation-cap-icon {
+        color: #ffe6b3;
+        font-size: 100em;
+        top: -10rem;
+        left: 3rem;
+        opacity: 0.5;
+        border: 10px solid #ffe6b3;
+    }
+
+    .buttons-container {
+        width: 30em;
+        margin-left: -15em;
+        bottom: 8em;
+    }
+
+    .buttons {
+        background-color: rgba(0,0,0,0);
+        border: 1px solid #47aad9;
+        color: #47aad9;
+    }
+
+    .buttons:hover {
+        background-color: #47aad9;
+        color: #fafafa;
+    }
 }
+
+@media only screen and (min-width: 1600px) {
+    #graduation-cap-icon {
+        font-size: 95em;
+    }
+}
+
+@media only screen and (min-width: 2150px) {
+    #graduation-cap-icon {
+        font-size: 100em;
+        top: -10rem;
+        left: 4rem;
+    }
+}
+
+
 
