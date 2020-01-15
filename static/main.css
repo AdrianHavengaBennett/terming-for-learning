@@ -92,6 +92,7 @@ h6 {
 
 .input-field label {
     color: #47aad9;
+    top: -0.5em;
 }
 
 .user-register-button:hover {
@@ -117,6 +118,7 @@ h6 {
 
 .text-font .row p i:hover {
     font-size: 2em;
+    color:#ff0029;
 }
 
 .term-category-button {
@@ -131,6 +133,7 @@ h6 {
     padding-left: 10px;
     border-bottom: 2px solid #fafafa;
     border-top: 2px solid #fafafa;
+    box-shadow: 0px 0px 4px #333333;
 }
 
 .term-category-button:hover {
@@ -214,6 +217,11 @@ nav a.button-collapse i {
     padding: 8px;
 }
 
+nav ul a {
+    color: #153240;
+    font-size: 2em;
+}
+
 .side-nav li>a {
     color: #fff3d9;
     padding: 0;
@@ -256,7 +264,7 @@ nav a.button-collapse i {
     position: relative;
     margin: 1em auto;
     box-shadow: 0px 0px 4px #333333;
-    width: 94%;
+    width: 98%;
     height: 3em;
     background-color: #fafafa;
 }
@@ -265,24 +273,23 @@ nav a.button-collapse i {
     color: #153240;
     position: fixed;
     left: 50%;
-    margin-left: -47%;
+    margin-left: -49%;
     bottom: 1.5em;
     text-align: center;
     box-shadow: 0px 0px 4px #333333;
-    width: 94%;
+    width: 98%;
     height: 3em;
     background-color: #fafafa;
 }
 
-.content-section {
-    position: initial;
+.container {
+    position: absolute;
     left: 50%;
-    width: 90%;
     margin-left: -45%;
+    bottom: 6.5em;
     top: 4em;
-    bottom: 5em;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .buttons-container {
@@ -294,13 +301,13 @@ nav a.button-collapse i {
 }
 
 .buttons-container .btn {
-    width: 31%;
-    transition: none;
-    padding: 0;
+    width: 100%;
+    padding: 0 8px;
+    text-align: center;
 }
 
 .buttons {
-    margin: 0 2px;
+    margin: 0;
     background-color: #47aad9;
     color: #fafafa;
 }
@@ -379,7 +386,15 @@ nav a.button-collapse i {
     font-size: .65em;
 }
 
-/*******************************PROFILE SCREEN*/
+.nav-copyright-info {
+    position: absolute;
+    width: 15em;
+    bottom: 5em;
+    left: 50%;
+    margin-left: -7.5em;
+    color: #153240;
+    font-size: .65em;
+}
 
 #user-welcome {
     font-size: 2em;
@@ -464,6 +479,10 @@ nav a.button-collapse i {
         font-size: 1.25em;
     }
 
+    .side-nav {
+        width: 400px;
+    }
+
     .side-nav li {
         padding: 16px;
     }
@@ -513,13 +532,23 @@ nav a.button-collapse i {
     .text-font .row p i {
         font-size: 1.75em;
     }
-
 }
+
+@media only screen and (min-width: 993px) {
+    .row .col.l8 {
+        padding-left: 10%;
+    }
+}
+
 
 
 /**********************************************MOBILE END*/
 
 /**********************************************DESKTOP START*/
+
+.custom-container {
+    width: 100%;
+}
 
 /*******************************MEDIA QUERIES*/
 
@@ -528,8 +557,39 @@ nav a.button-collapse i {
         line-height: 2.5em;
     }
 
-    .content-section {
-        bottom: 14em;
+    #register-welcome,
+    #login-welcome {
+        text-align: center;
+        position: absolute;
+        width: 13.5em;
+        top: 50%;
+        left: 50%;
+        margin-left: -8em;
+        margin-top: -15px;
+        color: #383838;
+        font-size: 2em;
+        z-index: 1;
+    }
+
+    .text-font>h4,
+    h5, 
+    h6, 
+    #user-welcome {
+        font-size: 2em;
+    }
+
+    form[class="text-font"],
+    .term-category-button {
+        width: 72%;
+    }
+
+    p[class="text-font"] {
+        width: 100%;
+    }
+
+    .container {
+        bottom: 15em;
+        top: 7.5em;
     }
 
     #graduation-cap-icon {
@@ -542,9 +602,10 @@ nav a.button-collapse i {
     }
 
     .buttons-container {
-        width: 30em;
-        margin-left: -15em;
         bottom: 8em;
+        width: auto;
+        margin-left: 0;
+        left: 0;
     }
 
     .buttons {
@@ -556,6 +617,41 @@ nav a.button-collapse i {
     .buttons:hover {
         background-color: #47aad9;
         color: #fafafa;
+    }
+
+    .search-form {
+        width: 25%;
+        margin-left: auto;
+    }
+
+    .form-box {
+        margin-top: 0;
+        border-right: 1px solid #333333;
+    }
+
+    .text-font {
+        width: 72%;
+        text-align: left;
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .further-readings {
+        margin: 0;
+        margin-left: 1em;
+    }
+
+    #category-div {
+        text-align: center;
+    }
+
+    .page-header {
+        text-align: left;
+        left: 0;
+        margin-left: 0;
+        padding-left: 10%;
     }
 }
 

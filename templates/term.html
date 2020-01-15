@@ -1,46 +1,58 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">{{ term.term }}</h2>
         <i class="fa fa-quote-right header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container content-section form-box">
-        <div class="text-font">
-            <h5>Definition</h5>
-            <hr>
-            <p>{{ term.term_definition }}</p>
-            <h5>Noob Definition</h5>
-            <a href="#" class="like-counter">Like</a><span class="click-text"><a id="clicks"></a></span>
-            <hr>
-            <p>{{ term.noob_definition }}</p>
-            <h5>Examples</h5>
-            <hr>
-            <p>{{ term.term_examples }}</p>
+
+    <div class="row">
+        <div class="col s12 l8 container form-box">
+
             <div class="text-font">
-                <div class="row">
-                {% if is_in_database %}
-                    <p>Remove From Further Readings: <span><a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times" aria-hidden="true"></i></a></span></p>
-                {% else %}
-                    <p>Add To Further Readings: <span><a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag" aria-hidden="true"></i></a></span></p>
-                {% endif %}
+                <h5>Definition</h5>
+                <hr>
+                <p>{{ term.term_definition }}</p>
+                <h5>Noob Definition</h5>
+                <a href="#" class="like-counter">Like</a><span class="click-text"><a id="clicks"></a></span>
+                <hr>
+                <p>{{ term.noob_definition }}</p>
+                <h5>Examples</h5>
+                <hr>
+                <p>{{ term.term_examples }}</p>
+                <div class="further-readings text-font">
+                    <div class="row">
+                    {% if is_in_database %}
+                        <p>Remove From Further Readings: <span><a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times" aria-hidden="true"></i></a></span></p>
+                    {% else %}
+                        <p>Add To Further Readings: <span><a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag" aria-hidden="true"></i></a></span></p>
+                    {% endif %}
+                    </div>
                 </div>
+                <h6>Category</h6>
+                <hr>
+                <p>{{ term.category_name }}</p>
+                <h6>Author</h6>
+                <hr>
+                <p>{{ term.author }}</p>
             </div>
-            <h6>Category</h6>
-            <hr>
-            <p>{{ term.category_name }}</p>
-            <h6>Author</h6>
-            <hr>
-            <p>{{ term.author }}</p>
         </div>
     </div>
-    <div class="buttons-container">
-        <div class="row">
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
             {% if username == term.author %}
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('edit_term', term_id=term._id) }}">Edit Term</a>
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a>
+            <div class="row">
+                <div class="col s4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('edit_term', term_id=term._id) }}">Edit</a>
+                </div>
+                <div class="col s4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_request', term_id=term._id) }}">Delete</a>
+                </div>
             {% endif %}
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('my_terms', username=username) }}">Go back</a>
+                <div class="col s4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('get_all_terms', username=username) }}">Back</a>
+                </div>
+            </div>
         </div>
     </div>
 

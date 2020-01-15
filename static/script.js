@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Materialize js initializations
     $(".button-collapse").sideNav();
     $("select").formSelect();
-    
+    $('input#input_text, textarea#textarea2').characterCounter();
 });
 
 // noob voting functionality

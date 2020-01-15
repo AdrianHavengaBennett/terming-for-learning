@@ -1,46 +1,63 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">New term</h2>
         <i class="fa fa-file-text-o header-icon" aria-hidden="true"></i>
     </div>
 
-    <div class="container content-section form-box">
+    <div class="row">
+        <div class="col s12 l8 container form-box">
 
-        <form class="text-font" action="{{ url_for('add_term') }}" method="post">
-            <input type="hidden" id="author" name="author" value="{{ username }}">
-            <input type="hidden" id="_id" name="_id" value="{{ new_id }}">
-            <input type="hidden" id="saved_by" name="saved_by" value="">
-            <input type="hidden" id="voted_by" name="voted_by" value="">
+            <form class="text-font" action="{{ url_for('add_term') }}" method="post">
+                <input type="hidden" id="author" name="author" value="{{ username }}">
+                <input type="hidden" id="_id" name="_id" value="{{ new_id }}">
+                <input type="hidden" id="saved_by" name="saved_by" value="">
 
-            <select name="category_name" id="category" class="browser-default" required>
-                <option value="" disabled selected>Saved Categories</option>
-                {% for cat in categories %}
-                    <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
-                {% endfor %}
-            </select>
+                <select name="category_name" id="category" class="browser-default" required>
+                    <option value="" disabled selected>Saved Categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                    {% endfor %}
+                </select>
 
-            <div class="text-font custom-button">
-                <a class="buttons custom-button" href= "{{ url_for('add_category') }}">New Category</a>
-            </div>
-
-            <label for="term">Term Name:</label><br>
-            <input type="text" id="term" name="term" required><br>
-            <label for="term_definition">Term Definition:</label><br>
-            <textarea id="term_definition" name="term_definition" required></textarea><br>
-            <label for="noob_definition">Noob Definition:</label><br>
-            <textarea id="noob_definition" name="noob_definition" required></textarea><br>
-            <label for="term_examples">Term Examples:</label><br>
-            <textarea id="term_examples" name="term_examples" rows="4" required></textarea><br> <!--Need to treat links as such. How can I achieve this? -->   
+                <div class="text-font custom-button">
+                    <a class="buttons custom-button" href= "{{ url_for('add_category') }}">New Category</a>
+                </div>
+                
+                <div class="input-field">
+                    <label for="term">Term Name:</label><br>
+                    <input type="text" id="term" name="term" data-length="28" required><br>
+                </div>
+                <div class="input-field">
+                    <label for="term_definition">Term Definition:</label><br>
+                    <textarea id="term_definition" name="term_definition" required></textarea><br>
+                </div>
+                <div class="input-field">
+                    <label for="noob_definition">Noob Definition:</label><br>
+                    <textarea id="noob_definition" name="noob_definition" required></textarea><br>
+                </div>
+                <div class="input-field">
+                    <label for="term_examples">Term Examples:</label><br>
+                    <textarea id="term_examples" name="term_examples" rows="4" required></textarea><br> <!--Need to treat links as such. How can I achieve this? -->
+                </div>
+        </div>
     </div>
-    <div class="buttons-container">
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
             <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=username) }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
-                <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add Term"></a>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('get_all_terms', username=username) }}">Cancel</a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
+                </div>
             </div>
         </div>
+    </div>
     </form>
 
 

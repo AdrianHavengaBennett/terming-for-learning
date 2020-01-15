@@ -1,39 +1,55 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">Edit Term</h2>
         <i class="fa fa-pencil header-icon" aria-hidden="true"></i>
     </div>
 
-    <div class="container content-section form-box">
+    <div class="row">
+        <div class="col s12 l8 container form-box">
 
-        <form class="text-font" action="{{ url_for('save_term', term_id=term._id) }}" method="post">
-            <input type="hidden" id="author" name="author" value="{{ username }}">
+            <form class="text-font" action="{{ url_for('save_term', term_id=term._id) }}" method="post">
+                <input type="hidden" id="author" name="author" value="{{ username }}">
 
-            <select name="category_name" id="category" class="browser-default" required>
-                {% for cat in categories %}
-                    {% if cat.category_name == term.category_name %}
-                        <option value="{{ cat.category_name }}" selected>{{ term.category_name }}</option>
-                    {% else %}
-                        <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select><br>
-
-            <label for="term">Term Name:</label><br>
-            <input type="text" id="term" name="term" value="{{ term.term }}" required><br>
-            <label for="term_definition">Term Definition:</label><br>
-            <textarea id="term_definition" name="term_definition" required>{{ term.term_definition }}</textarea><br>
-            <label for="noob_definition">Noob Definition:</label><br>
-            <textarea id="noob_definition" name="noob_definition" required>{{ term.noob_definition }}</textarea><br>
-            <label for="term_examples">Term Examples:</label><br>
-            <textarea id="term_examples" name="term_examples" rows="4" required>{{ term.term_examples }}</textarea><br>
+                <select name="category_name" id="category" class="browser-default" required>
+                    {% for cat in categories %}
+                        {% if cat.category_name == term.category_name %}
+                            <option value="{{ cat.category_name }}" selected>{{ term.category_name }}</option>
+                        {% else %}
+                            <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select><br>
+                
+                <div class="input-field">
+                    <label for="term">Term Name:</label><br>
+                    <input type="text" id="term" name="term" value="{{ term.term }}" data-length="28" required><br>
+                </div>
+                <div class="input-field">
+                    <label for="term_definition">Term Definition:</label><br>
+                    <textarea rows="5" id="term_definition" name="term_definition" required>{{ term.term_definition }}</textarea><br>
+                </div>
+                <div class="input-field">
+                    <label for="noob_definition">Noob Definition:</label><br>
+                    <textarea id="noob_definition" name="noob_definition" required>{{ term.noob_definition }}</textarea><br>
+                </div>
+                <div class="input-field">
+                    <label for="term_examples">Term Examples:</label><br>
+                    <textarea id="term_examples" name="term_examples" rows="4" required>{{ term.term_examples }}</textarea><br>
+                </div>
+        </div>
     </div>
-    <div class="buttons-container">
-        <div class="row">
-            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
-            <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Save Term"></a>
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
+            <div class="row">
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('show_term', term_id=term._id) }}">Cancel</a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Save"></a>
+                </div>
+            </div>
         </div>
     </div>
     </form>

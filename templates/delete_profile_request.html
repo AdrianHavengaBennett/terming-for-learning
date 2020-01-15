@@ -1,24 +1,25 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">But ... why?!</h2>
         <i class="fa fa-trash header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container form-box">
-        <div class="profile-image">
-            <img src="{{ url_for('static', filename='02th-egg-person.jpg') }}">
+
+    <div class="row">
+        <div class="col s12 l8 container form-box">
+
+            <div class="text-font">
+                <h4>{{ user.username }}</h4>
+                <hr>
+            </div>
+            <h5 class="text-font"><strong>Any terms you have saved in this profile will be deleted along with it!</strong></h5>
+            <p class="text-font"><strong>Are you sure you'd like to delete this profile?</strong></p>
         </div>
-        <div class="text-font">
-            <h4>{{ user.username }}</h4>
-            <hr>
-        </div>
-        <h5 class="text-font"><strong>Any terms you have saved in this profile will be deleted along with it!</strong></h5>
-        <p class="text-font"><strong>Are you sure you'd like to delete this profile?</strong></p>
     </div>
-    <div class="buttons-container">
-        <div class="row">
-            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('profile', username=user.username) }}">No</a>
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
+            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('get_all_terms', username=user.username) }}">No</a>
             <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_profile', user_id=user._id) }}">Yes</a>
         </div>
     </div>

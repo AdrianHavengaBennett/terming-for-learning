@@ -1,16 +1,13 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">Your terms</h2>
         <i class="fa fa-list-ol header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container row">
-        <div class="col s12 l8 content-section form-box">
-            <form action="{{ url_for('find_my_term') }}" method="post">
-                <label class="text-font" for="term_search">Search Terms</label>
-                <input type="search" name="term_search" id="term_search" required>
-            </form>
+
+    <div class="row">
+        <div class="col s12 l8 container form-box">
             {% for term in terms %}
 
                 <a class="text-font" href="{{ url_for('show_term', term_id=term._id) }}">
@@ -23,10 +20,16 @@
             {% endfor %}
         </div>
     </div>
-    <div class="buttons-container">
-        <div class="row">
-            <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('profile', username=user.username) }}">Go back</a>
-            <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New Term</a>
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
+            <div class="row">
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('get_all_terms', username=user.username) }}">Back</a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New</a>
+                </div>
+            </div>
         </div>
     </div>
 

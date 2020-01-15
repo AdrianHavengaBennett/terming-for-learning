@@ -11,18 +11,17 @@ In this program, I've called on a database structure for the first time, too; Mo
 # UX
 
 ## User Stories
-- As a user of this website, I would like to be able to do the following: 
-- Register an account with my chosen email address, username, profile image, and password.
+As a user of this website, I would like to be able to do the following: 
+- Register an account with my chosen email address, username, and password.
 - Login and retrieve my account.
 - Delete my account, should I no longer wish to use this program/website.
 - Search for, and read other users' uploaded terms as well as save them.
 - Add, edit, save, or delete my own terms.
-- Add a new category when adding a new term, should that category not already be saved by that particular user.
+- Add a new category when adding a new term, should that category not already be saved by me.
 - See a separate list of the terms I have save and also a separate list of the categories I have added.
 - See a laymen's-type of definition, which may make more sense to beginners.
 # TODO
 - Vote up/like a laymen's definition to highlight its helpfulness.
-- Edit my account infomation - username, password, or profile image - and save it to be retrieved at a later stage. 
 
 ## Wireframe
 At the suggestion by my wise mentor, Nishant Kumar, I decided to use https://proto.io/ to help me with my wireframe.
@@ -49,14 +48,9 @@ User has the ability to do the following:
 - Delete their account(s).
 - Add a term.
 - Edit or delete both terms and categories.
-- Search all global terms or search user's saved terms.
+- Search all global terms.
 - Rate a noob definition (rating is based on definition's Laymen's level - a handy tooltip offers guidance) - The idea is to help new programers.
 - Save (shortlist) terms which he/she has determined will require further insights (also removing from shortlist). This will be presented (on desktop - separate screen for mobile) as something similar to Outlook's flagged email system.
-
-# TODO
-- Upload a profile image.
-- Edit their account(s) information: username, password, profile image
-
 
 ### - Features left to implement
 
@@ -95,15 +89,16 @@ Technologies used in this project:
 
 ### User Testing
 The following test cases have been performed to test funtionality:
-- Signing in - expected result = Profile page and user welcome loaded | PASS
-- Register - expected result = Profile page and user welcome loaded | PASS
-- Clicking my terms - expected result = user's terms presented | PASS
-- Clicking all terms - expected result = all users' terms presented | PASS
-- Create new term - expected result = form loads and upon completion and save, user's terms presented with new term at bottom of list | PASS
-- Edit term - expected result = form loads with current category name, and upon completion and save, user's terms presented | PASS
+- Signing in - expected result = All terms and user welcome loaded | PASS
+- Register - expected result = All terms page and user welcome loaded | PASS
+- Clicking "my terms" (on mobile - in navigation or elsewhere) - expected result = user's terms presented | PASS
+- Clicking "all terms" (on mobile - in navigation or elsewhere) - expected result = all users' terms presented | PASS
+- Create new term - expected result = form loads and, upon completion and save, user's terms presented with new term at bottom of list | PASS
+- Edit term - expected result = form loads with current category name and, upon completion and save, user's terms presented | PASS
 - Save term - expected result = clones the term, changes the id, and populates saved_by to generate saved list / user's saved terms presented to user | PASS
 
-- Edit saved term - expected result = term is updated in saved collection | FAIL
+# TODO
+more tests when project is completed
 
 - HTML validated via https://validator.w3.org/ - Pass
 - CSS validated via https://jigsaw.w3.org/css-validator/ - Pass

@@ -71,32 +71,6 @@ def delete_profile(user_id):
 
     return redirect(url_for("welcome"))
 
-# Edit profile
-@app.route("/edit_profile/<user_id>")
-def edit_profile(user_id):
-    user = users.find_one({"_id": ObjectId(user_id)})
-
-    return render_template("edit_profile.html", user=user)
-
-# Save profile changes
-@app.route("/save_profile/<user_id>")
-def save_profile(user_id):
-    username = check_session_user(session)
-
-    user = users.find_one({"_id": ObjectId(user_id)})
-
-    users.replace_one(
-        {"_id": user_id}, {
-         "email": request.form.get("email"),
-         "username": request.form.get("username"),
-         "password": request.form.get("password"),
-         "pic": request.form.get("pic")
-         })
-
-    return redirect(url_for("profile",
-                            username=username,
-                            user=user))
-
 # checks the login credentials and loads the terms list:
 @app.route("/valid_login", methods=["POST"])
 def valid_login():
@@ -110,7 +84,7 @@ def valid_login():
 
         session["USERNAME"] = user_exists["username"]
 
-        return redirect(url_for("profile", username=user_exists["username"]))
+        return redirect(url_for("get_all_terms", username=user_exists["username"]))
     else:
         return "User not found - try register instead"
 
@@ -138,23 +112,9 @@ def save_new_user():
     if len(password) < 4:
         return "Password too short!"  # TODO JS prompt
 
-    # if "profile_image" in request.files:
-    #     profile_image = request.files["profile_image"]
-    #     mongo.save_file(profile_image.filename, profile_image)
-
     users.insert_one(request.form.to_dict())
 
-    return redirect(url_for("profile", username=username))
-
-# User's profile:
-@app.route("/profile/<username>")
-def profile(username):
-    username = check_session_user(session)
-
-    user = users.find_one({"username": username})
-
-    return render_template("profile.html", user=user,
-                           username=username)
+    return redirect(url_for("get_all_terms", username=username))
 
 # Shows all of the user's terms
 @app.route("/my_terms/<username>")
@@ -172,9 +132,11 @@ def my_terms(username):
 def get_all_terms():
     username = check_session_user(session)
 
+    user = users.find_one({"username": username})
+
     return render_template("all_terms.html",
                            username=username,
-                           user=username,
+                           user=user,
                            terms=terms.find())
 
 # When a term is clicked:
@@ -199,17 +161,8 @@ def show_term(term_id):
                                      "term_examples": term_examples,
                                      "category_name": category_name})
 
-    # checks to see if the normal term is in voted terms. Searching by ID won't work as they're unique. So, as above, we search by key/value pairs to narrow it down and make it unique (to a degree)
-    already_voted = voted.find_one({"voted_by": username,
-                                    "term": term_name,
-                                    "term_definition": term_definition,
-                                    "noob_definition": noob_definition,
-                                    "term_examples": term_examples,
-                                    "category_name": category_name})
-
     return render_template("term.html", term=term,
                            is_in_database=is_in_database,
-                           already_voted=already_voted,
                            username=username, user=username)
 
 # Add a new term (overwrites default ObjectId):
@@ -268,34 +221,8 @@ def save_term(term_id):
          "noob_definition": request.form.get("noob_definition"),
          "term_examples": request.form.get("term_examples"),
          "author": request.form.get("author"),
-         "saved_by": request.form.get("saved_by"),
-         "voted_by": request.form.get("voted_by")
+         "saved_by": request.form.get("saved_by")
          })
-
-    # finds the same term in a different collection and saves it with the updated values
-    the_term = terms.find_one({"_id": term_id})
-    cat = the_term["category_name"]
-    term = the_term["term"]
-    t_def = the_term["term_definition"]
-    n_def = the_term["noob_definition"]
-    t_examples = the_term["term_examples"]
-    saved_cursor = saved.find_one({"category_name": cat,
-                                           "term": term,
-                                           "term_definition": t_def,
-                                           "noob_definition": n_def,
-                                           "term_examples": t_examples})
-    print(saved_cursor)
-
-    # new_values = {"$set": {"term": request.form.get("term"),
-    #                        "category_name": request.form.get("category_name"),
-    #                        "term_definition": request.form.get("term_definition"),
-    #                        "noob_definition": request.form.get("noob_definition"),
-    #                        "term_examples": request.form.get("term_examples"),
-    #                        "author": request.form.get("author"),
-    #                        "saved_by": request.form.get("saved_by"),
-    #                        "voted_by": request.form.get("voted_by")}}
-    # my_saved = saved
-    # my_saved.update_one(saved_term_to_update, new_values)
 
     return redirect(url_for("my_terms", username=username))
 
@@ -318,24 +245,7 @@ def delete_term(term_id):
 
     return redirect(url_for("my_terms", username=username))
 
-# Find a user-created term THIS IS PRACTICALLY DUPLICATE CODE TO FIND_TERM ( TODO DRY!):
-@app.route("/find_my_term", methods=["POST"])
-def find_my_term():
-    # This requires some error checking and validation
-    username = check_session_user(session)
-
-    term_searched = request.form["term_search"]
-    the_term = terms.find_one({"term": term_searched})
-
-    if the_term is not None:
-        if the_term["author"] == username:
-            return redirect(url_for("show_term",
-                                    username=username,
-                                    term_id=the_term["_id"]))
-    else:
-        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
-
-# Find any term THIS IS PRACTICALLY DUPLICATE CODE TO FIND_MY_TERM ( TODO DRY!):
+# Find a term in all terms:
 @app.route("/find_term", methods=["POST"])
 def find_term():
     # This requires some error checking and validation
@@ -429,34 +339,21 @@ def find_category():
 def saved_terms():
     username = check_session_user(session)
 
+    user = users.find_one({"username": username})
+
     return render_template("further_readings.html",
                            terms=saved.find({"saved_by": username}),
+                           user=user,
                            username=username)
 
 # When a further_readings term is clicked:
-@app.route("/further_readings_term/<term_id>")
-def show_further_readings_term(term_id):
+@app.route("/saved_term/<term_id>")
+def show_saved_term(term_id):
     username = check_session_user(session)
 
     term = saved.find_one({"_id": term_id})
 
-    # use these variables to make a search unique (to the best degree possible)
-    term_name = term["term"]
-    term_definition = term["term_definition"]
-    noob_definition = term["noob_definition"]
-    term_examples = term["term_examples"]
-    category_name = term["category_name"]
-
-    # checks to see if the normal term is in saved terms. Searching by ID won't work as they're unique. What are the chances 2 users upload identical terms, to the letter?
-    already_voted = voted.find_one({"voted_by": username,
-                                    "term": term_name,
-                                    "term_definition": term_definition,
-                                    "noob_definition": noob_definition,
-                                    "term_examples": term_examples,
-                                    "category_name": category_name})
-
     return render_template("saved_term.html", term=term,
-                           already_voted=already_voted,
                            username=username, user=username)
 
 # clones the term, changes the id, and populates saved_by to generate further readings list:
@@ -464,18 +361,13 @@ def show_further_readings_term(term_id):
 def add_to_saved(term_id):
     username = check_session_user(session)
 
-    user = users.find_one({"username": username})
-
     in_all_terms = terms.find_one({"_id": term_id})
     in_saved_terms = saved.find_one({"_id": term_id})
-    in_voted_terms = voted.find_one({"_id": term_id})
 
     if in_all_terms:
         the_term = terms.find({"_id": term_id})
     elif in_saved_terms:
         the_term = saved.find({"_id": term_id})
-    elif in_voted_terms:
-        the_term = voted.find({"_id": term_id})
 
     cloned_term = the_term.clone()
 
@@ -483,10 +375,9 @@ def add_to_saved(term_id):
         random_string = uuid.uuid4().hex
         doc["_id"] = random_string
         doc["saved_by"] = username
-        doc["voted_by"] = ""
         saved.insert_one(doc)
 
-        return redirect(url_for("saved_terms", user=user))
+        return redirect(url_for("saved_terms"))
 
 # Removes a document from the further_readings database:
 @app.route("/remove_from_saved/<term_id>")
@@ -513,84 +404,6 @@ def find_saved():
         return render_template("saved_term.html", term=the_term)
     else:
         return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
-
-# # Shows the list of voted for terms (Noob Definitions):
-# @app.route("/voted_terms")
-# def voted_terms():
-#     username = check_session_user(session)
-
-#     return render_template("voted_terms.html",
-#                            terms=voted.find(),
-#                            username=username)
-
-# clones the term, changes the id, and populates voted_by to generate voted list:
-@app.route("/vote_up/<term_id>")
-def vote_up(term_id):
-    username = check_session_user(session)
-
-    user = users.find_one({"username": username})
-
-    in_all_terms = terms.find_one({"_id": term_id})
-    in_saved_terms = saved.find_one({"_id": term_id})
-    in_voted_terms = voted.find_one({"_id": term_id})
-
-    if in_all_terms:
-        the_term = terms.find({"_id": term_id})
-    elif in_saved_terms:
-        the_term = saved.find({"_id": term_id})
-    elif in_voted_terms:
-        the_term = voted.find({"_id": term_id})
-
-    cloned_term = the_term.clone()
-
-    for doc in cloned_term:
-        random_string = uuid.uuid4().hex
-        doc["_id"] = random_string
-        doc["voted_by"] = username
-        doc["saved_by"] = ""
-        voted.insert_one(doc)
-
-    return redirect(url_for("voted_terms", user=user))  # this will need to return the number of times a term has been voted for (can't use ID so you'll need to find how many times a term has voted_by populated)
-
-# # When a voted term is clicked:
-# @app.route("/voted_term/<term_id>")
-# def show_voted_term(term_id):
-#     username = check_session_user(session)
-
-#     term = voted.find_one({"_id": term_id})
-
-#     term_name = term["term"]
-#     term_definition = term["term_definition"]
-#     noob_definition = term["noob_definition"]
-#     term_examples = term["term_examples"]
-#     category_name = term["category_name"]
-
-#     # checks to see if the normal term is in saved terms. Searching by ID won't work as they're unique. What are the chances 2 users upload identical terms, to the letter?
-#     is_in_database = saved.find_one({"saved_by": username,
-#                                      "term": term_name,
-#                                      "term_definition": term_definition,
-#                                      "noob_definition": noob_definition,
-#                                      "term_examples": term_examples,
-#                                      "category_name": category_name})
-
-#     return render_template("voted_term.html", term=term,
-#                            is_in_database=is_in_database,
-#                            already_voted=voted
-#                            .find_one({"voted_by": username}),
-#                            username=username, user=username)
-
-# Removes a document from the voted list:
-@app.route("/remove_vote/<term_id>")
-def remove_vote(term_id):
-    username = check_session_user(session)
-
-    user = users.find_one({"username": username})
-
-    voted.delete_one({"_id": term_id})
-
-    return redirect(url_for("voted_terms", user=user))
-
-# ************************************************************************************************************************************************* END
 
 
 if __name__ == "__main__":

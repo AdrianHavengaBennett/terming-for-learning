@@ -1,25 +1,38 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">New Category</h2>
         <i class="fa fa-file-text-o header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container">
 
-        <form class="text-font" action="{{ url_for('save_category') }}" method="post">
-            <input type="hidden" id="author" name="author" value="{{ username }}">
-            <label for="category">Category Name:</label><br>
-            <input type="text" id="category" name="category_name" required><br>
+    <div class="row">
+        <div class="col s12 l8 container form-box">
+
+            <form class="text-font" action="{{ url_for('save_category') }}" method="post">
+                <input type="hidden" id="author" name="author" value="{{ username }}">
+                <div class="input-field">
+                    <label for="category">Category Name:</label><br>
+                    <input type="text" id="category" name="category_name" required><br>
+                </div>
+        </div>
     </div>
-        <div class="buttons-container">
+   <div class="row">
+        <div class="col s12 l8 buttons-container">
             <div class="row">
-                <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">Cancel</a>
-                <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
-                <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">Cancel</a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
 
 

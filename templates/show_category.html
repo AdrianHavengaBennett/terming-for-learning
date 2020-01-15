@@ -1,19 +1,29 @@
-{% extends "profile.html" %}
-{% block profile_content %}
+{% extends "all_terms.html" %}
+{% block all_terms_content %}
 
     <div class="header-container">
         <h2 class="header-font page-header">Categories</h2>
         <i class="fa fa-files-o header-icon" aria-hidden="true"></i>
     </div>
-    <div class="container form-box">
-        <div class="text-font">
-            <h4>{{ category.category_name }}</h4>
+
+    <div class="row">
+        <div class="col s12 l8 container form-box">
+
+            <div id="category-div" class="text-font">
+                <h4>{{ category.category_name }}</h4>
+            </div>
         </div>
     </div>
-    <div class="buttons-container">
-        <div class="row">
-            <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('get_categories') }}">Go Back</a>
-            <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_category_request', category_id=category._id) }}">Delete Category</a>
+    <div class="row">
+        <div class="col s12 l8 buttons-container">
+            <div class="row">
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('get_categories') }}">Go Back</a>
+                </div>
+                <div class="col s4 l4">
+                    <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('delete_category_request', category_id=category._id) }}">Delete Category</a>
+                </div>
+            </div>
         </div>
     </div>
 
