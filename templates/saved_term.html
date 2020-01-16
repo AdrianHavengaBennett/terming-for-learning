@@ -2,40 +2,60 @@
 {% block all_terms_content %}
 
     <div class="header-container">
-        <h2 class="header-font page-header">{{ term.term }}</h2>
-        <i class="fa fa-quote-right header-icon" aria-hidden="true"></i>
+        <h2 class="header-font page-header hide-on-large-only">{{ term.term }}</h2>
+        <i class="fa fa-quote-right header-icon hide-on-large-only" aria-hidden="true"></i>
+
+        {% endblock %}
+        {% block all_terms_content_2 %}
+
     </div>
 
     <div class="row">
-        <div class="col s12 l8 container form-box">
+        <div class="col s12 l8 offset-l1 offset-xl1 container form-box">
+            <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
 
-            <div class="text-font">
-                <h5>Definition</h5>
-                <hr>
-                <p>{{ term.term_definition }}</p>
-                <h5>Noob Definition</h5>
-                <a href="#" class="like-counter">Like</a><span class="click-text"><a id="clicks"></a></span>
-                <hr>
-                <p>{{ term.noob_definition }}</p>
-                <h5>Examples</h5>
-                <hr>
-                <p>{{ term.term_examples }}</p>
-                <div class="further-readings text-font">
-                    <div class="row">
-                        <p>Remove From Further Readings: <span><a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times" aria-hidden="true"></i></a></span></p>
+            <div class="row">
+                <div class="col s12 l10">
+                    <div class="text-font">
+                        <h5>Definition</h5>
+                        <hr>
+                        <p>{{ term.term_definition }}</p>
+                        <div class="row">
+                            <div id="like-text" class="col s9 offset-s1">
+                                <h5>Noob Definition</h5>
+                                <hr>
+                            </div>
+                            <div class="col s1">
+                                <a href="#" class="like-counter"><i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <p>{{ term.noob_definition }}</p>
+                        <h5>Examples</h5>
+                        <hr>
+                        <p>{{ term.term_examples }}</p>
+                        <div class="row">
+                            <div class="further-readings text-font">
+                                <div class="col s9 offset-s1">
+                                    <p class="save-text">Remove From Further Readings: </p>
+                                </div>
+                                <div class="col s1">
+                                    <a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times save-term-button" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <h6>Category</h6>
+                        <hr>
+                        <p>{{ term.category_name }}</p>
+                        <h6>Author</h6>
+                        <hr>
+                        <p>{{ term.author }}</p>
                     </div>
                 </div>
-                <h6>Category</h6>
-                <hr>
-                <p>{{ term.category_name }}</p>
-                <h6>Author</h6>
-                <hr>
-                <p>{{ term.author }}</p>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col s12 l8 buttons-container">
+        <div class="col s12 l6 offset-l1 buttons-container">
             <div class="row">
                 <div class="col s4 l4">
                     <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('saved_terms', username=username) }}">Back</a>

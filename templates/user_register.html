@@ -5,31 +5,31 @@
         <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
         
         <div class="header-container">
-            <h2 id="register-welcome" class="header-font page-header">New face! Welcome!</h2>
+            <h2 id="register-welcome" class="header-font">New face! Welcome!</h2>
         </div>
 
         <div class="row form-box-login-register text-font">
             <form class="col s12" action="{{ url_for('save_new_user') }}" method="post">
                 <div class="row">
-                    <div class="input-field col s12 l10 offset-l1">
+                    <div class="input-field col s12 l6 offset-l3">
                         <input class="validate" type="email" id="email" name="email" required><br>
                         <label for="email" class="active">Email:</label><br>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12 l10 offset-l1">
-                        <input class="validate" type="text" id="username" name="username" required><br>
+                    <div class="input-field col s12 l6 offset-l3">
+                        <input class="validate" type="text" id="username" name="username" data-length="16" required><br>
                         <label for="username" class="active">Username:</label><br>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12 l10 offset-l1">
+                    <div class="input-field col s12 l6 offset-l3">
                         <input class="validate" type="password" id="password" name="password" required><br>
                         <label for="password" class="active">Password:</label><br>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s12 l8 buttons-container">
+                    <div class="col s12 l6 offset-l3 buttons-container">
                         <div class="row">
                             <div class="col s4 l4">
                                 <a class="waves-effect waves-light btn buttons text-font" href="{{ url_for('welcome') }}">Cancel</a>

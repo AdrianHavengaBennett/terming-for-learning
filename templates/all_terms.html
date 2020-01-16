@@ -32,7 +32,7 @@
                     <li><a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i>Categories</a></li>
                     <li><a href="{{ url_for('sign_out') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
                     <li><a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i>Delete Profile</a></li>
-                    <div class="row social-icons">
+                    <div id="nav-social-icons" class="row">
                         <div class="col s3">
                             <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                         </div>
@@ -52,62 +52,128 @@
                         </div>
                     </div>
                 </ul>
-                
             </div>
         </nav>
     </header>
     
     <section class="general-background-color border disable-scroll">
         <i id="graduation-cap-icon" class="fa fa-graduation-cap" aria-hidden="true"></i>
-    {% block all_terms_content %}
+        {% block all_terms_content %}
 
-    <div class="header-container">
-        <h2 class="header-font page-header">All terms</h2>
-        <i class="fa fa-home header-icon" aria-hidden="true"></i>
-    </div>
-    
-    <div class="row">
-        <div class="col s12 l8 container form-box">
+        <div class="header-container">
+            <h2 class="header-font page-header hide-on-large-only">All terms</h2>
+            <i class="fa fa-home header-icon hide-on-large-only" aria-hidden="true"></i>
 
-            <h1 id="user-welcome" class="text-font">Hello, {{ username }}!</h1>
-            <form class="search-form" action="{{ url_for('find_term') }}" method="post">
-                <label class="text-font" for="term_search">Search:</label>
-                <input type="search" name="term_search" id="term_search" required>
-            </form>
-            {% for term in terms %}
-                
-                <a class="text-font" href="{{ url_for('show_term', term_id=term._id) }}">
-                    <div class="term-category-button">
-                        {{ term.term }}
-                        <i class="fa fa-chevron-right term-category-button-icon" aria-hidden="true"></i>
-                    </div>
-                </a>
-                
-            {% endfor %}
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col s12 l8 xl8 buttons-container">
+            {% endblock %}
             <div class="row">
-                <div class="col s4 l4 xl4">
-                    <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New</a>
+                <div class="col l5 offset-l1">
+                    <a href="{{ url_for('get_all_terms') }}"><h2 class="header-font page-header hide-on-med-and-down">Terming For Learning</h2></a>
+                </div>
+                <div class="col l2 offset-l1 hide-on-med-and-down">
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Navigation <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+                            <div class="dropdown-contents">
+                                <a href="{{ url_for('get_all_terms') }}"><i class="fa fa-home" aria-hidden="true"></i> All Terms</a>
+                                <a href="{{ url_for('my_terms', username=username) }}"><i class="fa fa-list-ol" aria-hidden="true"></i> My Terms</a>
+                                <a href="{{ url_for('saved_terms') }}"><i class="fa fa-flag" aria-hidden="true"></i> Further Readings</a>
+                                <a href="{{ url_for('get_categories') }}"><i class="fa fa-files-o" aria-hidden="true"></i> Categories</a>
+                                <a href="{{ url_for('delete_profile_request', user_id=user._id) }}"><i class="fa fa-trash" aria-hidden="true"></i> Delete Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l2 hide-on-med-and-down">
+                    <a href="{{ url_for('sign_out') }}"><i id="sign-out-icon" class="fa fa-sign-out social-icons" aria-hidden="true"></i> Sign Out</a>
+                </div>
+            </div>
+            {% block all_terms_content_2 %}
+
+        </div>
+        
+        <div class="row">
+            <div class="col s12 l8 offset-l1 container form-box">
+                <h1 id="user-welcome" class="text-font hide-on-large-only">Hello, {{ username }}!</h1>
+                
+                <div class="row">
+                    <div class="col l1">
+                        <i class="fa fa-home desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+                    </div>
+                    <div class="col s12 l4 offset-l5">
+                        <form class="search-form" action="{{ url_for('find_term') }}" method="post">
+                            <label class="text-font" for="term_search">Search:</label>
+                            <input type="search" name="term_search" id="term_search" required>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col s12 l10">
+                        {% for term in terms %}
+                    
+                            <a class="text-font" href="{{ url_for('show_term', term_id=term._id) }}">
+                                <div class="term-category-button">
+                                    {{ term.term }}
+                                    <i class="fa fa-chevron-right term-category-button-icon" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col l3 hide-on-med-and-down">
+                <!-- further readings to go here -->
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col s12 l6 offset-l1 buttons-container">
+                <div class="row">
+                    <div class="col s4 l4">
+                        <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">New</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {% endblock %}
+        {% endblock %}
 
     </section>
     <footer>
         <div class="footer-container hide-on-med-and-down">
-            <h2 class="header-font page-header">Your footer</h2>
+            <div class="row">
+                <div class="col l9">
+                    <a href="#"><p class="footer-info">www.exampleSite.com</p></a>
+                    <a href="#"><p class="footer-info">people@FullStackDevelopment.com</p></a>
+                </div>
+                <div class="col l2">
+                    <div class="row">
+                        <div class="col l3">
+                            <a href="#"><i class="fa fa-facebook-square social-icons" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col l3">
+                            <a href="#"><i class="fa fa-twitter-square social-icons" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col l3">
+                            <a href="#"><i class="fa fa-youtube-square social-icons" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col l3">
+                            <a href="#"><i class="fa fa-instagram social-icons" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <!-- JQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Materialize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <!-- Custom script  -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>

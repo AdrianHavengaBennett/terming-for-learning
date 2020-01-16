@@ -55,7 +55,7 @@ def sign_out():
 
     return redirect(url_for("welcome"))
 
-# Delete profile request TODO change this to a JS prompt:
+# Delete profile request:
 @app.route("/delete_profile_request/<user_id>")
 def delete_profile_request(user_id):
     user = users.find_one({"_id": ObjectId(user_id)})
@@ -78,13 +78,14 @@ def valid_login():
     password = request.form["password"]
     user_exists = users.find_one({"email": email})
 
-    if user_exists:  # TODO more server-side validation
+    if user_exists:
         if password != user_exists["password"]:
             return "Password Incorrect!"
 
         session["USERNAME"] = user_exists["username"]
 
-        return redirect(url_for("get_all_terms", username=user_exists["username"]))
+        return redirect(url_for("get_all_terms",
+                                username=user_exists["username"]))
     else:
         return "User not found - try register instead"
 
@@ -104,13 +105,21 @@ def save_new_user():
     session["USERNAME"] = username
 
     if user_exists:
-        return "User already exists - try log in"
+        return """
+            <h1>User already exists - try logging in.</h1>
+            """
     if len(username) < 4:
-        return "Username too short!"  # TODO JS prompt
+        return """
+            <h1>Username too short.</h1>
+            """
     if username[0].islower():
-        return "First letter of username must be uppercase!"  # TODO JS prompt
+        return """
+            <h1>First letter of username must be uppercase.</h1>
+            """
     if len(password) < 4:
-        return "Password too short!"  # TODO JS prompt
+        return """
+            <h1>Password too short</h1>
+            """
 
     users.insert_one(request.form.to_dict())
 
@@ -120,7 +129,6 @@ def save_new_user():
 @app.route("/my_terms/<username>")
 def my_terms(username):
     username = check_session_user(session)
-
     user = users.find_one({"username": username})
 
     return render_template("my_terms.html", user=user,
@@ -131,7 +139,6 @@ def my_terms(username):
 @app.route("/all_terms")
 def get_all_terms():
     username = check_session_user(session)
-
     user = users.find_one({"username": username})
 
     return render_template("all_terms.html",
@@ -143,6 +150,7 @@ def get_all_terms():
 @app.route("/term/<term_id>")
 def show_term(term_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     term = terms.find_one({"_id": term_id})
 
@@ -153,7 +161,7 @@ def show_term(term_id):
     term_examples = term["term_examples"]
     category_name = term["category_name"]
 
-    # checks to see if the normal term is in saved terms. Searching by ID won't work as they're unique. What are the chances 2 users upload identical terms, to the letter?
+    # checks to see if the normal term is in saved terms.
     is_in_database = saved.find_one({"saved_by": username,
                                      "term": term_name,
                                      "term_definition": term_definition,
@@ -163,28 +171,25 @@ def show_term(term_id):
 
     return render_template("term.html", term=term,
                            is_in_database=is_in_database,
-                           username=username, user=username)
+                           username=username, user=user)
 
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
 def new_term():
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     random_string = uuid.uuid4().hex
 
     return render_template("new_term.html",
                            categories=categories.find({"author": username}),
-                           new_id=random_string, user=username,
+                           new_id=random_string, user=user,
                            username=username)
 
 # Save the term to the database:
 @app.route("/add_term", methods=["POST"])
 def add_term():
     username = check_session_user(session)
-
-    term_title = request.form.get("term")
-    if len(term_title) > 28:
-        return "Term title to be 28 characters, max!"
 
     terms.insert_one(request.form.to_dict())
 
@@ -194,22 +199,19 @@ def add_term():
 @app.route("/edit_term/<term_id>")
 def edit_term(term_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     term = terms.find_one({"_id": term_id})
 
     return render_template("edit_term.html",
                            term=term,
                            categories=categories.find({"author": username}),
-                           username=username, user=username)
+                           username=username, user=user)
 
 # Save your changes to the database once done editing:
 @app.route("/save_term/<term_id>", methods=["POST"])
 def save_term(term_id):
     username = check_session_user(session)
-
-    term_title = request.form.get("term")
-    if len(term_title) > 28:
-        return "Term title to be 28 characters, max!"
 
     # saves the term
     my_terms = terms
@@ -226,15 +228,16 @@ def save_term(term_id):
 
     return redirect(url_for("my_terms", username=username))
 
-# Delete a term request TODO change to JS prompt:
+# Delete a term request:
 @app.route("/delete_request/<term_id>")
 def delete_request(term_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     term = terms.find_one({"_id": term_id})
 
     return render_template("delete_request.html",
-                           term=term, user=username)
+                           term=term, user=user)
 
 # Shows chosen term and asks for confirmation before deleting:
 @app.route("/delete_term/<term_id>")
@@ -248,8 +251,9 @@ def delete_term(term_id):
 # Find a term in all terms:
 @app.route("/find_term", methods=["POST"])
 def find_term():
-    # This requires some error checking and validation
+    # TODO This requires some error checking and validation
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     term_searched = request.form["term_search"]
     the_term = terms.find_one({"term": term_searched})
@@ -257,38 +261,46 @@ def find_term():
     if the_term:
         return redirect(url_for("show_term",
                                 username=username,
-                                term_id=the_term["_id"]))
+                                term_id=the_term["_id"],
+                                user=user))
     else:
-        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
+        return """
+            <h1>Oops! It seems your search was unsuccessful!</h1>
+        """
 
 # Show all categories:
 @app.route("/categories")
 def get_categories():
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     return render_template("categories.html",
                            categories=categories.find({"author": username}),
-                           username=username, user=username)
+                           username=username, user=user)
 
 # When a category is clicked:
 @app.route("/show_category/<category_id>")
 def show_category(category_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     category = categories.find_one({"_id": ObjectId(category_id)})
 
     return render_template("show_category.html",
-                           category=category, user=username)
+                           username=username,
+                           category=category, user=user)
 
-# Delete a category request TODO change to a JS prompt:
+# Delete a category request:
 @app.route("/delete_category_request/<category_id>")
 def delete_category_request(category_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     category = categories.find_one({"_id": ObjectId(category_id)})
 
     return render_template("delete_category_request.html",
-                           category=category, user=username)
+                           username=username,
+                           category=category, user=user)
 
 # Shows chosen category and asks for confirmation before deleting:
 @app.route("/delete_category/<category_id>")
@@ -301,9 +313,10 @@ def delete_category(category_id):
 @app.route("/add_category")
 def add_category():
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     return render_template("add_category.html",
-                           username=username, user=username)
+                           username=username, user=user)
 
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
@@ -315,7 +328,9 @@ def save_category():
                                          "author": username})
 
     if is_in_database:
-        return "Category already exists!"  # TODO change this to a JS prompt to warn the user.
+        return """
+            <h1>Category already exists!</h1>
+            """
     else:
         categories.insert_one(request.form.to_dict())
         return redirect(url_for("new_term"))
@@ -324,21 +339,24 @@ def save_category():
 @app.route("/find_category", methods=["POST"])
 def find_category():
     username = check_session_user(session)
-    # This requires some error checking and validation
+    user = users.find_one({"username": username})
+
+    # TODO This requires some error checking and validation
     category_searched = request.form["category_search"]
     the_category = categories.find_one({"category_name": category_searched})
 
     if the_category["author"] == username:
         return render_template("show_category.html",
-                               category=the_category, user=username)
+                               category=the_category, user=user)
     else:
-        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
+        return """
+            <h1>Oops! It seems your search was unsuccessful!</h1>
+        """
 
 # Shows the list of saved terms (Further Readings):
 @app.route("/saved_terms")
 def saved_terms():
     username = check_session_user(session)
-
     user = users.find_one({"username": username})
 
     return render_template("further_readings.html",
@@ -350,17 +368,19 @@ def saved_terms():
 @app.route("/saved_term/<term_id>")
 def show_saved_term(term_id):
     username = check_session_user(session)
+    user = users.find_one({"username": username})
 
     term = saved.find_one({"_id": term_id})
 
     return render_template("saved_term.html", term=term,
-                           username=username, user=username)
+                           username=username, user=user)
 
 # clones the term, changes the id, and populates saved_by to generate further readings list:
 @app.route("/add_to_saved/<term_id>")
 def add_to_saved(term_id):
     username = check_session_user(session)
 
+    # Finds which id the user clicked on and clones it.
     in_all_terms = terms.find_one({"_id": term_id})
     in_saved_terms = saved.find_one({"_id": term_id})
 
@@ -383,7 +403,6 @@ def add_to_saved(term_id):
 @app.route("/remove_from_saved/<term_id>")
 def remove_from_saved(term_id):
     username = check_session_user(session)
-
     user = users.find_one({"username": username})
 
     saved.delete_one({"_id": term_id})
@@ -395,15 +414,20 @@ def remove_from_saved(term_id):
 @app.route("/find_saved", methods=["POST"])
 def find_saved():
     username = check_session_user(session)
-    # This requires some error checking and validation
+    user = users.find_one({"username": username})
+
+    # TODO This requires some error checking and validation
     term_searched = request.form["saved_search"]
     the_term = saved.find_one({"term": term_searched,
                               "saved_by": username})
 
     if the_term:
-        return render_template("saved_term.html", term=the_term)
+        return render_template("saved_term.html",
+                               term=the_term, user=user)
     else:
-        return "Oops! It seems your search was unsuccessful!"  # TODO change this to a JS prompt to warn the user.
+        return """
+            <h1>Oops! It seems your search was unsuccessful!</h1>
+        """
 
 
 if __name__ == "__main__":
