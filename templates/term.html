@@ -11,12 +11,10 @@
     </div>
 
     <div class="row">
-        <div class="col s12 l8 offset-l1 offset-xl1 container form-box">
+        <div class="col s12 l8 offset-l1 container form-box">
             <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
-
             <div class="row">
                 <div class="col s12 l10">
-
                     <div class="text-font">
                         <h5>Definition</h5>
                         <hr>
@@ -36,22 +34,22 @@
                         <p>{{ term.term_examples }}</p>
                         <div class="row">
                             <div class="further-readings text-font">
-                            {% if is_in_database %}
-                                <div class="col s9 offset-s1">
-                                    <p class="save-text">Remove From Further Readings: </p>
-                                </div>
-                                <div class="col s1">
-                                    <a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times save-term-button" aria-hidden="true"></i></a>
-                                </div>
-                            {% else %}
-                                <div class="col s9 offset-s1">
-                                    <p class="save-text">Add To Further Readings: </p>
-                                </div>
-                                <div class="col s1">
-                                    <a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag save-term-button" aria-hidden="true"></i></a>
-                                </div>
+                                {% if is_in_database %}
+                                    <div class="col s9 offset-s1">
+                                        <p class="save-text">Remove From Further Readings: </p>
+                                    </div>
+                                    <div class="col s1">
+                                        <a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times save-term-button" aria-hidden="true"></i></a>
+                                    </div>
+                                {% else %}
+                                    <div class="col s9 offset-s1">
+                                        <p class="save-text">Add To Further Readings: </p>
+                                    </div>
+                                    <div class="col s1">
+                                        <a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag save-term-button" aria-hidden="true"></i></a>
+                                    </div>
+                                {% endif %}
                             </div>
-                            {% endif %}
                         </div>
                         <h6>Category</h6>
                         <hr>
@@ -63,7 +61,10 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
+        {% block all_terms_content_3 %}
     </div>
+    
     <div class="row">
         <div class="col s12 l6 offset-l1 buttons-container">
             {% if username == term.author %}

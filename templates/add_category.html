@@ -16,15 +16,18 @@
 
             <div class="row">
                 <div class="col s12 l10">
-                    <form class="text-font" action="{{ url_for('save_category') }}" method="post">
+                    <form id="form" class="text-font" action="{{ url_for('save_category') }}" method="post">
                         <input type="hidden" id="author" name="author" value="{{ username }}">
                         <div class="input-field">
                             <label for="category">Category Name:</label><br>
                             <input type="text" id="category" name="category_name" required><br>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
+        {% endblock %}
+        {% block all_terms_content_3 %}
     </div>
    <div class="row">
         <div class="col s12 l6 offset-l1 buttons-container">
@@ -33,15 +36,15 @@
                     <a class="waves-effect waves-light btn buttons text-font" href= "{{ url_for('new_term') }}">Cancel</a>
                 </div>
                 <div class="col s4 l4">
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="reset" value="Clear"></a>
+                    <a class="waves-effect waves-light btn buttons text-font"><input form="form" type="reset" value="Clear"></a>
                 </div>
                 <div class="col s4 l4">
-                    <a class="waves-effect waves-light btn buttons text-font"><input type="submit" value="Add"></a>
+                    <a class="waves-effect waves-light btn buttons text-font"><input form="form" type="submit" value="Add"></a>
                 </div>
             </div>
         </div>
     </div>
-</form>
+
 
 
 

@@ -60,7 +60,9 @@ def sign_out():
 def delete_profile_request(user_id):
     user = users.find_one({"_id": ObjectId(user_id)})
 
-    return render_template("delete_profile_request.html", user=user)
+    return render_template("delete_profile_request.html", user=user,
+                           saved_terms=saved
+                           .find({"saved_by": user["username"]}))
 
 # Delete profile:
 @app.route("/delete_profile/<user_id>")
@@ -80,14 +82,18 @@ def valid_login():
 
     if user_exists:
         if password != user_exists["password"]:
-            return "Password Incorrect!"
+            return """
+                <h1>Password Incorrect!</h1>
+                """
 
         session["USERNAME"] = user_exists["username"]
 
         return redirect(url_for("get_all_terms",
                                 username=user_exists["username"]))
     else:
-        return "User not found - try register instead"
+        return """
+        <h1>User not found - try register instead</h1>
+        """
 
 # User register:
 @app.route("/user_register")
@@ -133,7 +139,8 @@ def my_terms(username):
 
     return render_template("my_terms.html", user=user,
                            username=username,
-                           terms=terms.find({"author": username}))
+                           terms=terms.find({"author": username}),
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Show all terms in the database:
 @app.route("/all_terms")
@@ -144,7 +151,8 @@ def get_all_terms():
     return render_template("all_terms.html",
                            username=username,
                            user=user,
-                           terms=terms.find())
+                           terms=terms.find(),
+                           saved_terms=saved.find({"saved_by": username}))
 
 # When a term is clicked:
 @app.route("/term/<term_id>")
@@ -171,7 +179,8 @@ def show_term(term_id):
 
     return render_template("term.html", term=term,
                            is_in_database=is_in_database,
-                           username=username, user=user)
+                           username=username, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
@@ -184,7 +193,8 @@ def new_term():
     return render_template("new_term.html",
                            categories=categories.find({"author": username}),
                            new_id=random_string, user=user,
-                           username=username)
+                           username=username,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Save the term to the database:
 @app.route("/add_term", methods=["POST"])
@@ -206,7 +216,8 @@ def edit_term(term_id):
     return render_template("edit_term.html",
                            term=term,
                            categories=categories.find({"author": username}),
-                           username=username, user=user)
+                           username=username, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Save your changes to the database once done editing:
 @app.route("/save_term/<term_id>", methods=["POST"])
@@ -237,7 +248,8 @@ def delete_request(term_id):
     term = terms.find_one({"_id": term_id})
 
     return render_template("delete_request.html",
-                           term=term, user=user)
+                           term=term, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Shows chosen term and asks for confirmation before deleting:
 @app.route("/delete_term/<term_id>")
@@ -276,7 +288,8 @@ def get_categories():
 
     return render_template("categories.html",
                            categories=categories.find({"author": username}),
-                           username=username, user=user)
+                           username=username, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # When a category is clicked:
 @app.route("/show_category/<category_id>")
@@ -288,7 +301,8 @@ def show_category(category_id):
 
     return render_template("show_category.html",
                            username=username,
-                           category=category, user=user)
+                           category=category, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Delete a category request:
 @app.route("/delete_category_request/<category_id>")
@@ -300,7 +314,8 @@ def delete_category_request(category_id):
 
     return render_template("delete_category_request.html",
                            username=username,
-                           category=category, user=user)
+                           category=category, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Shows chosen category and asks for confirmation before deleting:
 @app.route("/delete_category/<category_id>")
@@ -316,7 +331,8 @@ def add_category():
     user = users.find_one({"username": username})
 
     return render_template("add_category.html",
-                           username=username, user=user)
+                           username=username, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # Save the new category to the database:
 @app.route("/save_category", methods=["POST"])
@@ -347,7 +363,8 @@ def find_category():
 
     if the_category["author"] == username:
         return render_template("show_category.html",
-                               category=the_category, user=user)
+                               category=the_category, user=user,
+                               saved_terms=saved.find({"saved_by": username}))
     else:
         return """
             <h1>Oops! It seems your search was unsuccessful!</h1>
@@ -362,7 +379,8 @@ def saved_terms():
     return render_template("further_readings.html",
                            terms=saved.find({"saved_by": username}),
                            user=user,
-                           username=username)
+                           username=username,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # When a further_readings term is clicked:
 @app.route("/saved_term/<term_id>")
@@ -373,7 +391,8 @@ def show_saved_term(term_id):
     term = saved.find_one({"_id": term_id})
 
     return render_template("saved_term.html", term=term,
-                           username=username, user=user)
+                           username=username, user=user,
+                           saved_terms=saved.find({"saved_by": username}))
 
 # clones the term, changes the id, and populates saved_by to generate further readings list:
 @app.route("/add_to_saved/<term_id>")
@@ -423,7 +442,8 @@ def find_saved():
 
     if the_term:
         return render_template("saved_term.html",
-                               term=the_term, user=user)
+                               term=the_term, user=user,
+                               saved_terms=saved.find({"saved_by": username}))
     else:
         return """
             <h1>Oops! It seems your search was unsuccessful!</h1>

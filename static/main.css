@@ -6,9 +6,9 @@
 /**********************************************GENERAL START*/
 
 .like-counter {
-  color: #000;
-  text-decoration: none;
-  margin-right: 5px;
+    color: #000;
+    text-decoration: none;
+    margin-right: 5px;
 }
 
 .liked {
@@ -23,9 +23,9 @@
     top: 50%;
     left: 50%;
     margin-left: -8em;
-    margin-top: -15px;
+    margin-top: -9.5px;
     color: #383838;
-    font-size: 2em;
+    font-size: 1em;
     z-index: 1;
 }
 
@@ -37,6 +37,13 @@ html, body {
 
 form>input {
     color: #333333;
+}
+
+.waves-effect input[type="button"], 
+.waves-effect input[type="reset"], 
+.waves-effect input[type="submit"] {
+    width: 100%;
+    height: 100%;
 }
 
 label {
@@ -111,14 +118,6 @@ h6 {
     top: -0.5em;
 }
 
-.user-register-button:hover {
-    background-color: #47aad9;
-}
-
-.buttons:hover {
-    background-color: #153240;
-}
-
 .custom-button {
     text-transform: uppercase;
     padding: .5em;
@@ -131,6 +130,8 @@ h6 {
     font-size: 2em;
     height: 2em;
     line-height: 2.5em;
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
 }
 
 .save-term-button:hover {
@@ -150,6 +151,8 @@ h6 {
     border-bottom: 2px solid #fafafa;
     border-top: 2px solid #fafafa;
     box-shadow: 0px 0px 4px #333333;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 
 .term-category-button:hover {
@@ -240,9 +243,24 @@ nav a.button-collapse i {
 
 #sign-out-icon {
     padding-left: 1em;
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
 }
 
 #sign-out-icon:hover {
+    color: #47aad9;
+}
+
+#sign-out-text {
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
+}
+
+#sign-out-text:hover {
+    color: #153240;
+}
+
+#sign-out-text:hover #sign-out-icon {
     color: #47aad9;
 }
 
@@ -323,6 +341,21 @@ nav ul a {
     background-color: #fafafa;
 }
 
+.footer-info {
+    height: 2em;
+    line-height: 3em;
+    font-family: "Railway", sans-serif;
+    color: #153240;
+    margin: 0;
+    text-align: right;
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
+}
+
+.footer-info:hover {
+    color: #47aad9;
+}
+
 .container {
     position: absolute;
     left: 50%;
@@ -351,6 +384,12 @@ nav ul a {
     margin: 0;
     background-color: #47aad9;
     color: #fafafa;
+    -webkit-transition: background-color .5s ease-in-out;
+    transition: background-color .5s ease-in-out;
+}
+
+.buttons:hover {
+    background-color: #153240;
 }
 
 .form-box {
@@ -373,21 +412,14 @@ nav ul a {
     border: 10px solid #153240;
 }
 
-.footer-info {
-    height: 2em;
-    line-height: 3em;
-    font-family: "Railway", sans-serif;
-    color: #153240;
-    margin: 0;
-    text-align: right;
-}
-
 .social-icons {
     height: 2.5em;
     line-height: 2.5em;
     color: #153240;
     font-size: 2em;
     vertical-align: middle;
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
 }
 
 .social-icons:hover {
@@ -427,6 +459,16 @@ nav ul a {
     color: #153240;
 }
 
+
+#home-text-sign-in a {
+    -webkit-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
+}
+
+#home-text-sign-in a:hover {
+    color: #153240;
+}
+
 .user-register-button {
     position: absolute;
     width: 16em;
@@ -436,6 +478,12 @@ nav ul a {
     background-color: #153240;
     color: #fafafa;
     border-radius: 10px;
+    -webkit-transition: background-color .5s ease-in-out;
+    transition: background-color .5s ease-in-out;
+}
+
+.user-register-button:hover {
+    background-color: #47aad9;
 }
 
 .copyright-info {
@@ -489,6 +537,12 @@ nav ul a {
     .user-register-button>span {
         font-size: 1.5em;
         line-height: 2.25em;
+    }
+
+    #register-welcome,
+    #login-welcome {
+        margin-top: -15px;
+        font-size: 2em;
     }
 
     #home-text-sign-in {
@@ -617,11 +671,15 @@ nav ul a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    -webkit-transition: background-color .5s ease-in-out;
+    transition: background-color .5s ease-in-out;
 }
 
 .dropdown {
     float: left;
     overflow: hidden;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 
 .dropdown .dropbtn {
@@ -647,6 +705,8 @@ nav ul a {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     font-family: "Railway", sans-serif;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 
 .dropdown-contents a {
@@ -675,6 +735,30 @@ nav ul a {
 .desktop-content-icon {
     font-size: 3em;
     margin: .5em 0;
+}
+
+#desktop-FR-section {
+    margin-top: 1.75em;
+    position: absolute;
+    bottom: 13.5em;
+    top: 13em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 23%;
+}
+
+#desktop-FR-section .term-category-button {
+    width: 98%;
+}
+
+#col-padding-adjustment {
+    padding-left: 0;
+}
+
+#login-col-padding-adjustment,
+#register-col-padding-adjustment {
+    padding-left: 0;
+    padding-right: 1.5rem;
 }
 
 /*******************************MEDIA QUERIES*/
@@ -725,6 +809,8 @@ nav ul a {
         background-color: rgba(0,0,0,0);
         border: 1px solid #47aad9;
         color: #47aad9;
+        -webkit-transition: all .5s ease-in-out;
+        transition: all .5s ease-in-out;
     }
 
     .buttons:hover {

@@ -20,6 +20,7 @@
 <body>
     <header>
         <nav>
+            <!-- mobile nav -->
             <div class="nav-wrapper">
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="side-nav" id="mobile-demo">
@@ -65,6 +66,7 @@
             <i class="fa fa-home header-icon hide-on-large-only" aria-hidden="true"></i>
 
             {% endblock %}
+            <!-- desktop nav -->
             <div class="row">
                 <div class="col l5 offset-l1">
                     <a href="{{ url_for('get_all_terms') }}"><h2 class="header-font page-header hide-on-med-and-down">Terming For Learning</h2></a>
@@ -84,13 +86,13 @@
                     </div>
                 </div>
                 <div class="col l2 hide-on-med-and-down">
-                    <a href="{{ url_for('sign_out') }}"><i id="sign-out-icon" class="fa fa-sign-out social-icons" aria-hidden="true"></i> Sign Out</a>
+                    <a id="sign-out-text" href="{{ url_for('sign_out') }}" onclick="return confirm('Sign out?');"><i id="sign-out-icon" class="fa fa-sign-out social-icons" aria-hidden="true"></i> Sign Out</a>
                 </div>
             </div>
             {% block all_terms_content_2 %}
 
         </div>
-        
+        <!-- content -->
         <div class="row">
             <div class="col s12 l8 offset-l1 container form-box">
                 <h1 id="user-welcome" class="text-font hide-on-large-only">Hello, {{ username }}!</h1>
@@ -122,11 +124,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col l3 hide-on-med-and-down">
-                <!-- further readings to go here -->
+
+            {% endblock %}
+            <!-- desktop-only content -->
+            <div class="col l3 offset-l3 hide-on-med-and-down">
+                <div class="row">
+                    <div id="col-padding-adjustment" class="col l9 xl10">
+                        <form class="search-form" action="{{ url_for('find_saved') }}" method="post">
+                            <label class="text-font" for="term_search">Search:</label>
+                            <input type="search" name="saved_search" id="saved_search" required>
+                        </form>
+                    </div>
+                    <div class="col l1">
+                        <i class="fa fa-flag desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div id="desktop-FR-section">
+                    {% for saved_term in saved_terms %}
+                        {% if saved_term["saved_by"] != "" %}
+                            <a href="{{ url_for('show_saved_term', term_id=saved_term._id) }}">
+                                <div class="term-category-button">
+                                    {{ saved_term.term }}
+                                    <i class="fa fa-chevron-right term-category-button-icon" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
+
+            {% block all_terms_content_3 %}
         </div>
-        
+        <!-- buttons -->
         <div class="row">
             <div class="col s12 l6 offset-l1 buttons-container">
                 <div class="row">
@@ -140,6 +169,7 @@
         {% endblock %}
 
     </section>
+    <!-- footer -->
     <footer>
         <div class="footer-container hide-on-med-and-down">
             <div class="row">
