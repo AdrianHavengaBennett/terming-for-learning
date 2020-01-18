@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // Materialize js initializations
     $(".button-collapse").sideNav();
+    $(".tooltipped").tooltip();
     $("select").formSelect();
     $('input#input_text, textarea#textarea2').characterCounter();
 });

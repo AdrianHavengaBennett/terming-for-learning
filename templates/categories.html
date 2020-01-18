@@ -17,16 +17,20 @@
                 <div class="col l1">
                     <i class="fa fa-files-o desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
                 </div>
-                <div class="col s12 l4 offset-l5">
+                <div class="col l5">
+                    <h2 class="header-font desktop-header hide-on-med-and-down">Categories</h2>
+                </div>
+                <div class="col s12 l4">
                     <form class="search-form" action="{{ url_for('find_category') }}" method="post">
-                        <label for="category_search">Search:</label>
-                        <input type="search" name="category_search" id="category_search">
+                        <label for="category_search">Search categories:</label>
+                        <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="category_search" id="category_search">
                     </form>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col s12 l10">
+                {% if categories.count() > 0 %}
                     {% for cat in categories %}
 
                         <a class="text-font" href="{{ url_for('show_category', category_id=cat._id) }}">
@@ -37,6 +41,9 @@
                         </a>
 
                     {% endfor %}
+                {% else %}
+                    <p class="no-content">Nothing to see here! Get writing!</p>
+                {% endif %}
                 </div>
             </div>
         </div>

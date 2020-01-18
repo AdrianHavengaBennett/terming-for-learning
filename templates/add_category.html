@@ -12,7 +12,15 @@
 
     <div class="row">
         <div class="col s12 l8 offset-l1 offset-xl1 container form-box">
-            <i class="fa fa-file-text-o desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+
+            <div class="row">
+                <div class="col l1">
+                    <i class="fa fa-file-text-o desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+                </div>
+                <div class="col l5">
+                    <h2 class="header-font desktop-header hide-on-med-and-down">New Category</h2>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col s12 l10">
@@ -20,7 +28,7 @@
                         <input type="hidden" id="author" name="author" value="{{ username }}">
                         <div class="input-field">
                             <label for="category">Category Name:</label><br>
-                            <input type="text" id="category" name="category_name" required><br>
+                            <input type="text" id="category" name="category_name" data-length="12" required><br>
                         </div>
                     </form>
                 </div>

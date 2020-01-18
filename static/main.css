@@ -5,6 +5,12 @@
 
 /**********************************************GENERAL START*/
 
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
 .like-counter {
     color: #000;
     text-decoration: none;
@@ -29,10 +35,10 @@
     z-index: 1;
 }
 
-html, body {
-    margin: 0;
-    height: 100%;
-    width: 100%;
+.no-content {
+    font-family: "Railway", sans-serif;
+    text-align: center;
+    color: #333333;
 }
 
 form>input {
@@ -54,17 +60,6 @@ label {
 hr {
     width: 4em;
     background-color: #333333;
-}
-
-.profile-image {
-    width: 100%;
-    text-align: center;
-}
-
-.profile-image img {
-    border-radius: 50%;
-    width: 50%;
-    text-align: center;
 }
 
 select {
@@ -146,7 +141,7 @@ h6 {
     background-color: #2e6e8d;
     color: #fafafa;
     line-height: 2.5em;
-    text-align: justify;
+    text-align: left;
     padding-left: 10px;
     border-bottom: 2px solid #fafafa;
     border-top: 2px solid #fafafa;
@@ -191,6 +186,11 @@ nav .button-collapse {
 
 nav a {
     color: #153240;
+}
+
+p>strong {
+    font-size: 1.25em;
+    color: #ff0029;
 }
 
 /**********************************************GENERAL END*/
@@ -522,6 +522,10 @@ nav ul a {
         bottom: 8em;
     }
 
+    .no-content {
+        font-size: 1.5em;
+    }
+
     #home-title {
         bottom: 15em;
         font-size: 3em;
@@ -642,7 +646,7 @@ nav ul a {
     }
 
     p>strong {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
     .text-font .row p i {
@@ -728,6 +732,10 @@ nav ul a {
 
 /*********** Dropdown navigation end */
 
+.desktop-header {
+    font-size: 2em;
+}
+
 .custom-container {
     width: 100%;
 }
@@ -763,7 +771,7 @@ nav ul a {
 
 /*******************************MEDIA QUERIES*/
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 993px) {
     .user-register-button>span {
         line-height: 2.5em;
     }
@@ -786,6 +794,10 @@ nav ul a {
 
     p[class="text-font"] {
         width: 100%;
+    }
+
+    p>strong {
+        font-size: 1.25em;
     }
 
     #graduation-cap-icon {

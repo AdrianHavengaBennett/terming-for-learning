@@ -85,8 +85,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col l2 hide-on-med-and-down">
-                    <a id="sign-out-text" href="{{ url_for('sign_out') }}" onclick="return confirm('Sign out?');"><i id="sign-out-icon" class="fa fa-sign-out social-icons" aria-hidden="true"></i> Sign Out</a>
+                <div class="col l3 hide-on-med-and-down">
+                    <a id="sign-out-text" href="{{ url_for('sign_out') }}" onclick="return confirm('Sign out?');">
+                        <i id="sign-out-icon" class="fa fa-sign-out social-icons" aria-hidden="true"></i> Sign Out: {{ username }}</a>
                 </div>
             </div>
             {% block all_terms_content_2 %}
@@ -101,10 +102,13 @@
                     <div class="col l1">
                         <i class="fa fa-home desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
                     </div>
-                    <div class="col s12 l4 offset-l5">
+                    <div class="col l5">
+                        <h2 class="header-font desktop-header hide-on-med-and-down">All terms</h2>
+                    </div>
+                    <div class="col s12 l4">
                         <form class="search-form" action="{{ url_for('find_term') }}" method="post">
-                            <label class="text-font" for="term_search">Search:</label>
-                            <input type="search" name="term_search" id="term_search" required>
+                            <label class="text-font" for="term_search">Search all:</label>
+                            <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="term_search" id="term_search" required>
                         </form>
                     </div>
                 </div>
@@ -131,8 +135,8 @@
                 <div class="row">
                     <div id="col-padding-adjustment" class="col l9 xl10">
                         <form class="search-form" action="{{ url_for('find_saved') }}" method="post">
-                            <label class="text-font" for="term_search">Search:</label>
-                            <input type="search" name="saved_search" id="saved_search" required>
+                            <label class="text-font" for="term_search">Search saved:</label>
+                            <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="saved_search" id="saved_search" required>
                         </form>
                     </div>
                     <div class="col l1">
@@ -140,6 +144,7 @@
                     </div>
                 </div>
                 <div id="desktop-FR-section">
+                {% if saved_terms.count() > 0 %}
                     {% for saved_term in saved_terms %}
                         {% if saved_term["saved_by"] != "" %}
                             <a href="{{ url_for('show_saved_term', term_id=saved_term._id) }}">
@@ -150,6 +155,9 @@
                             </a>
                         {% endif %}
                     {% endfor %}
+                {% else %}
+                    <p class="no-content">Nothing to see here! Get reading!</p>
+                {% endif %}
                 </div>
             </div>
 

@@ -12,11 +12,18 @@
 
     <div class="row">
         <div class="col s12 l8 offset-l1 offset-xl1 container form-box">
-            <i class="fa fa-list-ol desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
-
+            <div class="row">
+                <div class="col l1">
+                    <i class="fa fa-list-ol desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+                </div>
+                <div class="col l5">
+                    <h2 class="header-font desktop-header hide-on-med-and-down">Your terms</h2>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col s12 l10">
-                
+                {% if terms.count() > 0 %}
                     {% for term in terms %}
                         
                         <a class="text-font" href="{{ url_for('show_term', term_id=term._id) }}">
@@ -27,6 +34,9 @@
                         </a>
 
                     {% endfor %}
+                {% else %}
+                    <p class="no-content">Nothing to see here! Get writing!</p>
+                {% endif %}
                 </div>
             </div>
         </div>

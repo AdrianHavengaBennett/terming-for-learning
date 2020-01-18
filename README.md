@@ -5,7 +5,7 @@
 Calling everyone who has an unquenchable thirst for learning!
 The main aim of this program is to jot down, share, and like terms which you either simply like alone or feel further your understanding of a particular programming language. But it doesn't have to stop there. Use it for any terms for any subject.
 This program was put together for The Code Institute as my third milestone project (Data Centric Development Milestone Project), which introduces the Back-End for the first time, focusing on logic, driven by Python and made simple by 
-Flask and the Jinja2 templating system.
+Flask and the Jinja2 templating system and template inheritance.
 In this program, I've called on a database structure for the first time, too; MongoDB. The program also calls on old hands for interactivity, such as Javascript and jQuery, as well as the necessary HTML5, CSS, and the Materialize framework. Enjoy!
 
 # UX
@@ -44,13 +44,14 @@ At the suggestion by my wise mentor, Nishant Kumar, I decided to use https://pro
 ### - Existing features
 User has the ability to do the following:
 - Create an account by registering their email, username, and password.
-- Sign in an out of their registered accounts.
+- Sign in and out of their registered accounts.
 - Delete their account(s).
-- Add a term.
+- Add a term or read other users' terms.
 - Edit or delete both terms and categories.
-- Search all global terms.
+- Search all global terms, saved terms, and categories.
 - Rate a noob definition (rating is based on definition's Laymen's level - a handy tooltip offers guidance) - The idea is to help new programers.
 - Save (shortlist) terms which he/she has determined will require further insights (also removing from shortlist). This will be presented (on desktop - separate screen for mobile) as something similar to Outlook's flagged email system.
+- Handy tooltips guide your path.
 
 ### - Features left to implement
 
@@ -88,20 +89,28 @@ Technologies used in this project:
 ## Testing
 
 ### User Testing
+
 The following test cases have been performed to test funtionality:
-- Signing in - expected result = All terms and user welcome loaded | PASS
-- Register - expected result = All terms page and user welcome loaded | PASS
-- Clicking "my terms" (on mobile - in navigation or elsewhere) - expected result = user's terms presented | PASS
-- Clicking "all terms" (on mobile - in navigation or elsewhere) - expected result = all users' terms presented | PASS
-- Create new term - expected result = form loads and, upon completion and save, user's terms presented with new term at bottom of list | PASS
-- Edit term - expected result = form loads with current category name and, upon completion and save, user's terms presented | PASS
-- Save term - expected result = clones the term, changes the id, and populates saved_by to generate saved list / user's saved terms presented to user | PASS
+
+Action|Expected result|PASS/FAIL
+-|-|-
+Register | All terms page and user welcome loaded | PASS
+Signing in | All terms and user welcome loaded | PASS
+Signing out | JS confirm: OK to sign out and return to welcome page / Cancel to stay logged in | PASS
+Clicking "my terms" (on mobile - in navigation or elsewhere) | User's terms presented | PASS
+Clicking "all terms" (on mobile - in navigation or elsewhere) | All users' terms presented | PASS
+Create new term | Form loads and, upon completion and save, user's terms presented with new term added | PASS
+Edit term | Form loads with current category name and, upon completion and save, user's terms presented | PASS
+Save term | Clones term, changes id, and populates saved_by to generate saved list. User's saved terms presented | PASS
+Search saved terms/categories | If term/category is in database, loads term/category; if not, "not found" message displayed | PASS
+Delete term | Confirmation of deletion and, upon confirming, deletes term | PASS
+Delete profile | Confirmation of deletion and, upon confirming, deletes user and all terms/categories associated with username | PASS
 
 # TODO
 more tests when project is completed
 
-- HTML validated via https://validator.w3.org/ - Pass
-- CSS validated via https://jigsaw.w3.org/css-validator/ - Pass
+- HTML validated via https://validator.w3.org/ - FAILED due to templating language
+- CSS validated via https://jigsaw.w3.org/css-validator/ - PASS
 
 ## Deployment TODO
 For this project, I have used Heroku to deploy and host the application.

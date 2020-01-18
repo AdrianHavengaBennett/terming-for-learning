@@ -67,9 +67,14 @@ def delete_profile_request(user_id):
 # Delete profile:
 @app.route("/delete_profile/<user_id>")
 def delete_profile(user_id):
+    username = check_session_user(session)
+
     user = users.find_one({"_id": ObjectId(user_id)})
     users.delete_one(user)
     session.pop("USERNAME", None)
+
+    categories.delete_many({"author": username})
+    terms.delete_many({"author": username})
 
     return redirect(url_for("welcome"))
 
@@ -224,7 +229,35 @@ def edit_term(term_id):
 def save_term(term_id):
     username = check_session_user(session)
 
-    # saves the term
+    the_term = terms.find_one({"_id": term_id})
+
+    # check if term is in saved, then save changes there also
+    saved_terms = saved
+    in_saved = saved.find_one({"term": the_term["term"],
+                               "category_name": the_term["category_name"],
+                               "term_definition": the_term["term_definition"],
+                               "noob_definition": the_term["noob_definition"],
+                               "term_examples": the_term["term_examples"],
+                               "author": the_term["author"]
+                               })
+    if in_saved:
+        saved_terms.update_many(
+            {"term": the_term["term"],
+             "category_name": the_term["category_name"],
+             "term_definition": the_term["term_definition"],
+             "noob_definition": the_term["noob_definition"],
+             "term_examples": the_term["term_examples"],
+             "author": the_term["author"]},
+
+            {"$set": {
+             "term": request.form.get("term"),
+             "category_name": request.form.get("category_name"),
+             "term_definition": request.form.get("term_definition"),
+             "noob_definition": request.form.get("noob_definition"),
+             "term_examples": request.form.get("term_examples"),
+             "author": request.form.get("author")}}, True)
+
+    # saves the original term
     my_terms = terms
     my_terms.replace_one(
         {"_id": term_id}, {
@@ -263,7 +296,6 @@ def delete_term(term_id):
 # Find a term in all terms:
 @app.route("/find_term", methods=["POST"])
 def find_term():
-    # TODO This requires some error checking and validation
     username = check_session_user(session)
     user = users.find_one({"username": username})
 
@@ -357,11 +389,11 @@ def find_category():
     username = check_session_user(session)
     user = users.find_one({"username": username})
 
-    # TODO This requires some error checking and validation
     category_searched = request.form["category_search"]
-    the_category = categories.find_one({"category_name": category_searched})
+    the_category = categories.find_one({"category_name": category_searched,
+                                        "author": username})
 
-    if the_category["author"] == username:
+    if the_category:
         return render_template("show_category.html",
                                category=the_category, user=user,
                                saved_terms=saved.find({"saved_by": username}))
@@ -435,7 +467,6 @@ def find_saved():
     username = check_session_user(session)
     user = users.find_one({"username": username})
 
-    # TODO This requires some error checking and validation
     term_searched = request.form["saved_search"]
     the_term = saved.find_one({"term": term_searched,
                               "saved_by": username})

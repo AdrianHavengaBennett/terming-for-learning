@@ -12,7 +12,17 @@
 
     <div class="row">
         <div class="col s12 l8 offset-l1 container form-box">
-            <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+
+            <div class="row">
+                <div class="col l1">
+                    <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
+                </div>
+                <div class="col l5">
+                    <h2 class="header-font desktop-header hide-on-med-and-down">{{ term.term }}</h2>
+                </div>
+            </div>
+
+            
             <div class="row">
                 <div class="col s12 l10">
                     <div class="text-font">
@@ -25,7 +35,9 @@
                                 <hr>
                             </div>
                             <div class="col s1">
-                                <a href="#" class="like-counter"><i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i></a>
+                                <a href="#" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is useful to beginners? Hit that thumbs up!">
+                                    <i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </div>
                         <p>{{ term.noob_definition }}</p>
