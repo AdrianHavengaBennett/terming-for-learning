@@ -20,8 +20,8 @@ As a user of this website, I would like to be able to do the following:
 - Add a new category when adding a new term, should that category not already be saved by me.
 - See a separate list of the terms I have save and also a separate list of the categories I have added.
 - See a laymen's-type of definition, which may make more sense to beginners.
-# TODO
 - Vote up/like a laymen's definition to highlight its helpfulness.
+- Also unlike a term should it be edited and no longer useful in my opinion.
 
 ## Wireframe
 At the suggestion by my wise mentor, Nishant Kumar, I decided to use https://proto.io/ to help me with my wireframe.
@@ -49,7 +49,8 @@ User has the ability to do the following:
 - Add a term or read other users' terms.
 - Edit or delete both terms and categories.
 - Search all global terms, saved terms, and categories.
-- Rate a noob definition (rating is based on definition's Laymen's level - a handy tooltip offers guidance) - The idea is to help new programers.
+- Like/rate a noob definition (rating is based on definition's Laymen's level - a handy tooltip offers guidance) - The idea is to help new programers.
+- Ability to also unlike the term should you wish to.
 - Save (shortlist) terms which he/she has determined will require further insights (also removing from shortlist). This will be presented (on desktop - separate screen for mobile) as something similar to Outlook's flagged email system.
 - Handy tooltips guide your path.
 
@@ -57,6 +58,7 @@ User has the ability to do the following:
 
 There are currently no pressing features left to implement as the project is completed to the expectation of what it was designed for (student project). 
 However, should this program be made available to the public, further client and server-side validation for user's information safety will be necessary. At the moment, it's at an extreme basic level.
+For example, the session object is utilised with the user's username. In production, the user's ID would be a safer option.
 
 ## Technologies Used
 
@@ -102,6 +104,7 @@ Clicking "all terms" (on mobile - in navigation or elsewhere) | All users' terms
 Create new term | Form loads and, upon completion and save, user's terms presented with new term added | PASS
 Edit term | Form loads with current category name and, upon completion and save, user's terms presented | PASS
 Save term | Clones term, changes id, and populates saved_by to generate saved list. User's saved terms presented | PASS
+Save term | All of the above plus updates in further readings list | PASS
 Search saved terms/categories | If term/category is in database, loads term/category; if not, "not found" message displayed | PASS
 Delete term | Confirmation of deletion and, upon confirming, deletes term | PASS
 Delete profile | Confirmation of deletion and, upon confirming, deletes user and all terms/categories associated with username | PASS
