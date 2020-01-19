@@ -17,9 +17,16 @@
                 <div class="col l1">
                     <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
                 </div>
-                <div class="col l5">
+                <div class="col l6">
                     <h2 class="header-font desktop-header hide-on-med-and-down">{{ term.term }}</h2>
                 </div>
+                {% if number_of_likes > 0 %}
+                    <div class="col l2 offset-l1">
+                        <i class="fa fa-thumbs-o-up desktop-content-icon hide-on-med-and-down tooltipped" data-position="bottom" data-tooltip="Number of grateful readers" aria-hidden="true">
+                            <span> {{ number_of_likes }}</span>
+                        </i>
+                    </div>
+                {% endif %}
             </div>
 
             
@@ -34,11 +41,19 @@
                                 <h5>Noob Definition</h5>
                                 <hr>
                             </div>
-                            <div class="col s1">
-                                <a href="#" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is useful to beginners? Hit that thumbs up!">
-                                    <i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i>
-                                </a>
-                            </div>
+                            {% if already_liked %}
+                                <div class="col s1">
+                                    <a href="{{ url_for('dislike', term_id=term._id) }}" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is no longer useful to beginners?">
+                                        <i class="fa fa-thumbs-o-down social-icons" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="col s1">
+                                    <a href="{{ url_for('like', term_id=term._id) }}" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is useful to beginners?">
+                                        <i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                         <p>{{ term.noob_definition }}</p>
                         <h5>Examples</h5>

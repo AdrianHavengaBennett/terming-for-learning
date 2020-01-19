@@ -38,6 +38,23 @@ def check_session_user(session):
         username = session["USERNAME"]
     return username
 
+
+def liked(term_id, user):
+    if term_id in user["liked"]:
+        return True
+    else:
+        return False
+
+
+def num_of_likes(term_id, coll):
+    likes_array = []
+    num_of_instances = coll.find({"liked": term_id})
+
+    for term_id in num_of_instances:
+        likes_array.append(term_id)
+
+    return len(likes_array)
+
 # Home screen / main welcome page:
 @app.route("/")
 def welcome():
@@ -134,6 +151,10 @@ def save_new_user():
 
     users.insert_one(request.form.to_dict())
 
+    # Create a field of type array to store term_ids
+    users.update({"username": username},
+                 {"$push": {"liked": ""}})
+
     return redirect(url_for("get_all_terms", username=username))
 
 # Shows all of the user's terms
@@ -154,8 +175,7 @@ def get_all_terms():
     user = users.find_one({"username": username})
 
     return render_template("all_terms.html",
-                           username=username,
-                           user=user,
+                           username=username, user=user,
                            terms=terms.find(),
                            saved_terms=saved.find({"saved_by": username}))
 
@@ -182,10 +202,36 @@ def show_term(term_id):
                                      "term_examples": term_examples,
                                      "category_name": category_name})
 
+    already_liked = liked(term_id, user)
+    number_of_likes = num_of_likes(term_id, users)
+
     return render_template("term.html", term=term,
                            is_in_database=is_in_database,
+                           already_liked=already_liked,
+                           number_of_likes=number_of_likes,
                            username=username, user=user,
                            saved_terms=saved.find({"saved_by": username}))
+
+# Adds term_id to user's liked field
+@app.route("/like/<term_id>")
+def like(term_id):
+    username = check_session_user(session)
+
+    users.update({"username": username},
+                 {"$push": {"liked": term_id}})
+
+    return redirect(url_for("get_all_terms", username=username))
+
+# Removes term_id from user's liked field
+@app.route("/dislike/<term_id>")
+def dislike(term_id):
+    username = check_session_user(session)
+
+    users.update({"username": username},
+                 {"$pull": {"liked": term_id}})
+
+    return redirect(url_for("get_all_terms", username=username))
+
 
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
