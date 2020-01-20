@@ -53,6 +53,7 @@ User has the ability to do the following:
 - Ability to also unlike the term should you wish to.
 - Save (shortlist) terms which he/she has determined will require further insights (also removing from shortlist). This will be presented (on desktop - separate screen for mobile) as something similar to Outlook's flagged email system.
 - Handy tooltips guide your path.
+- Toast appears at the top of page to re-confirm you've saved a term.
 
 ### - Features left to implement
 
@@ -108,12 +109,11 @@ Save term | All of the above plus updates in further readings list | PASS
 Search saved terms/categories | If term/category is in database, loads term/category; if not, "not found" message displayed | PASS
 Delete term | Confirmation of deletion and, upon confirming, deletes term | PASS
 Delete profile | Confirmation of deletion and, upon confirming, deletes user and all terms/categories associated with username | PASS
+HTML validation | Confirmation of zero syntax or other errors | FAILED due to templating language
+CSS validation | Confirmation of zero syntax or other errors | PASS
 
 # TODO
 more tests when project is completed
-
-- HTML validated via https://validator.w3.org/ - FAILED due to templating language
-- CSS validated via https://jigsaw.w3.org/css-validator/ - PASS
 
 ## Deployment TODO
 For this project, I have used Heroku to deploy and host the application.
@@ -135,6 +135,8 @@ For this project, I have used Github for version control:
 
 ## Credits
 Special thanks goes out to Nishant Kumar, my mentor, for his patience and guidance when I've needed it most.
+
+Credit to https://www.w3schools.com/, which I frequently visited to brush up on things.
 
 I drew inspiration from my love of learning.
 

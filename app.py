@@ -1,5 +1,6 @@
 import uuid
 import os
+import time
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import pymongo
 from bson.objectid import ObjectId
@@ -152,8 +153,8 @@ def save_new_user():
     users.insert_one(request.form.to_dict())
 
     # Create a field of type array to store term_ids
-    users.update({"username": username},
-                 {"$push": {"liked": ""}})
+    users.update_one({"username": username},
+                     {"$push": {"liked": ""}})
 
     return redirect(url_for("get_all_terms", username=username))
 
@@ -174,9 +175,17 @@ def get_all_terms():
     username = check_session_user(session)
     user = users.find_one({"username": username})
 
+    # A way to display the number of times a term has been liked without having direct access to the term_id
+    all_users = users.find()
+    all_saved_ids = []
+    for item in all_users:
+        for num in item["liked"]:
+            all_saved_ids.append(num)
+
     return render_template("all_terms.html",
                            username=username, user=user,
                            terms=terms.find(),
+                           all_saved_ids=all_saved_ids,
                            saved_terms=saved.find({"saved_by": username}))
 
 # When a term is clicked:
@@ -217,20 +226,26 @@ def show_term(term_id):
 def like(term_id):
     username = check_session_user(session)
 
-    users.update({"username": username},
-                 {"$push": {"liked": term_id}})
+    term = terms.find_one({"_id": term_id})
 
-    return redirect(url_for("get_all_terms", username=username))
+    users.update_one({"username": username},
+                     {"$push": {"liked": term_id}})
+
+    return redirect(url_for("show_term", term_id=term["_id"],
+                            username=username))
 
 # Removes term_id from user's liked field
-@app.route("/dislike/<term_id>")
-def dislike(term_id):
+@app.route("/unlike/<term_id>")
+def unlike(term_id):
     username = check_session_user(session)
 
-    users.update({"username": username},
-                 {"$pull": {"liked": term_id}})
+    term = terms.find_one({"_id": term_id})
 
-    return redirect(url_for("get_all_terms", username=username))
+    users.update_one({"username": username},
+                     {"$pull": {"liked": term_id}})
+
+    return redirect(url_for("show_term", term_id=term["_id"],
+                            username=username))
 
 
 # Add a new term (overwrites default ObjectId):
@@ -477,6 +492,8 @@ def show_saved_term(term_id):
 def add_to_saved(term_id):
     username = check_session_user(session)
 
+    term = terms.find_one({"_id": term_id})
+
     # Finds which id the user clicked on and clones it.
     in_all_terms = terms.find_one({"_id": term_id})
     in_saved_terms = saved.find_one({"_id": term_id})
@@ -494,7 +511,11 @@ def add_to_saved(term_id):
         doc["saved_by"] = username
         saved.insert_one(doc)
 
-        return redirect(url_for("saved_terms"))
+        # Delay the redirect to give the JS toast time to escape before the page reloads
+        time.sleep(1)
+
+        return redirect(url_for("show_term", term_id=term["_id"]))
+
 
 # Removes a document from the further_readings database:
 @app.route("/remove_from_saved/<term_id>")

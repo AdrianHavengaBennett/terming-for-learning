@@ -14,24 +14,25 @@
         <div class="col s12 l8 offset-l1 container form-box">
 
             <div class="row">
+                
                 <div class="col l1">
                     <i class="fa fa-quote-right desktop-content-icon hide-on-med-and-down" aria-hidden="true"></i>
                 </div>
                 <div class="col l6">
                     <h2 class="header-font desktop-header hide-on-med-and-down">{{ term.term }}</h2>
                 </div>
-                {% if number_of_likes > 0 %}
-                    <div class="col l2 offset-l1">
-                        <i class="fa fa-thumbs-o-up desktop-content-icon hide-on-med-and-down tooltipped" data-position="bottom" data-tooltip="Number of grateful readers" aria-hidden="true">
-                            <span> {{ number_of_likes }}</span>
-                        </i>
-                    </div>
-                {% endif %}
             </div>
 
             
             <div class="row">
                 <div class="col s12 l10">
+                    {% if number_of_likes > 0 %}
+                        <div id="likes">
+                            <p class="tooltipped" data-position="bottom" data-tooltip="Number of grateful readers" aria-hidden="true">
+                                <span>Likes: {{ number_of_likes }}</span>
+                            </p>
+                        </div>
+                    {% endif %}
                     <div class="text-font">
                         <h5>Definition</h5>
                         <hr>
@@ -43,13 +44,13 @@
                             </div>
                             {% if already_liked %}
                                 <div class="col s1">
-                                    <a href="{{ url_for('dislike', term_id=term._id) }}" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is no longer useful to beginners?">
+                                    <a href="{{ url_for('unlike', term_id=term._id) }}" class="like-button tooltipped" data-position="bottom" data-tooltip="Think this definition is no longer useful to beginners?">
                                         <i class="fa fa-thumbs-o-down social-icons" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             {% else %}
                                 <div class="col s1">
-                                    <a href="{{ url_for('like', term_id=term._id) }}" class="like-counter tooltipped" data-position="bottom" data-tooltip="Think this definition is useful to beginners?">
+                                    <a href="{{ url_for('like', term_id=term._id) }}" class="like-button tooltipped" data-position="bottom" data-tooltip="Think this definition is useful to beginners?">
                                         <i class="fa fa-thumbs-o-up social-icons" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -62,18 +63,13 @@
                         <div class="row">
                             <div class="further-readings text-font">
                                 {% if is_in_database %}
-                                    <div class="col s9 offset-s1">
-                                        <p class="save-text">Remove From Further Readings: </p>
-                                    </div>
-                                    <div class="col s1">
-                                        <a href="{{ url_for('remove_from_saved', term_id=term._id) }}"><i class="fa fa-times save-term-button" aria-hidden="true"></i></a>
-                                    </div>
+                                    <p class="no-content"><em>You have saved this term. Edit your saved terms here: </em><a href="{{ url_for('saved_terms') }}">Further Readings</a></p>
                                 {% else %}
                                     <div class="col s9 offset-s1">
                                         <p class="save-text">Add To Further Readings: </p>
                                     </div>
                                     <div class="col s1">
-                                        <a href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag save-term-button" aria-hidden="true"></i></a>
+                                        <a id="save-term-button" href="{{ url_for('add_to_saved', term_id=term._id) }}"><i class="fa fa-flag save-term-button" aria-hidden="true"></i></a>
                                     </div>
                                 {% endif %}
                             </div>

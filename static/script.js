@@ -3,14 +3,11 @@ $(document).ready(function() {
     $(".button-collapse").sideNav();
     $(".tooltipped").tooltip();
     $("select").formSelect();
-    $('input#input_text, textarea#textarea2').characterCounter();
+    $("input#input_text, textarea#textarea2").characterCounter();
 });
 
-// // noob voting functionality
-// var clicks = 0;
-// document.getElementById("clicks").innerHTML = clicks;
-// $('.like-counter').click(function() {
-// clicks += 1;
-// document.getElementById("clicks").innerHTML = clicks;
-// $('.like-counter').addClass("liked");
-// });
+// Shows the added-to-FR toast
+$("#save-term-button").click(function() {
+    $("#saved-to-FR-toast").animate({top: "2em"}).delay(950).animate({top: "-6em"});
+});
+
