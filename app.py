@@ -6,7 +6,7 @@ from flask_pymongo import pymongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] =  os.getenv("SECRET_KEY")
+app.config["SECRET_KEY"] = "Nmr_JMruq7stpCsuYsGidA"
 
 MONGODB_URI = os.getenv("MONGO_URI")
 DBS_NAME = "terming_for_learning"

@@ -885,6 +885,20 @@ nav ul a {
         color: #fafafa;
     }
 
+    .login-register-btns {
+        margin-left: 0; 
+        background-color: rgba(0,0,0,0);
+        border: 1px solid #47aad9;
+        color: #47aad9;
+        -webkit-transition: all .5s ease-in-out;
+        transition: all .5s ease-in-out;
+    }
+
+    .login-register-btns:hover {
+        background-color: #47aad9;
+        color: #fafafa;
+    }
+
     .container {
         max-width: 1800px;
         bottom: 13.5em;
