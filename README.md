@@ -126,8 +126,6 @@ Below are the steps I have taken to achieve this:
 2. Commit changes
 3. Push Push Heroku Master
 
-![Deployment](deployment image)
-
 ### Deployment Link
 - http://terming-for-learning.herokuapp.com/
 
