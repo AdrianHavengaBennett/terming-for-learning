@@ -1,4 +1,4 @@
-# [Terming For Learning](deployment link here)
+# [Terming For Learning](http://terming-for-learning.herokuapp.com/)
 
 ### Welcome to my Terming For Learning website!
 
@@ -117,19 +117,19 @@ Delete profile | Confirmation of deletion and, upon confirming, deletes user and
 HTML validation | Confirmation of zero syntax or other errors | FAILED due to templating language
 CSS validation | Confirmation of zero syntax or other errors | PASS
 
-## Deployment TODO
+## Deployment
 For this project, I have used Heroku to deploy and host the application.
 
 Below are the steps I have taken to achieve this:
 
-1. 
-2. 
-3. 
+1. Login to Heroku
+2. Commit changes
+3. Push Push Heroku Master
 
 ![Deployment](deployment image)
 
-### Heroku Link
-- 
+### Deployment Link
+- http://terming-for-learning.herokuapp.com/
 
 ## Version Control
 For this project, I have used Github for version control:

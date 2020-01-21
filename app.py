@@ -139,10 +139,6 @@ def save_new_user():
         return """
             <h1>Username too short.</h1>
             """
-    if username[0].islower():
-        return """
-            <h1>First letter of username must be uppercase.</h1>
-            """
     if len(password) < 4:
         return """
             <h1>Password too short</h1>
