@@ -22,6 +22,7 @@ As a user of this website, I would like to be able to do the following:
 - See a laymen's-type of definition, which may make more sense to beginners.
 - Vote up/like a laymen's definition to highlight its helpfulness.
 - Also unlike a term should it be edited and no longer useful in my opinion.
+- See the amount of times a term has been liked without having to click on it to read it myself.
 
 ## Wireframe
 At the suggestion by my wise mentor, Nishant Kumar, I decided to use https://proto.io/ to help me with my wireframe.
@@ -54,6 +55,7 @@ User has the ability to do the following:
 - Save (shortlist) terms which he/she has determined will require further insights (also removing from shortlist). This will be presented (on desktop - separate screen for mobile) as something similar to Outlook's flagged email system.
 - Handy tooltips guide your path.
 - Toast appears at the top of page to re-confirm you've saved a term.
+- Number of likes a term has is displayed not only inside the term, but also outside in the all terms list.
 
 ### - Features left to implement
 
@@ -106,14 +108,14 @@ Create new term | Form loads and, upon completion and save, user's terms present
 Edit term | Form loads with current category name and, upon completion and save, user's terms presented | PASS
 Save term | Clones term, changes id, and populates saved_by to generate saved list. User's saved terms presented | PASS
 Save term | All of the above plus updates in further readings list | PASS
+Like/save icons hover | Tooltip offers guidance | PASS
+Search bar hover | Tooltip offers guidance | PASS
+Like/Unlike a term | Page reloads and increments/decrements like number in term itself and term button in all terms page | PASS
 Search saved terms/categories | If term/category is in database, loads term/category; if not, "not found" message displayed | PASS
 Delete term | Confirmation of deletion and, upon confirming, deletes term | PASS
 Delete profile | Confirmation of deletion and, upon confirming, deletes user and all terms/categories associated with username | PASS
 HTML validation | Confirmation of zero syntax or other errors | FAILED due to templating language
 CSS validation | Confirmation of zero syntax or other errors | PASS
-
-# TODO
-more tests when project is completed
 
 ## Deployment TODO
 For this project, I have used Heroku to deploy and host the application.
@@ -136,7 +138,7 @@ For this project, I have used Github for version control:
 ## Credits
 Special thanks goes out to Nishant Kumar, my mentor, for his patience and guidance when I've needed it most.
 
-Credit to https://www.w3schools.com/, which I frequently visited to brush up on things.
+Credit to https://www.w3schools.com/, which I referenced to brush up on CSS/HTML.
 
 I drew inspiration from my love of learning.
 

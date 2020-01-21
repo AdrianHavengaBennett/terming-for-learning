@@ -14,7 +14,6 @@ TERMS = "terms"
 CATEGORIES = "categories"
 USERS = "users"
 SAVED = "saved"
-VOTED = "voted"
 
 
 def mongo_connect(url):
@@ -30,7 +29,6 @@ terms = conn[DBS_NAME][TERMS]
 categories = conn[DBS_NAME][CATEGORIES]
 users = conn[DBS_NAME][USERS]
 saved = conn[DBS_NAME][SAVED]
-voted = conn[DBS_NAME][VOTED]
 
 
 # Helper functions
@@ -202,8 +200,7 @@ def show_term(term_id):
     noob_definition = term["noob_definition"]
     term_examples = term["term_examples"]
     category_name = term["category_name"]
-
-    # checks to see if the normal term is in saved terms.
+    # and check whether the term is in saved terms.
     is_in_database = saved.find_one({"saved_by": username,
                                      "term": term_name,
                                      "term_definition": term_definition,
@@ -247,7 +244,6 @@ def unlike(term_id):
     return redirect(url_for("show_term", term_id=term["_id"],
                             username=username))
 
-
 # Add a new term (overwrites default ObjectId):
 @app.route("/new_term")
 def new_term():
@@ -279,8 +275,7 @@ def edit_term(term_id):
 
     term = terms.find_one({"_id": term_id})
 
-    return render_template("edit_term.html",
-                           term=term,
+    return render_template("edit_term.html", term=term,
                            categories=categories.find({"author": username}),
                            username=username, user=user,
                            saved_terms=saved.find({"saved_by": username}))
@@ -294,6 +289,8 @@ def save_term(term_id):
 
     # check if term is in saved, then save changes there also
     saved_terms = saved
+    # this search is as accurate as can be without having the id.
+    # It matches each field exactly; the chance of 2 terms being identical to the letter is rare.
     in_saved = saved.find_one({"term": the_term["term"],
                                "category_name": the_term["category_name"],
                                "term_definition": the_term["term_definition"],
@@ -471,8 +468,7 @@ def saved_terms():
 
     return render_template("further_readings.html",
                            terms=saved.find({"saved_by": username}),
-                           user=user,
-                           username=username,
+                           user=user, username=username,
                            saved_terms=saved.find({"saved_by": username}))
 
 # When a further_readings term is clicked:

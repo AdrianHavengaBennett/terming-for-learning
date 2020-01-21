@@ -173,6 +173,15 @@ h6 {
     right: 1em;
 }
 
+.term-category-like-icon {
+    position: absolute;
+    color: #fafafa;
+    font-size: 1em;
+    top: 50%;
+    margin-top: -8px;
+    right: 4em;
+}
+
 nav {
     position: relative;
     left: 50%;
