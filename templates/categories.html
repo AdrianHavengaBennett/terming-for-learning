@@ -23,7 +23,8 @@
                 <div class="col s12 l4">
                     <form class="search-form" action="{{ url_for('find_category') }}" method="post">
                         <label for="category_search">Search categories:</label>
-                        <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="category_search" id="category_search">
+                        <input class="tooltipped hide-on-med-and-down" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="category_search" id="category_search">
+                        <input class="hide-on-large-only" type="search" name="category_search" id="category_search">
                     </form>
                 </div>
             </div>

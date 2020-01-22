@@ -122,15 +122,15 @@ For this project, I have used Heroku to deploy and host the application.
 
 Below are the steps I have taken to achieve this:
 
-1. Login to Heroku
-2. Commit changes
-3. Push Push Heroku Master
+1. Login to Heroku in the terminal
+2. Commit any changes
+3. Git Push Heroku Master
 
 ### Deployment Link
 - http://terming-for-learning.herokuapp.com/
 
 ## Version Control
-For this project, I have used Github for version control:
+For this project, I have used Github for static version control:
 - https://github.com/AdrianHavengaBennett/terming-for-learning
 
 ## Credits

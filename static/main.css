@@ -814,8 +814,8 @@ nav ul a {
     padding-left: 0;
 }
 
-#login-col-padding-adjustment,
-#register-col-padding-adjustment {
+#login-col-adjustment,
+#register-col-adjustment {
     padding-left: 0;
     padding-right: 1.5rem;
 }
@@ -825,6 +825,11 @@ nav ul a {
 @media only screen and (min-width: 993px) {
     .user-register-button>span {
         line-height: 2.5em;
+    }
+
+    #login-col-adjustment,
+    #register-col-adjustment {
+        padding-right: 5rem;
     }
 
     #likes {
@@ -881,20 +886,6 @@ nav ul a {
     }
 
     .buttons:hover {
-        background-color: #47aad9;
-        color: #fafafa;
-    }
-
-    .login-register-btns {
-        margin-left: 0; 
-        background-color: rgba(0,0,0,0);
-        border: 1px solid #47aad9;
-        color: #47aad9;
-        -webkit-transition: all .5s ease-in-out;
-        transition: all .5s ease-in-out;
-    }
-
-    .login-register-btns:hover {
         background-color: #47aad9;
         color: #fafafa;
     }

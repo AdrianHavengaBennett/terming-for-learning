@@ -109,7 +109,8 @@
                     <div class="col s12 l4">
                         <form class="search-form" action="{{ url_for('find_term') }}" method="post">
                             <label class="text-font" for="term_search">Search all:</label>
-                            <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="term_search" id="term_search" required>
+                            <input class="tooltipped hide-on-med-and-down" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="term_search" id="term_search">
+                            <input class="hide-on-large-only" type="search" name="term_search" id="term_search">
                         </form>
                     </div>
                 </div>
@@ -140,7 +141,8 @@
                     <div id="col-padding-adjustment" class="col l9 xl10">
                         <form class="search-form" action="{{ url_for('find_saved') }}" method="post">
                             <label class="text-font" for="term_search">Search saved:</label>
-                            <input class="tooltipped" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="saved_search" id="saved_search" required>
+                            <input class="tooltipped hide-on-med-and-down" data-position="left" data-tooltip="Searches are case-sensitive" type="search" name="saved_search" id="saved_search">
+                            <input class="hide-on-large-only" type="search" name="saved_search" id="saved_search">
                         </form>
                     </div>
                     <div class="col l1">
